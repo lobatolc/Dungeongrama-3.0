@@ -1,0 +1,27 @@
+[33mcommit 7f94a8a175bb344a4653ef5e0c5584596b37edbe[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: lobatolc <lucaslobto@hotmail.com>
+Date:   Thu Feb 3 13:04:52 2022 -0300
+
+    feat: creating the stage screen design
+
+[33mcommit 345636b1d9d588bf85acde7be065f539ee5ab691[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: lobatolc <lucaslobto@hotmail.com>
+Date:   Wed Feb 2 16:14:37 2022 -0300
+
+    feat: login screen design
+    
+    Criação do design da tela de login e padronização de tamanhos e cores
+
+[33mcommit 6b28a017d4de36796c49e8f9e7e6deb06ab17ebb[m
+Author: lobatolc <lucaslobto@hotmail.com>
+Date:   Wed Feb 2 10:47:48 2022 -0300
+
+    feat: initial commit
+    
+    First standardized commit
+
+[33mcommit cba808ad99c9dfac04fc6a8236d2a697f4a5e963[m
+Author: lobatolc <lucaslobto@hotmail.com>
+Date:   Wed Feb 2 10:25:30 2022 -0300
+
+    Initialize project using Create React App

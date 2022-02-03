@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {colors, spacing, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
+import {colors, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
 
 
 export const Container = styled.div`

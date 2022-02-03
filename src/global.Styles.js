@@ -39,15 +39,6 @@ export const shadow = {
     small:  "0px 4px 4px 0px #00000040"
 }
 
-export const spacing = {
-    greatMargin: "1.75rem",
-    greatPadding: "1.5rem",
-    mediumMargin:"1rem",
-    mediumPadding:"0.75rem",
-    smallMargin:"0.5rem",
-    smallPadding:"0.25rem"
-}
-
 export const margin = {
     big: "1.75rem",
     medium:"1rem",
@@ -55,8 +46,8 @@ export const margin = {
 }
 
 export const padding = {
-    great: "1.5rem",
-    medium:"0.75rem",
+    big: "1rem",
+    medium:"0.5rem",
     small:"0.25rem",
 }
 
@@ -70,6 +61,10 @@ export const border = {
         big: "2rem",
         medium: "1.25rem",
         small: "0.75rem",
+    },
+    color: {
+        lilac: "4px solid rgba(166, 145, 225, 1)",
+        dark: "4px solid rgba(0, 0, 0, 0,3)"
     }
 }
 
@@ -87,11 +82,11 @@ export const button = {
 }
 
 export const font = {
-    size:{
-        big: "2rem",
-        medium: "1.5rem",
-        small: "1.25rem",
-    },
+
+    big: "2rem",
+    medium: "1.5rem",
+    small: "1.25rem",
+
 }
 
 export const gradient = {
