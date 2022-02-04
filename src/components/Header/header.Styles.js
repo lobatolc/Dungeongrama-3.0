@@ -7,6 +7,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: ${colors.purple};
+
     div{
         display: flex;
         align-items: center;
@@ -32,6 +33,7 @@ export const Container = styled.div`
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            text-decoration: none;
             &:hover{
                 background-color: ${colors.white}10;
             }

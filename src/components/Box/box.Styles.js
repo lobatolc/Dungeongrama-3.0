@@ -8,8 +8,16 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: fit-content;
     padding: ${padding.medium};
+    overflow: auto;
+    ${({ height, width }) => {
+      return css`
+            width: ${width};
+            height: ${height};
+    
+        `;
+    }};
+
 `;
 
 export const Header = styled.div`
@@ -19,16 +27,14 @@ export const Header = styled.div`
     color: ${colors.white};
     height: 3rem;
     padding: ${padding.medium};
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+    text-align: center;
     box-shadow: ${shadow.small};
     ${({ width }) => {
       return css`
-            width: ${(width+1.5)+'rem'};
+            width: ${width};
         `;
     }};
-    
 `;
 
 export const Body = styled.div`
@@ -40,7 +46,8 @@ export const Body = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+    overflow-y: auto;
+    max-height: 50rem;
     p{
         margin-top: 0.5rem;
     }
@@ -59,12 +66,13 @@ export const Body = styled.div`
         background-image:  ${gradient.light};
         float: right;
         box-shadow: ${shadow.small};
+        
     }
 
     ${({ width, height, bgColor, color, border }) => {
         return css`
-            width: ${width+'rem'};
-            height: ${height+'rem'};
+            width: ${width};
+            height: ${height};
             border-right: ${border};
             border-left: ${border};
             border-bottom: ${border};

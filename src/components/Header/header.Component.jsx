@@ -10,9 +10,9 @@ function Header() {
             <h1>Dungeongrama</h1>
         </div>
         <div>
-            <a>Jogar</a>
-            <a>Classificação</a>
-            <a>Sair</a>
+            <a href="/stage">Jogar</a>
+            <a href="/ranking">Classificação</a>
+            <a href="/">Sair</a>
         </div>
     </Container>
   )}

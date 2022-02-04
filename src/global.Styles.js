@@ -16,13 +16,24 @@ html, body, #root {
 
 body{
     font: 14px, 'Roboto', sans-serif;
-    background: #ecf1f8;
+    background-color:#FAFAFA;
     color: #333;
+    box-sizing: border-box;
     -webkit-font-smoothing: antialiased !important;
+    .pageManager{
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+    }
 }
 
 ul{
     list-style: none;
+}
+
+a{
+     text-decoration: none;
 }
 `;
 

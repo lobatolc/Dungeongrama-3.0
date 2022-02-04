@@ -1,12 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
-import Login from './pages/login/login.Page';
-import Level from './pages/level/level.Page';
+import Routes from './controllers/routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 import GlobalStyle from './global.Styles';
 function App() {
   return (
     <>
-      <Level/>
+        <Router>
+          <Routes />
+        </Router>
       <GlobalStyle/>
     </>
   );

@@ -12,6 +12,11 @@ import logo from '../../images/icons/logo.png';
 import ajax from '../../images/developers/wizard.png';
 import lobato from '../../images/developers/thief.png';
 import larissa from '../../images/developers/knight.png';
+
+function verifyLogin(node){
+  window.location.href = "/stage";
+}
+
 function login() {
   return( 
     <Container>
@@ -29,7 +34,7 @@ function login() {
           <p>Senha</p>
           <LoginInput type="password"></LoginInput>
           <p id='register'>Não possui uma conta? Cadastre-se!</p>
-          <button>Entrar</button>
+          <button onClick={verifyLogin.bind(this)}>Entrar</button>
         </BottomContainer>
       </LoginContainer>
       <DevContainer>
