@@ -42,7 +42,8 @@ export const colors = {
     purpleAscent: "#E5E0EE",
     orange: "#FF5E03",
     red: "#F55454",
-    white: "#FAFAFA"
+    white: "#FAFAFA",
+    yellow: "#FFF6AA",
 }
 
 export const shadow = {

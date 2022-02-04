@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { Container } from './ranking.Styles';
-import Box from '../../components/Box/box.Component';
-import Rank from '../../components/Rank/rank.Component';
+import Box from '../../components/Box/box';
+import Rank from '../../components/Rank/rank';
 import {colors, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
 
 function Ranking() {

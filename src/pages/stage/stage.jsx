@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Container } from './stage.Styles';
 
-import Box from '../../components/Box/box.Component';
+import Box from '../../components/Box/box';
 import {border, colors} from '../../global.Styles';
 
-function level() {
+function Stage() {
   return(
     <Container>
         <h1 id='title'>Fases</h1>
@@ -29,7 +29,7 @@ function level() {
               <p>Pontuação: 1000</p>
             </div>
             <div id="button">
-              <button>
+              <button onClick={(e)=>{window.location.href = '/gameplay'}}>
                 Jogar
               </button>
             </div>
@@ -39,4 +39,4 @@ function level() {
     </Container>
   )}
 
-export default level;
+export default Stage;

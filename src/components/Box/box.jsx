@@ -24,6 +24,7 @@ function Box({
     <Container width={widthContainer} height={heightContainer}>
         <Header width={widthHeader} titleType={Array.isArray(title)}>
             {
+        
               Array.isArray(title) ? 
               title.map((t, index) => {
                 return <p>{title[index]}</p>

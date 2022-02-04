@@ -2,10 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Header from '../components/Header/header.Component';
-import Login from '../pages/login/login.Page';
-import Stage from '../pages/stage/stage.Page';
-import Ranking from '../pages/ranking/ranking.Page';
+import Header from '../components/Header/header';
+import Login from '../pages/login/login';
+import Stage from '../pages/stage/stage';
+import Ranking from '../pages/ranking/ranking';
+import Gameplay from "../pages/gameplay/gameplay";
 
 export default function routes(){
     return(
@@ -31,6 +32,14 @@ export default function routes(){
                     exact
                     component={Ranking}
                 />
+                <ValidatedRoute
+                    path="/gameplay"
+                    page_name="gameplay"
+                    privateRoute={true}
+                    exact
+                    component={Gameplay}
+                />
+
             </Switch>
 )};
 
