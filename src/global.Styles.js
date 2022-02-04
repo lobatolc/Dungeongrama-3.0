@@ -101,8 +101,10 @@ export const font = {
 }
 
 export const gradient = {
-    light: "linear-gradient(180deg, #F58E54 0%, #F55454 100%)",
-    dark:"linear-gradient(180deg, rgba(255, 94, 3, 0.7) 34.38%, #B71676 100%)",
+    orangeLight: "linear-gradient(180deg, #F58E54 0%, #F55454 100%)",
+    orangeDark:"linear-gradient(180deg, rgba(255, 94, 3, 0.7) 34.38%, #B71676 100%)",
+    purpleDark: "linear-gradient(180deg, #271F56 0%, #05073C 100%)",
+    purpleLight: "linear-gradient(180deg, #362E69 0%, #1E1749 100%)"
 }
 
 

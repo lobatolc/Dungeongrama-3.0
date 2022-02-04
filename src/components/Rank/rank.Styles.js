@@ -1,13 +1,29 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import {colors, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
 
 export const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr 3fr 3fr 3fr;
+  text-align: center;
+
+  
+ text-align: center;
   width: 100%;
   height: 3rem;
-  padding: 0.5rem;
-  margin: 0.5rem;
+  margin-top: 0.5rem;
   box-sizing: border-box;
-  background-color: red;
+  border-radius: 0.25rem;
+  ${({ rank }) => {
+    if(rank){
+      return css`
+          
+        background-image: ${gradient.purpleDark}; 
+      `;    
+    }else{
+      return css`
+        background-image: ${gradient.purpleLight}; 
+      `;    
+    }
+        
+    }};
 `;

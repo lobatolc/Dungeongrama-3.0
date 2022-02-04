@@ -4,9 +4,8 @@ import { Container } from './rank.Styles';
 
 function Rank({crown, user, rank}) {
   return( 
-    <Container>
-        {crown!="" ? <img src={crown} alt=""/> : ''}
-        <p>01</p>
+    <Container rank={rank%2==0? true : false}>
+        <p>{rank+1}</p>
         <p>lobato</p>
         <p>00:23:21</p>
         <p>30</p>

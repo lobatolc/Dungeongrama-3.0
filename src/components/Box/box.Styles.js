@@ -22,7 +22,7 @@ export const Container = styled.div`
 
 export const Header = styled.div`
     border-radius: 0.5rem;
-    background-image: ${gradient.light};
+    background-image: ${gradient.orangeLight};
     font-size: ${font.medium};
     color: ${colors.white};
     height: 3rem;
@@ -30,9 +30,31 @@ export const Header = styled.div`
     
     text-align: center;
     box-shadow: ${shadow.small};
-    ${({ width }) => {
+    ${({ width, titleType }) => {
+        if(titleType){
+            return css`
+                width: ${width};
+                display: grid;
+                grid-template-columns: 1fr 3fr 3fr 3fr 3fr;
+                align-items: center;
+                padding-right: 2rem;
+                padding-left: 2rem;
+        `;
+        }else{
+            return css`
+            width: ${width};
+        `;
+        }
       return css`
             width: ${width};
+            if(titleType){
+                display: grid;
+                grid-template-columns: 1fr 1fr 3fr 3fr 3fr 3fr;
+                align-items: center;
+                background-color: red;
+            }else{
+                background-color: blue;
+            }
         `;
     }};
 `;
@@ -63,7 +85,7 @@ export const Body = styled.div`
         padding-left: 1rem;
         padding-right: 1rem;
         color: ${colors.white};
-        background-image:  ${gradient.light};
+        background-image:  ${gradient.orangeLight};
         float: right;
         box-shadow: ${shadow.small};
         

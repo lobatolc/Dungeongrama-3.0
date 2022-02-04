@@ -15,8 +15,8 @@ function Ranking() {
             {name: 'joao', score: '234', gamesPlayed: '32', },
             {name: 'joao', score: '234', gamesPlayed: '32', }
         ]
-        rank.map((user) => {
-            auxState.push(<Rank/>)
+        rank.map((user, index) => {
+            auxState.push(<Rank rank={index}/>)
           })
           setRankingState(<div>{auxState}</div>)
       },[]);
@@ -24,7 +24,7 @@ function Ranking() {
     return( 
     <Container>
         <Box 
-            title={'Classificação'} 
+            title={['Nº', 'Nome', 'Tempo Médio', 'Partidas', 'Pontuação']}
             width={'98%'} 
             height={'100%'} 
             widthHeader={'100%'} 

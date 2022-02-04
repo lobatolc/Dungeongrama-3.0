@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Routes from './controllers/routes';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -10,6 +9,7 @@ function App() {
           <Routes />
         </Router>
       <GlobalStyle/>
+      <GlobalStyle />
     </>
   );
 }

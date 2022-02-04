@@ -48,7 +48,7 @@ export const LoginContainer = styled.div`
     box-shadow: ${shadow.big};
 
     h1{
-        background-image: ${gradient.dark};
+        background-image: ${gradient.orangeDark};
         font-size: 3rem;
         background-clip: text;
         -webkit-background-clip: text;
@@ -72,7 +72,7 @@ export const LoginContainer = styled.div`
         padding-left: 2rem;
         padding-right: 2rem;
         color: ${colors.white};
-        background-image:  ${gradient.light};
+        background-image:  ${gradient.orangeLight};
         float: right;
         margin-top:5rem;
         box-shadow: ${shadow.small};

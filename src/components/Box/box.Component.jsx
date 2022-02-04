@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Container, Header, Body } from './box.Styles';
 
+
+
 function Box({
   title, 
   width, 
@@ -15,10 +17,18 @@ function Box({
   children, 
   state, 
   setState}, ...props) {
+
+
+
   return(
     <Container width={widthContainer} height={heightContainer}>
-        <Header width={widthHeader}>
-            <p>{title}</p>
+        <Header width={widthHeader} titleType={Array.isArray(title)}>
+            {
+              Array.isArray(title) ? 
+              title.map((t, index) => {
+                return <p>{title[index]}</p>
+              }) : <p>{title}</p>
+            }
         </Header>
         <Body width={width} height={height} border={border} bgColor={bgColor} color={color} border={border}>
           {children}
