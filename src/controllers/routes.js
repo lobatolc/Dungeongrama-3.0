@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import ActivityProvider from "../contexts/activitContext";
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -10,37 +11,39 @@ import Gameplay from "../pages/gameplay/gameplay";
 
 export default function routes(){
     return(
-            <Switch>
-                <Route
-                    path="/"
-                    page_name="login"
-                    privateRoute={true}
-                    exact
-                    component={Login}
-                />
-                <ValidatedRoute
-                    path="/stage"
-                    page_name="stage"
-                    privateRoute={true}
-                    exact
-                    component={Stage}
-                />
-                <ValidatedRoute
-                    path="/ranking"
-                    page_name="ranking"
-                    privateRoute={true}
-                    exact
-                    component={Ranking}
-                />
-                <ValidatedRoute
-                    path="/gameplay"
-                    page_name="gameplay"
-                    privateRoute={true}
-                    exact
-                    component={Gameplay}
-                />
+            <ActivityProvider>
+              <Switch>
+                  <Route
+                      path="/"
+                      page_name="login"
+                      privateRoute={true}
+                      exact
+                      component={Login}
+                  />
+                  <ValidatedRoute
+                      path="/stage"
+                      page_name="stage"
+                      privateRoute={true}
+                      exact
+                      component={Stage}
+                  />
+                  <ValidatedRoute
+                      path="/ranking"
+                      page_name="ranking"
+                      privateRoute={true}
+                      exact
+                      component={Ranking}
+                  />
+                  <ValidatedRoute
+                      path="/gameplay"
+                      page_name="gameplay"
+                      privateRoute={true}
+                      exact
+                      component={Gameplay}
+                  />
 
-            </Switch>
+              </Switch>
+            </ActivityProvider>
 )};
 
 function ValidatedRoute({ Component, privateRoute, ...restProps }) {

@@ -8,11 +8,12 @@ import {
   TopContainer,
   BottomContainer,
 } from './login.Styles';
+import CardDeveloper from '../../components/CardDeveloper/cardDeveloper';
 
 import logo from '../../images/icons/logo.png';
-import ajax from '../../images/developers/wizard.png';
-import lobato from '../../images/developers/thief.png';
-import larissa from '../../images/developers/knight.png';
+import wizard from '../../images/developers/wizard.png';
+import thief from '../../images/developers/thief.png';
+import knight from '../../images/developers/knight.png';
 //import { loginDungeongrama } from '../../services/firebaseUse';
 
 function Login() {
@@ -61,9 +62,9 @@ function Login() {
         </BottomContainer>
       </LoginContainer>
       <DevContainer>
-        <img src={ajax} id="wizard" />
-        <img src={larissa} />
-        <img src={lobato} />
+        <img src={wizard} id="wizard" />
+        <img src={knight} />
+        <img src={thief} />
       </DevContainer>
     </Container>
   );

@@ -70,6 +70,7 @@ export const Body = styled.div`
     justify-content: space-between;
     overflow-y: auto;
     max-height: 50rem;
+    backdrop-filter: blur(0.25rem);
     p{
         margin-top: 0.5rem;
     }

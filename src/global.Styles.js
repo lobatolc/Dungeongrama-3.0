@@ -44,6 +44,7 @@ export const colors = {
     red: "#F55454",
     white: "#FAFAFA",
     yellow: "#FFF6AA",
+    blackBlur: "rgba(0,0,0,0.5)",
 }
 
 export const shadow = {
@@ -76,7 +77,8 @@ export const border = {
     },
     color: {
         lilac: "4px solid rgba(166, 145, 225, 1)",
-        dark: "4px solid rgba(0, 0, 0, 0,3)"
+        dark: "4px solid rgba(0, 0, 0, 0.3)",
+        darkBlur: "4px solid rgba(0,0,0,0.3)"
     }
 }
 
@@ -105,7 +107,10 @@ export const gradient = {
     orangeLight: "linear-gradient(180deg, #F58E54 0%, #F55454 100%)",
     orangeDark:"linear-gradient(180deg, rgba(255, 94, 3, 0.7) 34.38%, #B71676 100%)",
     purpleDark: "linear-gradient(180deg, #271F56 0%, #05073C 100%)",
-    purpleLight: "linear-gradient(180deg, #362E69 0%, #1E1749 100%)"
+    purpleLight: "linear-gradient(180deg, #362E69 0%, #1E1749 100%)",
+    yellowDark: "linear-gradient(180deg, #FFC700 0%, #FF993C 100%)",
+    blueLight: "linear-gradient(180deg, #00C2FF 0%, #0066FF 100%)",
+
 }
 
 
