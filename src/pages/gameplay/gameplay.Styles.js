@@ -8,13 +8,17 @@ export const Container = styled.div`
         " inventory interface " 
         " inventory construct";
     grid-template-rows: 1fr 9fr;
-    grid-template-columns: 2fr 8fr;
+    grid-template-columns: 1fr 9fr;
 `;
 
 export const Inventory = styled.div`
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    margin-left: 1rem;
     grid-area: inventory;
+    #inventoryBox{
+        height: 100%;
+    }
 `;
 
 export const Interface = styled.div`
@@ -110,6 +114,10 @@ export const VoidContainer = styled.div`
 export const BindContainer = styled.div`
     width: 100%;
     height: 100%;
+    padding: 0.25rem;
+    box-sizing: border-box;
+  
+    
     ${({ area }) => {
       return css`
             
@@ -117,12 +125,12 @@ export const BindContainer = styled.div`
         `;
     }};
 
-
 `;
 
 export const ActivityContainer = styled.div`
     width: 100%;
     height: 100%;
+
     ${({ area }) => {
             return css`
             border: 0.2rem dashed ${colors.purple}50;

@@ -8,7 +8,6 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: ${padding.medium};
     overflow: auto;
     ${({ height, width }) => {
       return css`
@@ -69,7 +68,7 @@ export const Body = styled.div`
     flex-direction: column;
     justify-content: space-between;
     overflow-y: auto;
-    max-height: 50rem;
+
     backdrop-filter: blur(0.25rem);
     p{
         margin-top: 0.5rem;

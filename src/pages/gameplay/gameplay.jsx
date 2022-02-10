@@ -10,6 +10,7 @@ import {
         } from './gameplay.Styles';
 import Box from '../../components/Box/box';
 import Activity from '../../components/Activity/activity';
+import Bind from '../../components/Bind/bind';
 import { useActivity } from '../../contexts/activitContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
@@ -24,16 +25,35 @@ function Gameplay() {
   const [audio, setAudio] = useState(false);
 
   const { activity, setActivity} = useActivity()
-  const dragEvents = {
+  const dragActivityContainer = {
     onDragOver :(e)=>{e.preventDefault();},
-    onDrop :(e)=>{ moveAcvitity(e)},
+    onDrop :(e)=>{ moveToContainer(e)},
   }
 
-  function moveAcvitity(e){
+  function moveToContainer(e){
     e.preventDefault();
     var act = document.getElementById(localStorage.getItem("id"));
     act.style.height = "100%";
+    act.style.margin = "0rem";
     e.target.appendChild(act);
+  }
+
+  const dragInventory = {
+    onDragOver :(e)=>{e.preventDefault();},
+    onDrop :(e)=>{ moveToInventory(e)},
+  }
+
+  function moveToInventory(e){
+    e.preventDefault();
+    var act = document.getElementById(localStorage.getItem("id"));
+   
+    if(e.target.id=="inventoryBox"){
+      act.style.height = "4rem";
+      act.style.marginBottom = "0.5rem";
+      e.target.appendChild(act);
+      console.log(e.target.id)
+    }
+    
   }
   
   useEffect(() => {
@@ -43,17 +63,21 @@ function Gameplay() {
         'Saltar',
         'Andar'
     ]
+
+    
+
+
     activityARRAY.map((act) => {
         auxState.push(<Activity name={act}/>)
       })
-      setInventory(<div>{auxState}</div>);
+      setInventory(<div {...dragInventory} id="inventoryBox">{auxState}</div>);
       
       const tiles = [
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "activity", "bind", "activity","void","void",
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "void", "void", "void","void","void",
+        "void", "void", "void", "void", "bind","void","void",
+        "void", "void", "void", "void", "activity","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
@@ -62,28 +86,53 @@ function Gameplay() {
       var auxTiles = []
       var auxTemplate = []
 
-      function teste(e){
-        var aux = e.target.firstChild
-        if(aux==null){
-          return true
-        }else{
-          return false
-        }
-      }
-      
+      var countBind = 0;
+      var bindARRAY = [
+        { 
+          bindDirection: "leftRight",
+          description: "Quando blablabla1",
+          descPosition:"first",
+          isArrow: true,
+        },
+        { 
+          bindDirection: "topBottom",
+          description: "Quando blablabla2",
+          descPosition:"first",
+          isArrow: true,
+        },
+        { 
+          bindDirection: "leftBottom",
+          description: "Quando blablabla3",
+          descPosition:"last",
+          isArrow: true,
+        },
+        { 
+          bindDirection: "leftRight",
+          description: "Quando blablabla4",
+          descPosition:"first",
+          isArrow: false,
+        },
+      ]
 
       tiles.forEach((tile, index) =>{
         if(tile == "void"){
-          auxTiles.push(<VoidContainer area={tile+index}>void</VoidContainer>);
+          auxTiles.push(<VoidContainer area={tile+index}></VoidContainer>);
           auxTemplate.push(tile+index)
         }else if(tile == "activity"){
           auxTiles.push(
-            <ActivityContainer {...dragEvents} area={tile+index} 
+            <ActivityContainer {...dragActivityContainer} area={tile+index}   title="Posicione uma atividade aqui"
            ></ActivityContainer>);
           auxTemplate.push(tile+index)
         }else{
-          auxTiles.push(<BindContainer area={tile+index}>bind</BindContainer>);
-          auxTemplate.push(tile+index)
+          auxTiles.push(<BindContainer area={tile+index}>
+                          <Bind 
+                            bindType={bindARRAY[countBind].bindDirection} 
+                            description={bindARRAY[countBind].description} 
+                            descPosition={bindARRAY[countBind].descPosition} 
+                            isArrow={bindARRAY[countBind].isArrow}/>
+                        </BindContainer>);
+          auxTemplate.push(tile+index);
+          countBind++;
         }
 
         
@@ -120,6 +169,7 @@ useEffect(()=>{
       <audio src={soundtrack} loop/>
         <Inventory>
           <Box 
+            
             title={'Inventário'}
             width={'18.5rem'} 
             height={'100%'} 
