@@ -4,14 +4,40 @@ import { colors } from '../../global.Styles';
 export const Container = styled.div`
    width: 100%;
    height:100%;
-   display: flex;
-    align-items: center;
+    display: grid;
+
+    img{
+        -webkit-touch-callout: none;  /* iPhone OS, Safari */
+        -webkit-user-select: none;    /* Chrome, Safari 3 */
+        -khtml-user-select: none;     /* Safari 2 */
+        -moz-user-select: none;       /* Firefox */
+        -ms-user-select: none;        /* IE10+ */
+        user-select: none;            /* Possível implementação no futuro */
+    }
+   
+    #bindDescription{
+        width: 100%;
+        padding: 0.25rem;
+        box-sizing: border-box;
+        max-height: 4rem;
+  
+        height: 3rem;
+        overflow: auto;
+    
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+    }
+
+    
      
    ${({ bindType }) => {
         switch(bindType){
             case "topBottom":
                 return css`   
-                
+                grid-template-columns: 1fr 1fr;
+                align-items: center;
                 #bind{
                  
                  height: 100%;
@@ -46,7 +72,8 @@ export const Container = styled.div`
 
             case "bottomTop":
                 return css`   
-
+                    grid-template-columns: 1fr 1fr;
+                    align-items: center;
                     #bind{
                  
                         height: 100%;
@@ -79,10 +106,13 @@ export const Container = styled.div`
                 `;
 
             case "leftRight":
-               
+                
                 return css` 
-                    flex-direction: column;  
-                    justify-content: center;
+                    grid-template-rows: 1fr 1fr;
+                   
+                    #bindDescription{
+                        width:80%;
+                    }
                     #bind{
                  
                     height: 0.2rem;
@@ -117,8 +147,7 @@ export const Container = styled.div`
 
             case "rightLeft":
                 return css`  
-                    flex-direction: column;  
-                    justify-content: center;
+                     grid-template-rows: 1fr 1fr;
                    #bind{
                         height: 0.2rem;
                         width: 100%;
@@ -127,6 +156,10 @@ export const Container = styled.div`
                         align-items: center;
                         background: black;
                  }
+
+                 #bindDescription{
+                        width:80%;
+                    }
 
                  #bindArrow{
                      position: inherit;
@@ -149,7 +182,17 @@ export const Container = styled.div`
             case "topRight":
                 return css`    
             
-                    justify-content: center;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "desc bind"
+                    "desc aux";
+                    
+                    #bindDescription{
+                        grid-area: desc;
+                    }
+                 
+
                     #bind{
                         height: 0.2rem;
                         width: 100%;
@@ -163,7 +206,7 @@ export const Container = styled.div`
                         height:100%;
                     
                         #bindSecond{
-                        height:52%;
+                        height:100%;
                         width: 0.2rem;
                         background: black;
                     }
@@ -185,7 +228,7 @@ export const Container = styled.div`
                         text-align: center;
                         word-wrap: break-word;
                         height: 100%;
-                        padding-right: 0.5rem;
+                      
                         
                     }
             
@@ -193,10 +236,18 @@ export const Container = styled.div`
 
             case "rightTop":
                 return css`    
-                    justify-content: center;
+                     grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "desc bind"
+                    "desc aux";
+                    
+                    #bindDescription{
+                        grid-area: desc;
+                    }
                     #bind{
                         height: 0.2rem;
-                        width: 50%;
+                        width:103%;
                         display: flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -209,7 +260,7 @@ export const Container = styled.div`
                         
                     
                         #bindSecond{
-                            height:52%;
+                            height:100%;
                             width: 100%;
                             background: black;
                             display: flex;
@@ -240,11 +291,26 @@ export const Container = styled.div`
             
             case "rightBottom":
                 return css`    
-                    justify-content: center;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "desc blank"
+                    "desc arrow";
+
+             
                     
+                    #bindDescription{
+                        grid-area: desc;
+                    }
+
+                    #bindContainer{
+                        grid-area: arrow;
+                    }
+
                     #bind{
+                        
                         height: 0.2rem;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -252,13 +318,15 @@ export const Container = styled.div`
                     }
 
                     #bindSecondContainer{
+                        
                         height: 100%;
                         
                         width:0.2rem;
-                        background: red;
+                       
                     
                         #bindSecond{
-                            height:52%;
+                            
+                            height:100%;
                   
                             width: 100%;
                             background: black;
@@ -296,11 +364,26 @@ export const Container = styled.div`
             
             case "bottomRight":
                 return css`    
-                    justify-content: center;
+                   grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "desc blank"
+                    "desc arrow";
+               
+
+             
                     
+                    #bindDescription{
+                        grid-area: desc;
+                    }
+
+                    #bindContainer{
+                 
+                        grid-area: arrow;
+                    }
                     #bind{
                         height: 0.2rem;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -313,7 +396,7 @@ export const Container = styled.div`
                         width:0.2rem;
 
                         #bindSecond{
-                            height:52%;
+                            height:100%;
                   
                             width: 100%;
                             background: black;
@@ -351,23 +434,38 @@ export const Container = styled.div`
             
             case "leftTop":
                 return css`    
-            
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "bind desc"  
+                    "aux desc";
                     justify-content: center;
+                    #bindDescription{
+                        grid-area: desc;
+                    }
+
+                    #bindContainer{
+                        grid-area: bind;
+                        display: flex;
+                        align-items: flex-end;
+                    }
+
                     #bind{
                         height: 0.2rem;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         justify-content: flex-end;
                         align-items: center;
                         
                         background: black;
+                        
                     }
 
                     #bindSecondContainer{
                         height:100%;
                     
                         #bindSecond{
-                        height:52%;
+                        height:100%;
                         width: 0.2rem;
                         background: black;
                         display: flex;
@@ -402,10 +500,24 @@ export const Container = styled.div`
             case "topLeft":
                 return css`    
             
-            justify-content: center;
+            grid-template-columns: 1fr 1fr;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas:
+                    "bind desc"  
+                    "aux desc";
+                    justify-content: center;
+                    #bindDescription{
+                        grid-area: desc;
+                    }
+
+                    #bindContainer{
+                        grid-area: bind;
+                        display: flex;
+                        align-items: flex-end;
+                    }
             #bind{
                 height: 0.2rem;
-                width: 50%;
+                width: 100%;
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
@@ -416,7 +528,7 @@ export const Container = styled.div`
                 height:100%;
             
                 #bindSecond{
-                height:52%;
+                height:100%;
                 width: 0.2rem;
                 background: black;
                 
@@ -447,11 +559,30 @@ export const Container = styled.div`
             
             case "leftBottom":
                 return css`    
-                    justify-content: center;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-areas:
+                    "blank desc"
+                    "arrow desc";
+           
+
+                    #bindContainer{
+                        grid-area: arrow;
+                        display: flex;
+                        align-items: center;
+                    
+                        background: red;
+                    }
+                   
+                    #bindDescription{
+                        grid-area: desc;
+                   
+                    }
+
+                   
                     
                     #bind{
                         height: 0.2rem;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         justify-content: flex-end;
                         align-items: center;
@@ -460,14 +591,16 @@ export const Container = styled.div`
 
                     #bindSecondContainer{
                         height: 100%;
-                        
-                        width:0.2rem;
-                        background: red;
+                        width: 100%;
+                        display: flex;
+                       justify-content: flex-end;
+      
                     
                         #bindSecond{
-                            height:52%;
+                            height:100%;
                   
-                            width: 100%;
+                           
+                            width:0.2rem;
                             background: black;
                             display: flex;
                             align-items: flex-end;
@@ -475,7 +608,7 @@ export const Container = styled.div`
                         }
 
                         #bindAux{
-                            height:48%;
+                            height:100%;
                             background: ${colors.white};
                         }
                     }
@@ -503,11 +636,27 @@ export const Container = styled.div`
         
             case "bottomLeft":
                 return css`    
-                    justify-content: center;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-areas:
+                    "blank desc"
+                    "arrow desc";
+           
+
+                    #bindContainer{
+                        grid-area: arrow;
+                        display: flex;
+                        align-items: center;
                     
+                        background: red;
+                    }
+                   
+                    #bindDescription{
+                        grid-area: desc;
+                   
+                    }
                     #bind{
                         height: 0.2rem;
-                        width: 50%;
+                        width: 100%;
                         display: flex;
                         justify-content: flex-start;
                         align-items: center;
@@ -517,12 +666,14 @@ export const Container = styled.div`
                     #bindSecondContainer{
                         height: 100%;
                         
-                        width:0.2rem;
-
+                        width: 100%;
+                        display: flex;
+                        justify-content: flex-end;
                         #bindSecond{
-                            height:52%;
+                            height:100%;
                   
-                            width: 100%;
+                            
+                            width:0.2rem;
                             background: black;
                             display: flex;
                             align-items: flex-end;

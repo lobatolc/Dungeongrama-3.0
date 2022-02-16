@@ -36,6 +36,8 @@ function Gameplay() {
     act.style.height = "100%";
     act.style.margin = "0rem";
     e.target.appendChild(act);
+    containerStyler();
+    localStorage.removeItem("id");
   }
 
   const dragInventory = {
@@ -51,9 +53,27 @@ function Gameplay() {
       act.style.height = "4rem";
       act.style.marginBottom = "0.5rem";
       e.target.appendChild(act);
-      console.log(e.target.id)
+      containerStyler();
+      
     }
+
+   
+  }
+
+  function containerStyler(){
+    var activityContainers = document.getElementsByClassName("actContainers");
+
+    for(let i = 0; i<activityContainers.length;i++){
+      if(activityContainers[i].firstChild!=null && activityContainers[i].firstChild.className!="act"){
+        activityContainers[i].style.border = "0rem dashed "+colors.purple+"50";
+ 
+      }else{
+        activityContainers[i].style.border = "0.2rem dashed "+colors.purple+"50";
+   
+      }
     
+    }
+
   }
   
   useEffect(() => {
@@ -76,7 +96,7 @@ function Gameplay() {
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "activity", "bind", "activity","void","void",
-        "void", "void", "void", "void", "bind","void","void",
+        "void", "void", "void", "activity", "bind","void","void",
         "void", "void", "void", "void", "activity","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
@@ -89,9 +109,9 @@ function Gameplay() {
       var countBind = 0;
       var bindARRAY = [
         { 
-          bindDirection: "leftRight",
-          description: "Quando blablabla1",
-          descPosition:"first",
+          bindDirection: "bottomLeft",
+          description: "Quan daaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          descPosition:"last",
           isArrow: true,
         },
         { 
@@ -120,7 +140,7 @@ function Gameplay() {
           auxTemplate.push(tile+index)
         }else if(tile == "activity"){
           auxTiles.push(
-            <ActivityContainer {...dragActivityContainer} area={tile+index}   title="Posicione uma atividade aqui"
+            <ActivityContainer {...dragActivityContainer} area={tile+index} className="actContainers"  title="Posicione uma atividade aqui"
            ></ActivityContainer>);
           auxTemplate.push(tile+index)
         }else{
@@ -192,7 +212,7 @@ useEffect(()=>{
             </div>
           </div>
           <p>00:00:00</p>
-          <button>Finalizar</button>
+          <button><p>Finalizar</p></button>
         </Interface>
         <Construct template={template} id="construct">
           {construct}

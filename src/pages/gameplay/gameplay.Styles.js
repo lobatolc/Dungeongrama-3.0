@@ -9,6 +9,7 @@ export const Container = styled.div`
         " inventory construct";
     grid-template-rows: 1fr 9fr;
     grid-template-columns: 1fr 9fr;
+ 
 `;
 
 export const Inventory = styled.div`
@@ -114,7 +115,6 @@ export const VoidContainer = styled.div`
 export const BindContainer = styled.div`
     width: 100%;
     height: 100%;
-    padding: 0.25rem;
     box-sizing: border-box;
   
     
