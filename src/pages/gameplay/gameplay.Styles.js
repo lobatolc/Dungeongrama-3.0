@@ -271,11 +271,41 @@ export const BarContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    
+
+    ${({ isVertical }) => {
+            if(isVertical){
+                return css`
+                    flex-direction: row;
+                `;
+            }else{
+                return css`
+                   flex-direction: column;
+                `; 
+            }
+            
+
+    }};
     #firstBarBind{
-        width: 0.188rem;
-        height:100%;
-        background: black;
+        
+
+        ${({ isVertical }) => {
+            if(isVertical){
+                return css`
+                    width: 100%;
+                    height:0.188rem;
+                    background: black;
+                `;
+            }else{
+                return css`
+                    width: 0.188rem;
+                    height:100%;
+                    background: black;
+                `; 
+            }
+            
+
+        }};
 
         ${({ firstBind }) => {
             if(firstBind){
@@ -293,9 +323,23 @@ export const BarContainer = styled.div`
     }
 
     #lastBarBind{
-        width: 0.188rem;
-        height:100%;
-        background: black;
+        ${({ isVertical }) => {
+            if(isVertical){
+                return css`
+                    width: 100%;
+                    height:0.188rem;
+                    background: black;
+                `;
+            }else{
+                return css`
+                    width: 0.188rem;
+                    height:100%;
+                    background: black;
+                `; 
+            }
+            
+
+        }};
 
         ${({ lastBind }) => {
             if(lastBind){
@@ -314,10 +358,120 @@ export const BarContainer = styled.div`
 
     
 
-    ${({ lastBind }) => {
-            return css`
+ 
+`;
+
+export const BallContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    height:100%;
+    width:100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    #firstBind{
+        display: flex;
+        justify-content: center;
+        div{
+            width: 0.188rem;
+            height:100%;
+            background-color: black;
+        }
+    }
+    #auxSecondThird{
+        display: flex;
+        grid-template-columns: 1fr 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        #secondBind{
+            height: 0.2rem;
+            width: 100%;
+            background-color: black;
             
-        `;
+        }
+        #thirdBind{
+            height: 0.2rem;
+            width: 100%;
+            background-color: black;
+        }
+
+    }
+
+    #lastBind{
+        display: flex;
+        justify-content: center;
+        div{
+            width: 0.188rem;
+            height:100%;
+            background-color: black;
+        }
+    }
+
+    ${({ firstBind }) => {
+        if(firstBind){
+            return css`
+                #firstBind{
+                    opacity:1;
+                }
+            `;
+        }else{
+            return css`
+                #firstBind{
+                    opacity:0;
+                }
+            `;
+        } 
+
+    }};
+
+    ${({ secondBind }) => {
+        if(secondBind){
+            return css`
+                #secondBind{
+                    opacity:1;
+                }
+            `;
+        }else{
+            return css`
+                #secondBind{
+                    opacity:0;
+                }
+            `;
+        } 
+
+    }};
+
+    ${({ thirdBind }) => {
+        if(thirdBind){
+            return css`
+                #thirdBind{
+                    opacity:1;
+                }
+            `;
+        }else{
+            return css`
+                #thirdBind{
+                    opacity:0;
+                }
+            `;
+        } 
+
+    }};
+
+${({ lastBind }) => {
+        if(lastBind){
+            return css`
+                #lastBind{
+                    opacity:1;
+                }
+            `;
+        }else{
+            return css`
+                #lastBind{
+                    opacity:0;
+                }
+            `;
+        } 
 
     }};
 `;

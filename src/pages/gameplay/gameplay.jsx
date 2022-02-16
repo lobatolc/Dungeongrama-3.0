@@ -8,13 +8,15 @@ import {
           VoidContainer, 
           ActivityContainer,
           DecisionContainer,
-          BarContainer
+          BarContainer,
+          BallContainer
         } from './gameplay.Styles';
 import Box from '../../components/Box/box';
 import Activity from '../../components/Activity/activity';
 import Decision from '../../components/Decision/decision';
 import Bar from '../../components/Bar/bar';
 import Bind from '../../components/Bind/bind';
+import Ball from '../../components/Ball/ball';
 import { useActivity } from '../../contexts/activitContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
@@ -22,6 +24,7 @@ import refresh from '../../images/icons/refresh.png';
 import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
+
 
 function Gameplay() {
   const [inventory, setInventory] = useState([]);
@@ -102,7 +105,7 @@ function Gameplay() {
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "activity", "bind", "activity","void","void",
         "void", "void", "void", "decision", "bind","void","void",
-        "void", "void", "bar", "bar", "activity","void","void",
+        "void", "void", "bar", "ball", "activity","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
         "void", "void", "void", "void", "void","void","void",
@@ -156,12 +159,19 @@ function Gameplay() {
           </DecisionContainer>)
           auxTemplate.push(tile+index)
         }else if(tile == "bar"){
-          auxTiles.push(<BarContainer firstBind={true} lastBind={true}>
+          auxTiles.push(<BarContainer firstBind={true} lastBind={true} isVertical={true}>
             <div id='firstBarBind'/>
-            <Bar isVertical={false}/>
+            <Bar isVertical={true}/>
             <div id='lastBarBind'/>
           </BarContainer>)
           auxTemplate.push(tile+index)
+        }else if(tile == "ball"){
+            auxTiles.push(<BallContainer firstBind={true} secondBind={true} thirdBind={true} lastBind={true}>
+                <div id="firstBind"><div/></div>
+                <div id="auxSecondThird"><div id="secondBind"/><div id="ball"><Ball isInitial={false}/></div><div id="thirdBind"/></div>
+                <div id="lastBind"><div/></div>
+              </BallContainer>)
+            auxTemplate.push(tile+index)
         }else{
           auxTiles.push(<BindContainer area={tile+index}>
                           <Bind 
