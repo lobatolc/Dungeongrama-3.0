@@ -7,6 +7,7 @@ export const Container = styled.div`
     height: 100%;
     display: flex;
     align-items: flex-start;
+
     flex-direction: column;
     #title{
         color: ${colors.purple};
@@ -27,5 +28,6 @@ export const Container = styled.div`
         width:100%;
         justify-content: center;
         flex-wrap: wrap; 
+        gap: 1rem;
     }
 `;

@@ -38,7 +38,7 @@ function Gameplay() {
   var hours = 0;
   var minutes = 0;
   var seconds = 0;
-  //setInterval(()=>{startTimer()}, 1000)
+  setInterval(()=>{startTimer()}, 1000)
 
   function startTimer(){
 

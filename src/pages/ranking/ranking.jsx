@@ -23,6 +23,7 @@ function Ranking() {
 
     return( 
     <Container>
+        <h1>Classificação dos Jogadores</h1>
         <Box 
             title={['Nº', 'Nome', 'Tempo Médio', 'Partidas', 'Pontuação']}
             width={'98%'} 

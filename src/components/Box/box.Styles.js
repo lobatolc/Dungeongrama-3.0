@@ -76,14 +76,15 @@ export const Body = styled.div`
     button{
         background-color: red;
         width: fit-content;
-        height:  ${button.size.medium};
+        height:  ${button.size.big};
+
         font-size: ${font.small};
         box-sizing: border-box;
         border: none;
         cursor: pointer;
         border-radius:  0.25rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
         color: ${colors.white};
         background-image:  ${gradient.orangeLight};
         float: right;

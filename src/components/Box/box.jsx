@@ -21,7 +21,7 @@ function Box({
 
 
   return(
-    <Container width={widthContainer} height={heightContainer}>
+    <Container width={widthContainer} height={heightContainer} className="boxContainer">
         <Header width={widthHeader} titleType={Array.isArray(title)}>
             {
         
