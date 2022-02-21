@@ -5,12 +5,12 @@ export const Container = styled.div`
         if(isVertical){
             return css`
                 height:100%;
-                width: 1.75rem;
+                width: 1rem;
                 background-color: black;
             `;
         }else{
             return css`
-                height: 1.75rem;
+                height: 1rem;
                 width:100%;
                 background-color: black;
             `;

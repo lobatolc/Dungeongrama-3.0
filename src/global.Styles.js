@@ -111,6 +111,9 @@ export const gradient = {
     purpleLight: "linear-gradient(180deg, #362E69 0%, #1E1749 100%)",
     yellowDark: "linear-gradient(180deg, #FFC700 0%, #FF993C 100%)",
     blueLight: "linear-gradient(180deg, #00C2FF 0%, #0066FF 100%)",
+    greenAlert: "linear-gradient(180deg, #3CE780 0.01%, #22C88C 100%)",
+    yellowAlert: "linear-gradient(180deg, #F2E910 0.01%, #D69F14 100%)",
+    redAlert: "linear-gradient(180deg, #F26C6C 0.01%, #DA240B 100%)"
 
 }
 

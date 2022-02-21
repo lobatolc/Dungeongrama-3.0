@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import ActivityProvider from "../contexts/activitContext";
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -8,10 +7,13 @@ import Login from '../pages/login/login';
 import Stage from '../pages/stage/stage';
 import Ranking from '../pages/ranking/ranking';
 import Gameplay from "../pages/gameplay/gameplay";
-
-export default function routes(){
+import NotifyModal from "../components/Notify/notify";
+import { useNotifys } from "../contexts/notifyContext";
+export default function Routes(){
+    const { notifys, setNotifys } = useNotifys();
     return(
-            <ActivityProvider>
+            <>
+             <NotifyModal {...notifys}/>
               <Switch>
                   <Route
                       path="/"
@@ -43,7 +45,7 @@ export default function routes(){
                   />
 
               </Switch>
-            </ActivityProvider>
+              </>
 )};
 
 function ValidatedRoute({ Component, privateRoute, ...restProps }) {

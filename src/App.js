@@ -4,12 +4,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import GlobalStyle from './global.Styles';
+import NotifyProvider from './contexts/notifyContext';
 function App() {
   return (
     <>
-        <Router>
-          <Routes />
-        </Router>
+        <NotifyProvider> 
+          <Router>
+            <Routes />
+          </Router>
+        </NotifyProvider>
       <GlobalStyle/>
       <GlobalStyle />
     </>

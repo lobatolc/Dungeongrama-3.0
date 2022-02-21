@@ -20,13 +20,20 @@ export const Container = styled.div`
         padding: 0.25rem;
         box-sizing: border-box;
         max-height: 4rem;
-  
         height: 3rem;
-        overflow: auto;
-    
-        ::-webkit-scrollbar {
-            width: 0px;
-        }
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        
+
+        ${({ bindType }) => {
+            if(bindType == "rightLeft" || bindType == "leftRight"){
+                return css`  
+                    max-height: 1.75rem;          
+                `; 
+            }
+        }};
+
 
     }
 

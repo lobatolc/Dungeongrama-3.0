@@ -2,6 +2,8 @@ import styled, {css} from 'styled-components';
 import {colors, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
 export const Container = styled.div`
     width: 100%;
+    max-width: 150rem;
+    max-height:80rem;
     height: 100%;
     display: grid;
     grid-template-areas: 
@@ -19,6 +21,12 @@ export const Inventory = styled.div`
     grid-area: inventory;
     #inventoryBox{
         height: 100%;
+        overflow-y: auto;
+        ::-webkit-scrollbar {
+            width: 0.25rem;
+            background: ${colors.purpleAscent}50;
+           
+        }
     }
 `;
 
@@ -151,33 +159,197 @@ export const DecisionContainer = styled.div`
     height:100%;
     width:100%;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0.2fr 1fr;
 
+    #firstBindContainer, #lastBindContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "binding blanking"
+    }
 
     #firstBind{
         display: flex;
-        justify-content: center;
-        div{
-            width: 0.188rem;
-            height:100%;
-            background-color: black;
+        #arrowContainer{
+            height: 100%;
+            width: 0.2rem;
+             
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            background: black;
+        }
+        img{
+                -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                -webkit-user-select: none;    /* Chrome, Safari 3 */
+                -khtml-user-select: none;     /* Safari 2 */
+                -moz-user-select: none;       /* Firefox */
+                -ms-user-select: none;        /* IE10+ */
+                user-select: none;  
+                
+                position: inherit;
+                color: black;
+                padding:0;
+                margin:0;
+                height: 1rem;
+                transform: rotate(90deg);
+
+                ${({ firstArrow }) => {
+                    if(firstArrow){
+                        return css`
+                            opacity: 1;
+                        `
+                    }else{
+                        return css`
+                            opacity: 0;
+                        `
+                    }
+                    
+                }};
+
         }
     }
     #auxSecondThird{
         display: flex;
+        
         grid-template-columns: 1fr 1fr 1fr;
         justify-content: center;
         align-items: center;
-        #secondBind{
-            height: 0.2rem;
+        #secondBindContainer, #thirdBindContainer{
             width: 100%;
-            background-color: black;
+            height:100%;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+
+            grid-template-areas: 
+            "topBind" 
+            "downBind";
+        
+        }
+
+        #secondBind{
+            display: flex;
+
+            #arrowContainer{
+                width: 100%;
+                height:0.188rem;
+                background-color: black;
+
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+             
+
+                img{
+                    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                    -webkit-user-select: none;    /* Chrome, Safari 3 */
+                    -khtml-user-select: none;     /* Safari 2 */
+                    -moz-user-select: none;       /* Firefox */
+                    -ms-user-select: none;        /* IE10+ */
+                    user-select: none;  
+                    
+                    position: inherit;
+                    color: black;
+                    padding:0;
+                    margin:0;
+                    height: 1rem;
+                    transform: rotate(360deg);
+
+                    ${({ secondArrow }) => {
+                        if(secondArrow){
+                            return css`
+                                opacity: 1;
+                            `
+                        }else{
+                            return css`
+                                opacity: 0;
+                            `
+                        }
+                        
+                    }};
+
+                }
+            }
+
+            ${({ isLeftSecond }) => {
+                if(isLeftSecond){
+                    return css`
+                        align-items: flex-end;
+                        grid-area: topBind;
+                   
+                    
+                    `;
+                }else{
+                    return css`
+                        align-items: flex-start;
+                        grid-area: downBind;   
+                    `;
+                } 
+            }};
             
         }
         #thirdBind{
-            height: 0.2rem;
+            height: 100%;
             width: 100%;
-            background-color: black;
+
+            display: flex;
+
+            #arrowContainer{
+                width: 100%;
+                height:0.188rem;
+                background-color: black;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                img{
+                    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                    -webkit-user-select: none;    /* Chrome, Safari 3 */
+                    -khtml-user-select: none;     /* Safari 2 */
+                    -moz-user-select: none;       /* Firefox */
+                    -ms-user-select: none;        /* IE10+ */
+                    user-select: none;  
+                    
+                    position: inherit;
+                    color: black;
+                    padding:0;
+                    margin:0;
+                    height: 1rem;
+                    transform: rotate(180deg);
+
+                    ${({ thirdArrow }) => {
+                        if(thirdArrow){
+                            return css`
+                                opacity: 1;
+                            `
+                        }else{
+                            return css`
+                                opacity: 0;
+                            `
+                        }
+                        
+                    }};
+
+                }
+
+            }
+
+            ${({ isLeftThird }) => {
+                if(isLeftThird){
+                    return css`
+                        align-items: flex-end;
+                        grid-area: topBind;
+                   
+                    
+                    `;
+                }else{
+                    return css`
+                        align-items: flex-start;
+                        grid-area: downBind;   
+                    `;
+                } 
+            }};
+            
         }
 
     }
@@ -185,12 +357,115 @@ export const DecisionContainer = styled.div`
     #lastBind{
         display: flex;
         justify-content: center;
-        div{
+        #arrowContainer{
             width: 0.188rem;
             height:100%;
-            background-color: black;
+             
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: black;
+
+            img{
+                -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                -webkit-user-select: none;    /* Chrome, Safari 3 */
+                -khtml-user-select: none;     /* Safari 2 */
+                -moz-user-select: none;       /* Firefox */
+                -ms-user-select: none;        /* IE10+ */
+                user-select: none;  
+                    
+                position: inherit;
+                color: black;
+                padding:0;
+                margin:0;
+                height: 1rem;
+                transform: rotate(-90deg);
+
+                ${({ lastArrow }) => {
+                    if(lastArrow){
+                        return css`
+                            opacity: 1;
+                        `
+                    }else{
+                        return css`
+                            opacity: 0;
+                        `
+                    }
+                        
+                }};
+
+            }
+
         }
     }
+
+    ${({ isLeftFirst }) => {
+        if(isLeftFirst){
+            return css`
+
+                #firstBind{
+                    justify-content: flex-end;
+                    grid-area: binding;
+                }
+               
+            `;
+        }else{
+            return css`
+                #firstBind{
+                    justify-content: flex-start;
+                    grid-area: blanking;
+                }
+                
+            `;
+        } 
+
+    }};
+
+    
+
+    ${({ isLeftLast }) => {
+        if(isLeftLast){
+            return css`
+
+                #lastBind{
+                    justify-content: flex-end;
+                    grid-area: binding;
+                }
+               
+            `;
+        }else{
+            return css`
+                #lastBind{
+                    justify-content: flex-start;
+                    grid-area: blanking;
+                }
+                
+            `;
+        } 
+
+    }};
+
+${({ isLeftFirst }) => {
+        if(isLeftFirst){
+            return css`
+
+                #firstBind{
+                    justify-content: flex-end;
+                    grid-area: binding;
+                }
+               
+            `;
+        }else{
+            return css`
+                #firstBind{
+                    justify-content: flex-start;
+                    grid-area: blanking;
+                }
+                
+            `;
+        } 
+
+    }};
 
     ${({ firstBind }) => {
         if(firstBind){
@@ -268,143 +543,666 @@ ${({ lastBind }) => {
 export const BarContainer = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
     
 
     ${({ isVertical }) => {
-            if(isVertical){
-                return css`
-                    flex-direction: row;
-                `;
-            }else{
-                return css`
-                   flex-direction: column;
-                `; 
-            }
-            
+        if(isVertical){
+            return css`
+                grid-template-columns: 1fr 0.1fr 1fr;
 
+                #firstBindContainer{
+  
+                    display: grid;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas: "first" "last";
+                    
+                    #firstBarBind{
+                        display: flex;
+                        #arrowContainer{
+                            height: 0.2rem;
+                            width: 100%;
+                            
+                            display: flex;
+                            align-items: center;
+                           
+                            background: black;
+                           
+                            ${({ isInitialFirst }) => {
+                                if(isInitialFirst ){
+                                    return css`
+                                        justify-content: flex-end;
+                                        img{
+                                            transform: rotate(360deg);
+                                        }
+                                    `
+                                }else{
+                                    return css`
+                                        justify-content: flex-start;
+                                        img{
+                                            transform: rotate(180deg);
+                                        }
+                                    `
+                                }
+                                
+                            }};
+                        }
+                        img{
+                            -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                            -webkit-user-select: none;    /* Chrome, Safari 3 */
+                            -khtml-user-select: none;     /* Safari 2 */
+                            -moz-user-select: none;       /* Firefox */
+                            -ms-user-select: none;        /* IE10+ */
+                            user-select: none;  
+                            
+                            position: inherit;
+                            color: black;
+                            padding:0;
+                            margin:0;
+                            height: 1rem;
+                            
+
+                            ${({ firstArrow }) => {
+                                if(firstArrow){
+                                    return css`
+                                        opacity: 1;
+                                    `
+                                }else{
+                                    return css`
+                                        opacity: 0;
+                                    `
+                                }
+                                
+                            }};
+
+                        }
+
+                        ${({ isLeftFirst }) => {
+                                if(isLeftFirst){
+                                    return css`
+                                        grid-area: first;
+                                        align-items: flex-end;
+                                    `
+                                }else{
+                                    return css`
+                                        grid-area: last;
+                                        align-items: flex-start;
+                                    `
+                                }
+                                
+                            }};
+                    }  
+                }
+
+                #lastBindContainer{
+      
+                    display: grid;
+                    grid-template-rows: 1fr 1fr;
+                    grid-template-areas: "first" "last";
+                    
+                    #lastBarBind{
+                        display: flex;
+                        #arrowContainer{
+                            height: 0.2rem;
+                            width: 100%;
+                            
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end; /*vamo usar isso aqui pra rotacionar as setas*/
+                            background: black;
+                           
+                            ${({ isInitialLast }) => {
+                                if(isInitialLast ){
+                                    return css`
+                                        justify-content: flex-end;
+                                        img{
+                                            transform: rotate(360deg);
+                                        }
+                                    `
+                                }else{
+                                    return css`
+                                        justify-content: flex-start;
+                                        img{
+                                            transform: rotate(180deg);
+                                        }
+                                    `
+                                }
+                                
+                            }};
+                        }
+                        img{
+                            -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                            -webkit-user-select: none;    /* Chrome, Safari 3 */
+                            -khtml-user-select: none;     /* Safari 2 */
+                            -moz-user-select: none;       /* Firefox */
+                            -ms-user-select: none;        /* IE10+ */
+                            user-select: none;  
+                            
+                            position: inherit;
+                            color: black;
+                            padding:0;
+                            margin:0;
+                            height: 1rem;
+                            
+
+                            ${({ lastArrow }) => {
+                                if(lastArrow){
+                                    return css`
+                                        opacity: 1;
+                                    `
+                                }else{
+                                    return css`
+                                        opacity: 0;
+                                    `
+                                }
+                                
+                            }};
+
+                        }
+
+                        ${({ isLeftLast }) => {
+                                if(isLeftLast){
+                                    return css`
+                                        grid-area: first;
+                                        align-items: flex-end;
+                                    `
+                                }else{
+                                    return css`
+                                        grid-area: last;
+                                        align-items: flex-start;
+                                    `
+                                }
+                                
+                            }};
+                    }  
+                }
+            `;
+        }else{
+            return css`
+                grid-template-rows: 1fr 0.1fr 1fr;
+
+                #firstBindContainer{
+  
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-areas: "first last";
+  
+                #firstBarBind{
+                    display: flex;
+                    #arrowContainer{
+                        height: 100%;
+                        width: 0.2rem;
+                        
+                        display: flex;
+                        justify-content: center;
+                        
+                        background: black;
+                        
+                        ${({ isInitialFirst }) => {
+                            if(isInitialFirst ){
+                                return css`
+                                    align-items: flex-end;
+                                    img{
+                                        transform: rotate(90deg);
+                                    }
+                                `
+                            }else{
+                                return css`
+                                    align-items: flex-start;
+                                    img{
+                                        transform: rotate(-90deg);
+                                    }
+                                `
+                            }
+                            
+                        }};
+                    }
+                    img{
+                        -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                        -webkit-user-select: none;    /* Chrome, Safari 3 */
+                        -khtml-user-select: none;     /* Safari 2 */
+                        -moz-user-select: none;       /* Firefox */
+                        -ms-user-select: none;        /* IE10+ */
+                        user-select: none;  
+                        
+                        position: inherit;
+                        color: black;
+                        padding:0;
+                        margin:0;
+                        height: 1rem;
+                        
+                        ${({ firstArrow }) => {
+                            if(firstArrow){
+                                return css`
+                                    opacity: 1;
+                                `
+                            }else{
+                                return css`
+                                    opacity: 0;
+                                `
+                            }
+                            
+                        }};
+                    }
+
+                    ${({ isLeftFirst }) => {
+                            if(isLeftFirst){
+                                return css`
+                                    grid-area: first;
+                                    justify-content: flex-end;
+                                `
+                            }else{
+                                return css`
+                                    grid-area: last;
+                                    justify-content: flex-start;
+                                `
+                            }
+                            
+                        }};
+                    }  
+                }
+
+                #lastBindContainer{
+  
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-areas: "first last";
+
+                    #lastBarBind{
+                        display: flex;
+                        #arrowContainer{
+                            height: 100%;
+                            width: 0.2rem;
+                            
+                            display: flex;
+                            justify-content: center;
+                            
+                            background: black;
+                            
+                            ${({ isInitialLast }) => {
+                                if(isInitialLast ){
+                                    return css`
+                                        align-items: flex-end;
+                                        img{
+                                            transform: rotate(90deg);
+                                        }
+                                    `
+                                }else{
+                                    return css`
+                                        align-items: flex-start;
+                                        img{
+                                            transform: rotate(-90deg);
+                                        }
+                                    `
+                                }
+                                
+                            }};
+                        }
+                        img{
+                            -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                            -webkit-user-select: none;    /* Chrome, Safari 3 */
+                            -khtml-user-select: none;     /* Safari 2 */
+                            -moz-user-select: none;       /* Firefox */
+                            -ms-user-select: none;        /* IE10+ */
+                            user-select: none;  
+                            
+                            position: inherit;
+                            color: black;
+                            padding:0;
+                            margin:0;
+                            height: 1rem;
+                            
+                            ${({ lastArrow }) => {
+                                if(lastArrow){
+                                    return css`
+                                        opacity: 1;
+                                    `
+                                }else{
+                                    return css`
+                                        opacity: 0;
+                                    `
+                                }
+                                
+                            }};
+                        }
+
+                        ${({ isLeftLast }) => {
+                                if(isLeftLast){
+                                    return css`
+                                        grid-area: first;
+                                        justify-content: flex-end;
+                                    `
+                                }else{
+                                    return css`
+                                        grid-area: last;
+                                        justify-content: flex-start;
+                                    `
+                                }
+                                
+                            }};
+                        }  
+                    }
+            `;
+        }
     }};
-    #firstBarBind{
+
         
 
-        ${({ isVertical }) => {
-            if(isVertical){
-                return css`
-                    width: 100%;
-                    height:0.188rem;
-                    background: black;
-                `;
-            }else{
-                return css`
-                    width: 0.188rem;
-                    height:100%;
-                    background: black;
-                `; 
+        
+
+        
+
+        #lastBarBind{
+            img{
+                ${({ lastArrow }) => {
+                    if(lastArrow){
+                        return css`
+                            opacity: 1;
+                        `
+                    }else{
+                        return css`
+                            opacity: 0;
+                        `
+                    }
+                    
+                }};
             }
             
-
-        }};
-
-        ${({ firstBind }) => {
-            if(firstBind){
-                return css`
-                    opacity: 1;
-                `;
-            }else{
-                return css`
-                    opacity: 0;
-                `; 
-            }
-            
-
-    }};
-    }
-
-    #lastBarBind{
-        ${({ isVertical }) => {
-            if(isVertical){
-                return css`
-                    width: 100%;
-                    height:0.188rem;
-                    background: black;
-                `;
-            }else{
-                return css`
-                    width: 0.188rem;
-                    height:100%;
-                    background: black;
-                `; 
-            }
-            
-
-        }};
-
-        ${({ lastBind }) => {
-            if(lastBind){
-                return css`
-                    opacity: 1;
-                `;
-            }else{
-                return css`
-                    opacity: 0;
-                `; 
-            }
-            
-
-    }};
-    }
+        }
 
     
 
- 
+
+
+
 `;
 
 export const BallContainer = styled.div`
     width: 100%;
     height: 100%;
-    height:100%;
-    width:100%;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0.1fr 1fr;
+
+    #firstBindContainer, #lastBindContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "leftBinding rightBinding";
+    }
+
+   
 
     #firstBind{
         display: flex;
-        justify-content: center;
-        div{
-            width: 0.188rem;
-            height:100%;
-            background-color: black;
+        
+
+        ${({ isLeftFirst }) => {
+                if(isLeftFirst){
+                    return css`
+                        justify-content: flex-end;
+                        grid-area: leftBinding;
+                   
+                    
+                    `;
+                }else{
+                    return css`
+                        justify-content: flex-start;
+                        grid-area: rightBinding;   
+                    `;
+                } 
+            }};
+
+        #arrowContainer{
+            height: 100%;
+            width: 0.2rem;
+             
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            background: black;
+        }
+        img{
+                -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                -webkit-user-select: none;    /* Chrome, Safari 3 */
+                -khtml-user-select: none;     /* Safari 2 */
+                -moz-user-select: none;       /* Firefox */
+                -ms-user-select: none;        /* IE10+ */
+                user-select: none;  
+                
+                position: inherit;
+                color: black;
+                padding:0;
+                margin:0;
+                height: 1rem;
+                transform: rotate(90deg);
+
+                ${({ firstArrow }) => {
+                    if(firstArrow){
+                        return css`
+                            opacity: 1;
+                        `
+                    }else{
+                        return css`
+                            opacity: 0;
+                        `
+                    }
+                    
+                }};
+
         }
     }
+
     #auxSecondThird{
         display: flex;
+        
         grid-template-columns: 1fr 1fr 1fr;
         justify-content: center;
         align-items: center;
-        #secondBind{
-            height: 0.2rem;
+        #secondBindContainer, #thirdBindContainer{
             width: 100%;
-            background-color: black;
+            height:100%;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+
+            grid-template-areas: 
+            "topBind" 
+            "downBind";
+        
+        }
+
+        #secondBind{
+            display: flex;
+
+            #arrowContainer{
+                width: 100%;
+                height:0.188rem;
+                background-color: black;
+
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+             
+
+                img{
+                    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                    -webkit-user-select: none;    /* Chrome, Safari 3 */
+                    -khtml-user-select: none;     /* Safari 2 */
+                    -moz-user-select: none;       /* Firefox */
+                    -ms-user-select: none;        /* IE10+ */
+                    user-select: none;  
+                    
+                    position: inherit;
+                    color: black;
+                    padding:0;
+                    margin:0;
+                    height: 1rem;
+                    transform: rotate(360deg);
+
+                    ${({ secondArrow }) => {
+                        if(secondArrow){
+                            return css`
+                                opacity: 1;
+                            `
+                        }else{
+                            return css`
+                                opacity: 0;
+                            `
+                        }
+                        
+                    }};
+
+                }
+            }
+
+            ${({ isLeftSecond }) => {
+                if(isLeftSecond){
+                    return css`
+                        align-items: flex-end;
+                        grid-area: topBind;
+                   
+                    
+                    `;
+                }else{
+                    return css`
+                        align-items: flex-start;
+                        grid-area: downBind;   
+                    `;
+                } 
+            }};
             
         }
         #thirdBind{
-            height: 0.2rem;
+            height: 100%;
             width: 100%;
-            background-color: black;
+
+            display: flex;
+
+            #arrowContainer{
+                width: 100%;
+                height:0.188rem;
+                background-color: black;
+
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                img{
+                    -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                    -webkit-user-select: none;    /* Chrome, Safari 3 */
+                    -khtml-user-select: none;     /* Safari 2 */
+                    -moz-user-select: none;       /* Firefox */
+                    -ms-user-select: none;        /* IE10+ */
+                    user-select: none;  
+                    
+                    position: inherit;
+                    color: black;
+                    padding:0;
+                    margin:0;
+                    height: 1rem;
+                    transform: rotate(180deg);
+
+                    ${({ thirdArrow }) => {
+                        if(thirdArrow){
+                            return css`
+                                opacity: 1;
+                            `
+                        }else{
+                            return css`
+                                opacity: 0;
+                            `
+                        }
+                        
+                    }};
+
+                }
+
+            }
+
+            ${({ isLeftThird }) => {
+                if(isLeftThird){
+                    return css`
+                        align-items: flex-end;
+                        grid-area: topBind;
+                   
+                    
+                    `;
+                }else{
+                    return css`
+                        align-items: flex-start;
+                        grid-area: downBind;   
+                    `;
+                } 
+            }};
+            
         }
 
     }
 
     #lastBind{
         display: flex;
-        justify-content: center;
-        div{
+    
+
+        ${({ isLeftLast }) => {
+            if(isLeftLast){
+                return css`
+                    justify-content: flex-end;
+                    grid-area: leftBinding;
+                    
+                
+                `;
+            }else{
+                return css`
+
+                    justify-content: flex-start;
+                    grid-area: rightBinding;
+                    
+                    
+                `;
+            } 
+
+        }};
+        
+        #arrowContainer{
             width: 0.188rem;
             height:100%;
-            background-color: black;
+             
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: black;
+
+            img{
+                -webkit-touch-callout: none;  /* iPhone OS, Safari */
+                -webkit-user-select: none;    /* Chrome, Safari 3 */
+                -khtml-user-select: none;     /* Safari 2 */
+                -moz-user-select: none;       /* Firefox */
+                -ms-user-select: none;        /* IE10+ */
+                user-select: none;  
+                    
+                position: inherit;
+                color: black;
+                padding:0;
+                margin:0;
+                height: 1rem;
+                transform: rotate(-90deg);
+
+                ${({ lastArrow }) => {
+                    if(lastArrow){
+                        return css`
+                            opacity: 1;
+                        `
+                    }else{
+                        return css`
+                            opacity: 0;
+                        `
+                    }
+                        
+                }};
+
+            }
+
         }
+
+        
     }
 
     ${({ firstBind }) => {

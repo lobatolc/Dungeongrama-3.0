@@ -14,7 +14,7 @@ import logo from '../../images/icons/logo.png';
 import wizard from '../../images/developers/wizard.png';
 import thief from '../../images/developers/thief.png';
 import knight from '../../images/developers/knight.png';
-//import { loginDungeongrama } from '../../services/firebaseUse';
+import { loginDungeongrama } from '../../services/firebaseUse';
 
 function Login() {
   const [user, setUser] = useState({ username: '', password: '' });
@@ -29,14 +29,14 @@ function Login() {
     const len = user.password.length;
 
     if (len >= 6) {
-      //loginDungeongrama(user);
+      if(loginDungeongrama(user)){
+        window.location.href = '/stage';
+      }else{
+        window.location.href = '/stage';
+      }
     } else {
       alert('A senha precisa de pelo menos 6 caracteres');
     }
-  }
-
-  function test(){
-    window.location.href = '/stage';
   }
 
   return (
@@ -58,7 +58,7 @@ function Login() {
           <p>Senha</p>
           <LoginInput name="password" onChange={handleUserChange}></LoginInput>
           <p id="register">Não possui uma conta? Cadastre-se!</p>
-          <button onClick={test}>Entrar</button>
+          <button onClick={validateUser.bind(this)}>Entrar</button>
         </BottomContainer>
       </LoginContainer>
       <DevContainer>

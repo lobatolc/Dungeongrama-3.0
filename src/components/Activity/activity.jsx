@@ -1,9 +1,9 @@
 import React, { useEffect} from 'react';
-import { useActivity } from '../../contexts/activitContext';
+
 import { Container } from './activity.Styles';
 
 function Activity({name, isInventory, index}, ...props) {
-  const { activity, setActivity} = useActivity()
+
   const dragEvents = {
     onDragEnter :(e)=>{ e.preventDefault(e)},
     onDragStart:(e)=>{dragStart(e)},

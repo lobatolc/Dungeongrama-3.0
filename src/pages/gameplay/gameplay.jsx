@@ -17,13 +17,14 @@ import Decision from '../../components/Decision/decision';
 import Bar from '../../components/Bar/bar';
 import Bind from '../../components/Bind/bind';
 import Ball from '../../components/Ball/ball';
-import { useActivity } from '../../contexts/activitContext';
+import { useNotifys } from '../../contexts/notifyContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
 import refresh from '../../images/icons/refresh.png';
 import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
+import arrow from '../../images/icons/arrow.png';
 
 
 function Gameplay() {
@@ -31,8 +32,40 @@ function Gameplay() {
   const [construct, setConstruct] = useState([]);
   const [template, setTemplate] = useState([]);
   const [audio, setAudio] = useState(false);
+  const { notifys, setNotifys } = useNotifys();
 
-  const { activity, setActivity} = useActivity()
+  const time = 1000;
+  var hours = 0;
+  var minutes = 0;
+  var seconds = 0;
+  //setInterval(()=>{startTimer()}, 1000)
+
+  function startTimer(){
+
+    seconds++;
+
+    if(seconds == 60){
+      seconds = 0;
+      minutes++;
+    }
+
+    if(minutes == 60){
+      minutes = 0;
+      hours++;
+    }
+
+    var stopwatch = document.getElementById('stopwatch');
+
+    if(stopwatch!=null || stopwatch!=undefined){
+      var format = (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+      stopwatch.innerText = format;
+    }
+  }
+
+
+
+  
+
   const dragActivityContainer = {
     onDragOver :(e)=>{e.preventDefault();},
     onDrop :(e)=>{ moveToContainer(e)},
@@ -62,10 +95,33 @@ function Gameplay() {
       act.style.marginBottom = "0.5rem";
       e.target.appendChild(act);
       containerStyler();
-      
+    }
+  }
+
+  function verifyDiagram(node){
+    var activityContainers = document.getElementsByClassName("actContainers");
+    var error = "";
+    for(let i=0; i<activityContainers.length;i++){
+      console.log(activityContainers[i].children)
+      if(activityContainers[i].children.length == 0){
+        error = "Preencha todos os espaços com atividades!";
+      }
     }
 
-   
+    if(error!=""){
+      setNotifys({
+        type: "warning",
+        log: error,
+        time: Date.now(),
+      })
+    }else{
+      setNotifys({
+        type: "success",
+        log: "Tudo certo, parabéns!",
+        time: Date.now(),
+      })
+    }
+    
   }
 
   function containerStyler(){
@@ -117,14 +173,14 @@ function Gameplay() {
       var countBind = 0;
       var bindARRAY = [
         { 
-          bindDirection: "bottomLeft",
-          description: "Quan daaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          bindDirection: "leftTop",
+          description: "aaa",         
           descPosition:"last",
           isArrow: true,
         },
         { 
-          bindDirection: "topBottom",
-          description: "Quando blablabla2",
+          bindDirection: "leftRight",
+          description: "Quando blablablaaaaaaaaaaaaaa2",
           descPosition:"first",
           isArrow: true,
         },
@@ -152,25 +208,110 @@ function Gameplay() {
            ></ActivityContainer>);
           auxTemplate.push(tile+index)
         }else if(tile == "decision"){
-          auxTiles.push(<DecisionContainer firstBind={true} secondBind={true} thirdBind={true} lastBind={true}>
-            <div id="firstBind"><div/></div>
-            <div id="auxSecondThird"><div id="secondBind"/><div id="decision"><Decision/></div><div id="thirdBind"/></div>
-            <div id="lastBind"><div/></div>
-          </DecisionContainer>)
+          auxTiles.push(
+            <DecisionContainer 
+                firstBind={true} 
+                secondBind={true} 
+                thirdBind={true} 
+                lastBind={true} 
+
+                firstArrow={true}
+                secondArrow={true}
+                thirdArrow={true}
+                lastArrow={true}
+
+                isLeftFirst={false}
+                isLeftSecond={true}
+                isLeftThird={false}
+                isLeftLast={false}>
+
+              <div id="firstBindContainer">
+                <div id="firstBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+              </div>
+              <div id="auxSecondThird">
+                <div id="secondBindContainer">
+                  <div id="secondBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                </div>
+                <div id="decision">
+                  <Decision/>
+                </div>
+                <div id="thirdBindContainer">
+                  <div id="thirdBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                </div>
+              </div>
+
+              <div id="lastBindContainer">
+                <div id="lastBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+              </div>
+            </DecisionContainer>)
           auxTemplate.push(tile+index)
+
         }else if(tile == "bar"){
-          auxTiles.push(<BarContainer firstBind={true} lastBind={true} isVertical={true}>
-            <div id='firstBarBind'/>
-            <Bar isVertical={true}/>
-            <div id='lastBarBind'/>
-          </BarContainer>)
+          auxTiles.push(
+            <BarContainer 
+                firstBind={true} 
+                lastBind={true} 
+
+                firstArrow={true} 
+                lastArrow={true} 
+
+                isLeftFirst={false} 
+                isLeftLast={false} 
+
+                isInitialFirst={false}
+                isInitialLast={false}
+
+                isVertical={true}>
+              <div id="firstBindContainer">
+                <div id='firstBarBind'><div id="arrowContainer"><img src={arrow}/></div></div>
+              </div>
+              <Bar isVertical={true}/>
+              <div id="lastBindContainer">
+                <div id='lastBarBind'><div id="arrowContainer"><img src={arrow}/></div></div>
+              </div>
+            </BarContainer>)
           auxTemplate.push(tile+index)
+
         }else if(tile == "ball"){
-            auxTiles.push(<BallContainer firstBind={true} secondBind={true} thirdBind={true} lastBind={true}>
-                <div id="firstBind"><div/></div>
-                <div id="auxSecondThird"><div id="secondBind"/><div id="ball"><Ball isInitial={false}/></div><div id="thirdBind"/></div>
-                <div id="lastBind"><div/></div>
-              </BallContainer>)
+            auxTiles.push(
+                <BallContainer 
+                  firstBind={true} 
+                  secondBind={true} 
+                  thirdBind={true} 
+                  lastBind={true}
+                  
+                  firstArrow={true}
+                  secondArrow={true}
+                  thirdArrow={true}
+                  lastArrow={true}
+                  
+                  
+                  isLeftFirst={false}
+                  isLeftSecond={true}
+                  isLeftThird={false}
+                  isLeftLast={false}
+                 
+                  
+                  >
+                
+                  <div id="firstBindContainer">
+                    <div id="firstBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                  </div>
+                  <div id="auxSecondThird">
+                    <div id="secondBindContainer">
+                      <div id="secondBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                    </div>
+                    <div id="ball">
+                      <Ball isInitial={false}/>
+                    </div>
+                    <div id="thirdBindContainer">
+                      <div id="thirdBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                    </div>
+                  </div>
+                  <div id="lastBindContainer">
+                    <div id="lastBind"><div id="arrowContainer"><img src={arrow}/></div></div>
+                  </div>
+                </BallContainer>)
             auxTemplate.push(tile+index)
         }else{
           auxTiles.push(<BindContainer area={tile+index}>
@@ -205,7 +346,7 @@ useEffect(()=>{
       
         music.play()
     }else{
-      console.log(localStorage.getItem("id"));
+  
         music.pause()
     }
 },[audio])
@@ -233,15 +374,18 @@ useEffect(()=>{
         </Inventory>
         <Interface>
           <div id='buttonsContainer'>
-            <div className='imgButtons'  onClick={(e)=>{setAudio(!audio)}}>
+            <div className='imgButtons'  
+              onClick={(e)=>{
+                setAudio(!audio);
+               }}>
               <img src={audio? sound : mute} alt=''/>
             </div>
             <div className='imgButtons'  onClick={(e)=>{window.location.href = '/gameplay'}}>
               <img src={refresh} alt=''/>
             </div>
           </div>
-          <p>00:00:00</p>
-          <button><p>Finalizar</p></button>
+          <p id="stopwatch">00:00:00</p>
+          <button onClick={verifyDiagram.bind(this)}><p>Finalizar</p></button>
         </Interface>
         <Construct template={template} id="construct">
           {construct}
