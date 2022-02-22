@@ -33,34 +33,42 @@ function Gameplay() {
   const [template, setTemplate] = useState([]);
   const [audio, setAudio] = useState(false);
   const { notifys, setNotifys } = useNotifys();
+  const [auxTimer, setAuxTimer] = useState();
 
-  const time = 1000;
-  var hours = 0;
-  var minutes = 0;
-  var seconds = 0;
-  setInterval(()=>{startTimer()}, 1000)
 
-  function startTimer(){
 
-    seconds++;
+  useEffect(() => {
+    var hours = 0;
+    var minutes = 0;
+    var seconds = 0;
+    setInterval(()=>{startTimer()}, 1000)
 
-    if(seconds == 60){
-      seconds = 0;
-      minutes++;
+    function startTimer(){
+
+      seconds++;
+  
+      if(seconds == 60){
+        seconds = 0;
+        minutes++;
+      }
+  
+      if(minutes == 60){
+        minutes = 0;
+        hours++;
+      }
+  
+      var stopwatch = document.getElementById('stopwatch');
+  
+      if(stopwatch!=null || stopwatch!=undefined){
+        var format = (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
+        stopwatch.innerText = format;
+      }
     }
+  }, [auxTimer])
 
-    if(minutes == 60){
-      minutes = 0;
-      hours++;
-    }
+  
 
-    var stopwatch = document.getElementById('stopwatch');
-
-    if(stopwatch!=null || stopwatch!=undefined){
-      var format = (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-      stopwatch.innerText = format;
-    }
-  }
+ 
 
 
 
@@ -104,13 +112,13 @@ function Gameplay() {
     for(let i=0; i<activityContainers.length;i++){
       console.log(activityContainers[i].children)
       if(activityContainers[i].children.length == 0){
-        error = "Preencha todos os espaços com atividades!";
+        error = "Preencha todos os espaços com atividade!";
       }
     }
 
     if(error!=""){
       setNotifys({
-        type: "warning",
+        type: "error",
         log: error,
         time: Date.now(),
       })
@@ -333,30 +341,20 @@ function Gameplay() {
 
   },[]);
 
-  
+  useEffect(()=>{
+    const music = document.getElementById("soundTrack");
 
-
-
-  
-
-useEffect(()=>{
-  const music = document.querySelector('audio');
-
-    if(audio){
-      
-        music.play()
-    }else{
-  
-        music.pause()
-    }
-},[audio])
-
-
-
+      if(audio){ 
+          music.play()
+      }else{
+    
+          music.pause()
+      }
+  },[audio])
 
   return( 
     <Container>
-      <audio src={soundtrack} loop/>
+      <audio id="soundTrack" src={soundtrack} loop/>
         <Inventory>
           <Box 
             

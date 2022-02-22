@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, NotifyBox } from "./notify.Styles";
 import { gradient, shadow } from '../../global.Styles';
+import soundError from '../../audio/ui/soundError.wav';
+import soundInfo from '../../audio/ui/soundInfo.wav';
+import soundSuccess from '../../audio/ui/soundSuccess.wav';
 function NotifyModal(props) {
     const [notifyState, setNotifyState] = useState({
         style: {
@@ -15,7 +18,7 @@ function NotifyModal(props) {
     });
     const [lastTimeOpen, setLastTimeOpen] = useState(Date.now());
     const [modalTimer, setModalTimer] = useState();
-
+    
     function warningType(params) {
         let background;
         let border;
@@ -24,21 +27,31 @@ function NotifyModal(props) {
             case 1:
             case "success":
                 background = gradient.greenAlert;
-                border = "0.25rem solid #158434";
+                border = "0.25rem solid #139648";
+                const soundSuc = document.getElementById("soundSuccess");
+                soundSuc.volume = 0.25;
+                soundSuc.play();
                 break;
 
             case 2:
             case "error":
                 background = gradient.redAlert;
                 border = "0.25rem solid #9F0B0B";
+                const soundErr = document.getElementById("soundError");
+                soundErr.volume = 0.25;
+                soundErr.play();
+                
                 break;
-
+            
             case 3:
-            case "warning":
-                background = gradient.yellowAlert;
-                border = "0.25rem solid #AC890B";
+            case "info":
+                background = gradient.blueAlert;
+                border = "0.25rem solid #0257D8";
+                const soundInf = document.getElementById("soundInfo");
+                soundInf.volume = 0.35;
+                soundInf.play();
+                
                 break;
-
             default:
                 background = "#fff";
         }
@@ -88,8 +101,13 @@ function NotifyModal(props) {
         CloseModal();
     }
 
+
+
     return (
         <Container className="notifyContainer">
+            <audio id="soundError" src={soundError}/>
+            <audio id="soundSuccess" src={soundSuccess}/>
+            <audio id="soundInfo" src={soundInfo}/>
             <NotifyBox
                 notifyHeight={"50px"}
                 notifyWidth={"100px"}

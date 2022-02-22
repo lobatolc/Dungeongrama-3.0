@@ -119,6 +119,7 @@ export const DevContainer = styled.div`
     border-radius: 0.75rem;
     img{
         height: 17.5rem;
+        cursor: pointer;
     }
     #wizard{
         transform: scaleX(-1);
