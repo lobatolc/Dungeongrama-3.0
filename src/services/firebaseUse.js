@@ -5,29 +5,28 @@ import {
 } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 
-export function loginDungeongrama(user) {
-  signInWithEmailAndPassword(
-    auth,
-    `${user.username}@dungeongrama.com`,
-    user.password
-  )
+export async function loginDungeongrama({ username, password }) {
+  username = `${username}@dungeongrama.com`;
+  const logged = await signInWithEmailAndPassword(auth, username, password)
     .then((userCredential) => {
-      alert('logged');
-      return true;
+      window.localStorage.setItem('user', userCredential.user.uid);
+
+      return [true, userCredential.user.uid];
     })
     .catch((error) => {
       const errorCode = error.code;
 
       filterError(errorCode);
-
-      return false;
+      return [false];
     });
+
+  return logged;
 }
 
 export function logOutDungeongrama() {
   signOut(auth)
     .then(() => {
-      // success logout
+      window.localStorage.setItem('user', '');
       return true;
     })
     .catch((error) => {
@@ -62,13 +61,14 @@ export function createUser(user) {
 function filterError(errorCode) {
   [, errorCode] = errorCode.split('/');
   switch (errorCode) {
-    case 'wrong-password' || 'user-not-found':
+    case 'wrong-password':
+    case 'user-not-found':
       alert('user or password is wrong');
       break;
     case 'email-already-in-use':
-      alert('email already in use');
+      alert('username already in use');
       break;
     default:
-      alert('unknown error');
+      alert(errorCode);
   }
 }
