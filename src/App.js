@@ -5,15 +5,18 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import GlobalStyle from './global.Styles';
 import NotifyProvider from './contexts/notifyContext';
+import { UserCredentialProvider } from './contexts/userContext';
 function App() {
   return (
     <>
-        <NotifyProvider> 
+      <UserCredentialProvider>
+        <NotifyProvider>
           <Router>
             <Routes />
           </Router>
         </NotifyProvider>
-      <GlobalStyle/>
+      </UserCredentialProvider>
+      <GlobalStyle />
       <GlobalStyle />
     </>
   );

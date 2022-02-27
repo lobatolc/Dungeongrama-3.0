@@ -18,23 +18,29 @@ import ajax from '../../images/developers/ajax.jpg';
 import lobato from '../../images/developers/lucas.jpg';
 import larissa from '../../images/developers/larissa.jpg';
 
-import { loginDungeongrama } from '../../services/firebaseUse';
+import {
+  loginDungeongrama,
+  logOutDungeongrama,
+} from '../../services/firebaseUse';
+import { useUserCredential } from '../../contexts/userContext';
+import { Link } from 'react-router-dom';
 
 function Login() {
-  const [user, setUser] = useState({ username: '', password: '' });
-  const [developerState, setDeveloperState] = useState("");
+  const [user, setUser] = useState({ username: 'admin', password: '123456' });
+  const [developerState, setDeveloperState] = useState('');
+  const { userCredential, setUserCredential } = useUserCredential();
   const [developerInfo, setDeveloperInfo] = useState({
-    informations:{
-      dev:"", 
-      nameDev:"", 
-      func:"", 
-      links:[], 
-      phrase:""
+    informations: {
+      dev: '',
+      nameDev: '',
+      func: '',
+      links: [],
+      phrase: '',
     },
-    position:{
-      top:0,
-      bottom:0
-    }
+    position: {
+      top: 0,
+      bottom: 0,
+    },
   });
 
   function handleUserChange(event) {
@@ -43,26 +49,38 @@ function Login() {
     setUser({ ...user, [name]: value });
   }
 
-  function validateUser() {
+  useEffect(() => {
+    logOutDungeongrama();
+    setUserCredential('');
+  });
+
+  async function validateUser(event) {
     const len = user.password.length;
 
     if (len >= 6) {
-      if(loginDungeongrama(user)){
-        window.location.href = '/stage';
-      }else{
-        window.location.href = '/stage';
+      const [logged, credential] = await loginDungeongrama(user);
+      if (logged) {
+        setUserCredential(credential);
+        console.log(window.localStorage.getItem('user'));
+        console.log(userCredential);
+        // window.location.href = '/stage';
+      } else {
+        event.preventDefault();
       }
     } else {
+      event.preventDefault();
       alert('A senha precisa de pelo menos 6 caracteres');
     }
   }
 
   return (
     <>
-      {developerState != "" ? 
-        <CardDeveloper dev={developerState} setDev={setDeveloperState}>
-
-      </CardDeveloper> : null}
+      {developerState != '' ? (
+        <CardDeveloper
+          dev={developerState}
+          setDev={setDeveloperState}
+        ></CardDeveloper>
+      ) : null}
       <Container>
         <InfoContainer>
           <h2>
@@ -77,40 +95,73 @@ function Login() {
           </TopContainer>
           <BottomContainer>
             <p>Usuário</p>
-            <LoginInput name="username" onChange={handleUserChange}></LoginInput>
+            <LoginInput
+              name="username"
+              onChange={handleUserChange}
+            ></LoginInput>
             <p>Senha</p>
-            <LoginInput name="password" type="password" onChange={handleUserChange}></LoginInput>
+            <LoginInput
+              name="password"
+              type="password"
+              onChange={handleUserChange}
+            ></LoginInput>
             <p id="register">Não possui uma conta? Cadastre-se!</p>
-            <button onClick={validateUser.bind(this)}>Entrar</button>
+            <button onClick={validateUser}>
+              <Link to="/stage">Entrar!</Link>
+            </button>
           </BottomContainer>
         </LoginContainer>
         <DevContainer>
-
-          <img src={wizard} id="wizard" 
-            onClick={(e)=>{setDeveloperState({
-              name:"Ajax Lima", 
-              image:ajax, 
-              func: "Back-End", 
-              links:['https://www.linkedin.com/in/ajaxlima/', 'https://github.com/Chamoouske'],
-              phrase: "Com grandes linhas de código vêm grandes bugs."})}} 
-         />
-
-          <img src={knight} id="knight" 
-            onClick={(e)=>{setDeveloperState({
-              name:"Larissa Nascimento", 
-              image:larissa, 
-              func: "Analista", 
-              links:['https://www.linkedin.com/in/larissa-nascimento-380a53226/', '#'],
-              phrase: "Professor, esse site merece uma nota 10."})}}
+          <img
+            src={wizard}
+            id="wizard"
+            onClick={(e) => {
+              setDeveloperState({
+                name: 'Ajax Lima',
+                image: ajax,
+                func: 'Back-End',
+                links: [
+                  'https://www.linkedin.com/in/ajaxlima/',
+                  'https://github.com/Chamoouske',
+                ],
+                phrase: 'Com grandes linhas de código vêm grandes bugs.',
+              });
+            }}
           />
-            
-          <img src={thief}  id="thief" 
-            onClick={(e)=>{setDeveloperState({
-              name:"Lucas Cordeiro", image:lobato, 
-              func: "Front-End",
-              links:['https://www.linkedin.com/in/lucas-lobato/', 'https://github.com/lobatolc'],
-              phrase: "Comecei este site com 15 anos. Amanhã faço 23."})}}
-           />
+
+          <img
+            src={knight}
+            id="knight"
+            onClick={(e) => {
+              setDeveloperState({
+                name: 'Larissa Nascimento',
+                image: larissa,
+                func: 'Analista',
+                links: [
+                  'https://www.linkedin.com/in/larissa-nascimento-380a53226/',
+                  '#',
+                ],
+                phrase: 'Professor, esse site merece uma nota 10.',
+              });
+            }}
+          />
+
+          <img
+            src={thief}
+            id="thief"
+            onClick={(e) => {
+              setDeveloperState({
+                name: 'Lucas Cordeiro',
+                image: lobato,
+                func: 'Front-End',
+                links: [
+                  'https://www.linkedin.com/in/lucas-lobato/',
+                  'https://github.com/lobatolc',
+                ],
+                phrase: 'Comecei este site com 15 anos. Amanhã faço 23.',
+              });
+            }}
+          />
         </DevContainer>
       </Container>
     </>
