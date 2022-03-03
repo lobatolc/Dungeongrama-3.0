@@ -11,13 +11,13 @@ export async function loginDungeongrama({ username, password }) {
     .then((userCredential) => {
       window.localStorage.setItem('user', userCredential.user.uid);
 
-      return [true, userCredential.user.uid];
+      return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
       const errorCode = error.code;
 
-      filterError(errorCode);
-      return [false];
+      
+      return [false, null, filterError(errorCode)];
     });
 
   return logged;
@@ -63,12 +63,10 @@ function filterError(errorCode) {
   switch (errorCode) {
     case 'wrong-password':
     case 'user-not-found':
-      alert('user or password is wrong');
-      break;
+      return 'O usuário ou senha está errado';
     case 'email-already-in-use':
-      alert('username already in use');
-      break;
+      return 'O usuário já existe';
     default:
-      alert(errorCode);
+      return errorCode;
   }
 }

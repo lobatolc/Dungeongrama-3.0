@@ -17,6 +17,7 @@ import knight from '../../images/developers/knight.png';
 import ajax from '../../images/developers/ajax.jpg';
 import lobato from '../../images/developers/lucas.jpg';
 import larissa from '../../images/developers/larissa.jpg';
+import { useNotifys } from '../../contexts/notifyContext';
 
 import {
   loginDungeongrama,
@@ -29,6 +30,8 @@ function Login() {
   const [user, setUser] = useState({ username: 'admin', password: '123456' });
   const [developerState, setDeveloperState] = useState('');
   const { userCredential, setUserCredential } = useUserCredential();
+  const { notifys, setNotifys } = useNotifys();
+
   const [developerInfo, setDeveloperInfo] = useState({
     informations: {
       dev: '',
@@ -58,18 +61,33 @@ function Login() {
     const len = user.password.length;
 
     if (len >= 6) {
-      const [logged, credential] = await loginDungeongrama(user);
+      const [logged, credential, error] = await loginDungeongrama(user);
       if (logged) {
         setUserCredential(credential);
         console.log(window.localStorage.getItem('user'));
         console.log(userCredential);
+        setNotifys({
+          type: "success",
+          log: "Login efetuado com sucesso!",
+          time: Date.now(),
+        })
         // window.location.href = '/stage';
-      } else {
+      } else if(error!=null){
+        setNotifys({
+          type: "error",
+          log: "A senha precisa de pelo menos 6 caracteres",
+          time: Date.now(),
+        })
+      }else {
         event.preventDefault();
       }
     } else {
       event.preventDefault();
-      alert('A senha precisa de pelo menos 6 caracteres');
+      setNotifys({
+        type: "error",
+        log: "A senha precisa de pelo menos 6 caracteres",
+        time: Date.now(),
+      })
     }
   }
 
