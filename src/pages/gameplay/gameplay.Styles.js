@@ -21,11 +21,17 @@ export const Inventory = styled.div`
     grid-area: inventory;
     #inventoryBox{
         height: 100%;
+        max-height: 45rem;
         overflow-y: auto;
         ::-webkit-scrollbar {
             width: 0.25rem;
-            background: ${colors.purpleAscent}50;
+            background: rgba(0,0,0,0.8);
+            
            
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background: ${colors.purpleAscent}50;
         }
     }
 `;
@@ -125,6 +131,17 @@ export const BindContainer = styled.div`
     height: 100%;
     box-sizing: border-box;
   
+    ${({ h, marginB }) => {
+        if(h!=null && h!=undefined){
+            return css`
+                height: ${h};
+                margin-bottom: ${marginB};
+                cursor: grab;
+
+            ` 
+        }
+            
+    }}
     
     ${({ area }) => {
       return css`
@@ -160,6 +177,18 @@ export const DecisionContainer = styled.div`
     width:100%;
     display: grid;
     grid-template-rows: 1fr 0.2fr 1fr;
+
+    ${({ h, marginB }) => {
+        if(h!=null && h!=undefined){
+            return css`
+                height: ${h};
+                margin-bottom: ${marginB};
+                cursor: grab;
+
+            ` 
+        }
+            
+    }}
 
     #firstBindContainer, #lastBindContainer{
         display: grid;
@@ -545,6 +574,17 @@ export const BarContainer = styled.div`
     height: 100%;
     display: grid;
     
+    ${({ h, marginB }) => {
+        if(h!=null && h!=undefined){
+            return css`
+                height: ${h};
+                margin-bottom: ${marginB};
+                cursor: grab;
+
+            ` 
+        }
+            
+    }}
 
     ${({ isVertical }) => {
         if(isVertical){
@@ -923,6 +963,18 @@ export const BallContainer = styled.div`
     display: grid;
     grid-template-rows: 1fr 0.1fr 1fr;
 
+    ${({ h, marginB }) => {
+        if(h!=null && h!=undefined){
+            return css`
+                height: ${h};
+                margin-bottom: ${marginB};
+                cursor: grab;
+
+            ` 
+        }
+            
+    }}
+    
     #firstBindContainer, #lastBindContainer{
         display: grid;
         grid-template-columns: 1fr 1fr;

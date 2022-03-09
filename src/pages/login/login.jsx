@@ -27,7 +27,7 @@ import { useUserCredential } from '../../contexts/userContext';
 import { Link } from 'react-router-dom';
 
 function Login() {
-  const [user, setUser] = useState({ username: 'admin', password: '123456' });
+  const [user, setUser] = useState({ username: '', password: '' });
   const [developerState, setDeveloperState] = useState('');
   const { userCredential, setUserCredential } = useUserCredential();
   const { notifys, setNotifys } = useNotifys();
@@ -58,6 +58,7 @@ function Login() {
   });
 
   async function validateUser(event) {
+ 
     const len = user.password.length;
 
     if (len >= 6) {
@@ -71,11 +72,13 @@ function Login() {
           log: "Login efetuado com sucesso!",
           time: Date.now(),
         })
+
         // window.location.href = '/stage';
       } else if(error!=null){
+        event.preventDefault();
         setNotifys({
           type: "error",
-          log: "A senha precisa de pelo menos 6 caracteres",
+          log: error,
           time: Date.now(),
         })
       }else {
@@ -102,8 +105,7 @@ function Login() {
       <Container>
         <InfoContainer>
           <h2>
-            Um jeito criativo de jogar RPG e construir diagramas de atividade ao
-            mesmo tempo.
+            Um jeito criativo de construir diagramas de atividade e jogar RPG ao mesmo tempo.
           </h2>
         </InfoContainer>
         <LoginContainer>

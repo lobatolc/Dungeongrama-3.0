@@ -49,11 +49,15 @@ function Stage() {
       <Container>
         <h1 id="title">Fases</h1>
         <p id="text">
-          Selecione uma fase para jogar o Dungeongrama. As fases são diferentes
-          entre si, cada uma possui um problema a ser resolvido através do
-          diagrama de atividade que você irá montar. Para concluir a fase, basta
-          posicionar cada atividade com coesão. Tenha em mente que a cada
-          partida, seu ranque na classificação dos jogadores pode ser alterado.
+          Você é Adelina Shatterstaff, exímia lutadora e ex comandante militar. 
+          Ainda lhe falta ar para pensar em tudo que aconteceu nos últimos dias, 
+          mas sua legião de homens fracassou na principal missão de expansão do seu reino contra Alphenia, 
+          o império adversário. Exilada do seu antigo posto, 
+          vagando pela circunvizinhança você se depara com uma cidade devastada, mas sem vestígios de ataque inimigo. 
+          Contudo, haviam runas mal escritas entre as ruas e os pilares das casas que ainda resistiam. 
+          Você as reconhece do campo de batalha em que foi derrotada e sua cabeça começa a doer novamente ao pensar no que aconteceu. 
+          Guerreiros leais matando seus companheiros, homens habilidosos incapazes de levantar a espada contra o inimigo 
+          e...meio exército sumindo? Ainda confusa, você se retira dali em busca de respostas ou, talvez, em busca de alguém.
         </p>
         <div id="boxes">
           <Box

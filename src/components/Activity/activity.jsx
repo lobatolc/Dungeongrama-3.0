@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 
 import { Container } from './activity.Styles';
 
-function Activity({name, isInventory, index}, ...props) {
+function Activity({name, isInventory, drag}, ...props) {
 
   const dragEvents = {
     onDragEnter :(e)=>{ e.preventDefault(e)},
@@ -23,7 +23,7 @@ function Activity({name, isInventory, index}, ...props) {
       id={name} 
       className={"act"} 
       isInventory={isInventory} 
-      draggable={true} 
+      draggable={drag} 
       title="Atividade: representa uma determinada tarefa realizada pelo usuário ou pelo software.">
         <p>{name}</p>
     </Container>

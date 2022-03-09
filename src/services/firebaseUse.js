@@ -27,14 +27,13 @@ export function logOutDungeongrama() {
   signOut(auth)
     .then(() => {
       window.localStorage.setItem('user', '');
-      return true;
+      console.log('then')
+      return null;
     })
     .catch((error) => {
       const errorCode = error.code;
-
-      filterError(errorCode);
-
-      return false;
+      console.log('catch')
+      return filterError(errorCode);
     });
 }
 

@@ -3,10 +3,25 @@ import { Container } from './header.Styles';
 import logo from '../../images/icons/logo.png';
 import { logOutDungeongrama } from '../../services/firebaseUse';
 import { Link } from 'react-router-dom';
+import { useNotifys } from '../../contexts/notifyContext';
 
 function Header() {
+  const { notifys, setNotifys } = useNotifys();
   function logOut() {
-    logOutDungeongrama();
+    const error = logOutDungeongrama();
+    if(error == null){
+      setNotifys({
+        type: "info",
+        log: "Obrigado pelo tempo dedicado. Até a próxima!",
+        time: Date.now(),
+      })
+    }else{
+      setNotifys({
+        type: "error",
+        log: error,
+        time: Date.now(),
+      })
+    }
   }
 
   return (

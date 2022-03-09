@@ -117,7 +117,7 @@ function Bind({bindType, description, descPosition, isArrow}) {
                     
                     auxBind.push(<div/>)
                     auxBind.push(<div className="bindContainer">
-                        <div id="bind"><img id="bindArrow" src={arrow}/></div>
+                        <div id="bind"><img id="bindArrow" draggable="false" src={arrow}/></div>
                         <div id="bindSecondContainer"><div id="bindSecond"></div></div>
                     </div>);
                     
@@ -125,7 +125,7 @@ function Bind({bindType, description, descPosition, isArrow}) {
                 break;
             }
         }else{
-            auxBind.push(<div id="bind"><img id="bindArrow" src={arrow}/></div>);
+            auxBind.push(<div id="bind"><img id="bindArrow" draggable="false" src={arrow}/></div>);
         }
 
         setBind(auxBind);
