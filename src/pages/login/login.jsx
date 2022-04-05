@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   InfoContainer,
@@ -9,7 +9,6 @@ import {
   BottomContainer,
 } from './login.Styles';
 import CardDeveloper from '../../components/CardDeveloper/cardDeveloper';
-import Popup from '../../components/Popup/popup';
 import logo from '../../images/icons/logo.png';
 import wizard from '../../images/developers/wizard.png';
 import thief from '../../images/developers/thief.png';
@@ -19,15 +18,16 @@ import lobato from '../../images/developers/lucas.jpg';
 import larissa from '../../images/developers/larissa.jpg';
 import { useNotifys } from '../../contexts/notifyContext';
 
-import {
-  loginDungeongrama,
-  logOutDungeongrama,
-} from '../../services/firebaseUse';
+import { loginDungeongrama } from '../../services/firebaseUse';
 import { useUserCredential } from '../../contexts/userContext';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function Login() {
-  const [user, setUser] = useState({ username: '', password: '' });
+  const [user, setUser] = useState({
+    username: '',
+    password: '',
+    logged: false,
+  });
   const [developerState, setDeveloperState] = useState('');
   const { userCredential, setUserCredential } = useUserCredential();
   const { notifys, setNotifys } = useNotifys();
@@ -52,50 +52,43 @@ function Login() {
     setUser({ ...user, [name]: value });
   }
 
-  useEffect(() => {
-    logOutDungeongrama();
-    setUserCredential('');
-  });
-
   async function validateUser(event) {
- 
     const len = user.password.length;
+    event.preventDefault();
 
     if (len >= 6) {
-      const [logged, credential, error] = await loginDungeongrama(user);
-      if (logged) {
-        setUserCredential(credential);
-        console.log(window.localStorage.getItem('user'));
-        console.log(userCredential);
-        setNotifys({
-          type: "success",
-          log: "Login efetuado com sucesso!",
-          time: Date.now(),
-        })
+      await loginDungeongrama(user).then((loginReturns) => {
+        const [logged, credential, error] = loginReturns;
+        if (logged) {
+          setUserCredential(credential);
 
-        // window.location.href = '/stage';
-      } else if(error!=null){
-        event.preventDefault();
-        setNotifys({
-          type: "error",
-          log: error,
-          time: Date.now(),
-        })
-      }else {
-        event.preventDefault();
-      }
+          setNotifys({
+            type: 'success',
+            log: 'Login efetuado com sucesso!',
+            time: Date.now(),
+          });
+          setUser({ ...user, logged });
+        } else {
+          setNotifys({
+            type: 'error',
+            log: error,
+            time: Date.now(),
+          });
+        }
+      });
     } else {
       event.preventDefault();
       setNotifys({
-        type: "error",
-        log: "A senha precisa de pelo menos 6 caracteres",
+        type: 'error',
+        log: 'A senha precisa de pelo menos 6 caracteres',
         time: Date.now(),
-      })
+      });
     }
   }
 
   return (
     <>
+      {user.logged ? <Redirect to="/stage" /> : null}
       {developerState != '' ? (
         <CardDeveloper
           dev={developerState}
@@ -105,7 +98,8 @@ function Login() {
       <Container>
         <InfoContainer>
           <h2>
-            Um jeito criativo de construir diagramas de atividade e jogar RPG ao mesmo tempo.
+            Um jeito criativo de construir diagramas de atividade e jogar RPG ao
+            mesmo tempo.
           </h2>
         </InfoContainer>
         <LoginContainer>
@@ -126,9 +120,7 @@ function Login() {
               onChange={handleUserChange}
             ></LoginInput>
             <p id="register">Não possui uma conta? Cadastre-se!</p>
-            <button onClick={validateUser}>
-              <Link to="/stage">Entrar!</Link>
-            </button>
+            <button onClick={validateUser}>Entrar!</button>
           </BottomContainer>
         </LoginContainer>
         <DevContainer>
