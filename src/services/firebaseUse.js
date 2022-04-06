@@ -1,22 +1,23 @@
+/* eslint-disable no-unused-expressions */
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { child, get, ref, set } from 'firebase/database';
+import { auth, db } from './firebaseConfig';
 
 export async function loginDungeongrama({ username, password }) {
   username = `${username}@dungeongrama.com`;
   const logged = await signInWithEmailAndPassword(auth, username, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       window.localStorage.setItem('user', userCredential.user.uid);
-
+      
       return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
       const errorCode = error.code;
 
-      
       return [false, null, filterError(errorCode)];
     });
 
@@ -27,37 +28,70 @@ export function logOutDungeongrama() {
   signOut(auth)
     .then(() => {
       window.localStorage.setItem('user', '');
-      console.log('then')
+
       return null;
     })
     .catch((error) => {
       const errorCode = error.code;
-      console.log('catch')
+
       return filterError(errorCode);
     });
 }
 
-export function createUser(user) {
-  createUserWithEmailAndPassword(
+export async function createUserFB(user) {
+  const created = await createUserWithEmailAndPassword(
     auth,
     `${user.username}@dungeongrama.com`,
     user.password
   )
     .then((userCredential) => {
-      alert('created user');
       loginDungeongrama(user);
-      return true;
+      createUserInDB(userCredential.user)
+      return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
       const errorCode = error.code;
 
-      filterError(errorCode);
-
-      return false;
+      return [false, null, filterError(errorCode)];
     });
+
+  return created;
 }
 
-function filterError(errorCode) {
+function createUserInDB(user) {
+  const [username] = user.reloadUserInfo.email.split('@')
+  console.log(username)
+  set(ref(db, `users/${user.uid}/${username}`), {
+    username: username,
+    avgTime: 0,
+    matches: 0,
+    score: 0,
+  }).catch((error) => {
+    const errorCode = error.code;
+    console.log(filterError(errorCode));
+  });
+}
+
+export async function readUser(userId = '') {
+  const data = await get(child(ref(db), `users/${userId}`))
+    .then((snapshot) => {
+      const items = [];
+      if (snapshot.exists()) {
+        snapshot.forEach((user) => {
+          items.push(user.val());
+        });
+      } else {
+        return [];
+      }
+      return items;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return data;
+}
+
+function filterError(errorCode = '/Erro Desconhecido') {
   [, errorCode] = errorCode.split('/');
   switch (errorCode) {
     case 'wrong-password':
