@@ -18,7 +18,7 @@ import lobato from '../../images/developers/lucas.jpg';
 import larissa from '../../images/developers/larissa.jpg';
 import { useNotifys } from '../../contexts/notifyContext';
 
-import { loginDungeongrama } from '../../services/firebaseUse';
+import { loginDungeongrama, createUserFB, readUser } from '../../services/firebaseUse';
 import { useUserCredential } from '../../contexts/userContext';
 import { Redirect } from 'react-router-dom';
 
@@ -52,16 +52,42 @@ function Login() {
     setUser({ ...user, [name]: value });
   }
 
+  async function createUser(event) {
+    const len = user.password.length;
+
+    if (len >= 6) {
+      const [created, , error] = await createUserFB(user);
+      if (created) {
+        setNotifys({
+          type: 'success',
+          log: 'Usuário criado com sucesso!',
+          time: Date.now(),
+        });
+      } else {
+        setNotifys({
+          type: 'error',
+          log: error,
+          time: Date.now(),
+        });
+      }
+    } else {
+      setNotifys({
+        type: 'error',
+        log: 'A senha precisa de pelo menos 6 caracteres',
+        time: Date.now(),
+      });
+    }
+  }
+
   async function validateUser(event) {
     const len = user.password.length;
-    event.preventDefault();
 
     if (len >= 6) {
       await loginDungeongrama(user).then((loginReturns) => {
         const [logged, credential, error] = loginReturns;
         if (logged) {
           setUserCredential(credential);
-
+          
           setNotifys({
             type: 'success',
             log: 'Login efetuado com sucesso!',
@@ -77,13 +103,17 @@ function Login() {
         }
       });
     } else {
-      event.preventDefault();
       setNotifys({
         type: 'error',
         log: 'A senha precisa de pelo menos 6 caracteres',
         time: Date.now(),
       });
     }
+  }
+  async function read(){
+    const data = (await readUser())
+
+    data.map(user => {console.log(user)})
   }
 
   return (
@@ -104,7 +134,7 @@ function Login() {
         </InfoContainer>
         <LoginContainer>
           <TopContainer>
-            <img src={logo} alt="" />
+            <img src={logo} alt="" onClick={read} />
             <h1>Dungeongrama</h1>
           </TopContainer>
           <BottomContainer>
@@ -119,7 +149,9 @@ function Login() {
               type="password"
               onChange={handleUserChange}
             ></LoginInput>
-            <p id="register">Não possui uma conta? Cadastre-se!</p>
+            <p id="register" onClick={createUser}>
+              Não possui uma conta? Cadastre-se!
+            </p>
             <button onClick={validateUser}>Entrar!</button>
           </BottomContainer>
         </LoginContainer>
