@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -6,138 +6,58 @@ import Header from '../components/Header/header';
 import Login from '../pages/login/login';
 import Stage from '../pages/stage/stage';
 import Ranking from '../pages/ranking/ranking';
-import Gameplay from "../pages/gameplay/gameplay";
-import NotifyModal from "../components/Notify/notify";
-import { useNotifys } from "../contexts/notifyContext";
-export default function Routes(){
-    const { notifys, setNotifys } = useNotifys();
-    return(
-            <>
-             <NotifyModal {...notifys}/>
-              <Switch>
-                  <Route
-                      path="/"
-                      page_name="login"
-                      privateRoute={true}
-                      exact
-                      component={Login}
-                  />
-                  <ValidatedRoute
-                      path="/stage"
-                      page_name="stage"
-                      privateRoute={true}
-                      exact
-                      component={Stage}
-                  />
-                  <ValidatedRoute
-                      path="/ranking"
-                      page_name="ranking"
-                      privateRoute={true}
-                      exact
-                      component={Ranking}
-                  />
-                  <ValidatedRoute
-                      path="/gameplay"
-                      page_name="gameplay"
-                      privateRoute={true}
-                      exact
-                      component={Gameplay}
-                  />
+import Gameplay from '../pages/gameplay/gameplay';
+import NotifyModal from '../components/Notify/notify';
+import { useNotifys } from '../contexts/notifyContext';
+export default function Routes() {
+  const { notifys, setNotifys } = useNotifys();
+  return (
+    <>
+      <NotifyModal {...notifys} />
+      <Switch>
+        <Route
+          path="/"
+          page_name="login"
+          privateRoute={true}
+          exact
+          component={Login}
+        />
+        <ValidatedRoute
+          path="/stage"
+          page_name="stage"
+          privateRoute={true}
+          exact
+          component={Stage}
+        />
+        <ValidatedRoute
+          path="/ranking"
+          page_name="ranking"
+          privateRoute={true}
+          exact
+          component={Ranking}
+        />
+        <ValidatedRoute
+          path="/gameplay"
+          page_name="gameplay"
+          privateRoute={true}
+          exact
+          component={Gameplay}
+        />
+      </Switch>
+    </>
+  );
+}
 
-              </Switch>
-              </>
-)};
-
-function ValidatedRoute({ Component, privateRoute, ...restProps }) {
-    const isValid = true;
-    const [routeHTML, setRouteHTML] = useState('');
-    useEffect(() => {
-      async function CheckRoute() {
-        setRouteHTML(<Login />);
-        switch (isValid) {
-          case null:
-          case undefined:
-            setRouteHTML(<Login />);
-            break;
-  
-          case false:
-            setRouteHTML(<Redirect push to="/login" />);
-            break;
-  
-          case true:
-            if (privateRoute) {
-              setRouteHTML(
-                <ValidatedWithPermissionsRoute
-                  component={Component}
-                  {...restProps}
-                ></ValidatedWithPermissionsRoute>,
-              );
-            } else {
-              setRouteHTML(
-                <Route
-                  {...restProps}
-                  render={(props) => (
-                    <div className="pageManager">
-                      <Header {...props} />
-                      <Component {...props} />
-                    </div>
-                  )}
-                ></Route>,
-              );
-            }
-            break;
-          default:
-            setRouteHTML(<Login />);
-            break;
-        }
-      }
-  
-      CheckRoute();
-    }, [isValid]);
-    return routeHTML;
-  }
-  
-  function ValidatedWithPermissionsRoute({
-    component: Component,
-    page_name,
-    page_group,
-    ...restProps
-  }) {
-    const permissions = true;
-    const [routeHTML, setRouteHTML] = useState('');
-  
-    useEffect(() => {
-      async function CheckPermissions() {
-        switch (permissions) {
-          case null:
-          case undefined:
-            setRouteHTML(<Login />);
-            break;
-  
-          default:
-            setRouteHTML(
-              <Route
-                {...restProps}
-                render={(props) => (
-                  <>
-                    <div className="pageManager">
-                      <Header permissionsLevel={permissions} {...restProps} />
-                      <Component
-                        page_name={page_name}
-                        page_group={page_group}
-                        {...restProps}
-                      />
-                    </div>
-                  </>
-                )}
-              ></Route>,
-            );
-            break;
-        }
-      }
-  
-      CheckPermissions();
-    }, [permissions]);
-  
-    return routeHTML;
-  }
+function ValidatedRoute({ privateRoute, component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <div className="pageManager">
+          <Header {...props} />
+          <Component {...props} />
+        </div>
+      )}
+    ></Route>
+  );
+}
