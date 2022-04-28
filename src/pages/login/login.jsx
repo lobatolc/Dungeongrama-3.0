@@ -110,11 +110,6 @@ function Login() {
       });
     }
   }
-  async function read(){
-    const data = (await readUser())
-
-    data.map(user => {console.log(user)})
-  }
 
   return (
     <>
@@ -134,7 +129,7 @@ function Login() {
         </InfoContainer>
         <LoginContainer>
           <TopContainer>
-            <img src={logo} alt="" onClick={read} />
+            <img src={logo} alt="" />
             <h1>Dungeongrama</h1>
           </TopContainer>
           <BottomContainer>
