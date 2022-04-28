@@ -12,7 +12,7 @@ export async function loginDungeongrama({ username, password }) {
   const logged = await signInWithEmailAndPassword(auth, username, password)
     .then(async (userCredential) => {
       window.localStorage.setItem('user', userCredential.user.uid);
-      
+
       return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
@@ -46,7 +46,7 @@ export async function createUserFB(user) {
   )
     .then((userCredential) => {
       loginDungeongrama(user);
-      createUserInDB(userCredential.user)
+      createUserInDB(userCredential.user);
       return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
@@ -59,9 +59,8 @@ export async function createUserFB(user) {
 }
 
 function createUserInDB(user) {
-  const [username] = user.reloadUserInfo.email.split('@')
-  console.log(username)
-  set(ref(db, `users/${user.uid}/${username}`), {
+  const [username] = user.reloadUserInfo.email.split('@');
+  set(ref(db, `users/${user.uid}`), {
     username: username,
     avgTime: 0,
     matches: 0,
@@ -72,7 +71,7 @@ function createUserInDB(user) {
   });
 }
 
-export async function readUser(userId = '') {
+export async function getUserInRealtimeDatabase(userId = '') {
   const data = await get(child(ref(db), `users/${userId}`))
     .then((snapshot) => {
       const items = [];
@@ -88,7 +87,11 @@ export async function readUser(userId = '') {
     .catch((error) => {
       console.error(error);
     });
-  return data;
+  return sortDataUsers(data);
+}
+
+function sortDataUsers(data) {
+  return data.sort((a, b) => b.score - a.score);
 }
 
 function filterError(errorCode = '/Erro Desconhecido') {
