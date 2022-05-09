@@ -74,7 +74,6 @@ export const Body = styled.div`
         margin-top: 0.5rem;
     }
     button{
-        background-color: red;
         width: fit-content;
         height:  ${button.size.big};
 
@@ -88,8 +87,12 @@ export const Body = styled.div`
         color: ${colors.white};
         background-image:  ${gradient.orangeLight};
         float: right;
-        box-shadow: ${shadow.small};
-        
+        box-shadow: ${shadow.small};  
+    }
+
+    #cancelButton{
+
+        margin-right: 1rem;
     }
 
     ${({ width, height, bgColor, color, border }) => {

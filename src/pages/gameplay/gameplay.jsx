@@ -18,6 +18,7 @@ import Bar from '../../components/Bar/bar';
 import Bind from '../../components/Bind/bind';
 import Ball from '../../components/Ball/ball';
 import { useNotifys } from '../../contexts/notifyContext';
+import { useStage } from '../../contexts/stageContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
 import refresh from '../../images/icons/refresh.png';
@@ -25,7 +26,7 @@ import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
-
+import {Tiles} from '../../models/models';
 
 function Gameplay() {
   const [inventory, setInventory] = useState([]);
@@ -33,9 +34,8 @@ function Gameplay() {
   const [template, setTemplate] = useState([]);
   const [audio, setAudio] = useState(false);
   const { notifys, setNotifys } = useNotifys();
+  const { stageContext, setStageContext } = useStage();
   const [auxTimer, setAuxTimer] = useState();
-
-
 
   useEffect(() => {
     var hours = 0;
@@ -423,18 +423,7 @@ function Gameplay() {
         "void", "void", "void", "void", "void","void","void",
       ] */
 
-      const tiles = [
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","activity","bind","activity","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        "void","void","void","void","void","void","void",
-        
-      ]
+      const tiles = Tiles(stageContext)
 
       var auxTiles = []
       var auxTemplate = []

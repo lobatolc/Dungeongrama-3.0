@@ -40,7 +40,6 @@ function Box(
         border={border}
         bgColor={bgColor}
         color={color}
-        border={border}
       >
         {children}
       </Body>

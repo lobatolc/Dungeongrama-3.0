@@ -5,59 +5,111 @@ import Popup from '../../components/Popup/popup';
 import Box from '../../components/Box/box';
 import { border, colors } from '../../global.Styles';
 import { useValidateUser } from '../../contexts/userContext';
+import { useStage } from '../../contexts/stageContext';
 
 import { Link } from 'react-router-dom';
 
 function Stage() {
   const [popupState, setPopupState] = useState(false);
+  const { stageContext, setStageContext } = useStage();
+  const [popup, setPopup] = useState();
+  const [stageSelected, setStageSelected] = useState(9999);
+  const [stage, setStage] = useState([
+    {
+      id : "0",
+      title: "title 0",
+      description: "Descricao 0"
+    },
+    {
+      id : "1",
+      title: "title 1",
+      description: "Descricao 1"
+    },
+    {
+      id : "2",
+      title: "title 2",
+      description: "Descricao 2"
+    },
+    {
+      id : "3",
+      title: "title 3",
+      description: "Descricao 3"
+    },
+    {
+      id : "4",
+      title: "title 4",
+      description: "Descricao 4"
+    }
+  ])
   const validateUser = useValidateUser();
 
   useEffect(() => {
     validateUser();
   }, []);
 
-  function startGame() {
-    setPopupState(!popupState);
+  useEffect(()=>{
+    if(stageSelected!=9999){
+      var auxPopup = []
+      auxPopup = 
+      <Popup
+            title={stage[stageSelected].title}
+            className={'popupHelper'}
+            width={'30rem'}
+            widthHeader={'32rem'}
+            widthContainer={'30rem'}
+            heightContainer={'30rem'}
+            height={'30rem'}
+            popupState={popupState}
+            setPopupState={setPopupState}
+          >
+            <p id="stageDescription">
+              {stage[stageSelected].description}
+            </p>
+            <div id="buttonContainer">
+            
+            <button onClick={e=>{setStageContext(0)}}>
+              <Link to="/gameplay">Iniciar</Link>
+            </button>
+            <button id="cancelButton" onClick={e=>{setPopupState(false)}}>
+              Cancelar
+            </button>
+            </div>
+            
+          </Popup>
+  
+        setPopup(auxPopup)
+        setPopupState(true)
+        setStageSelected(9999)
+    }
+    
+  }, [stageSelected])
+
+  function openPopup(id){
+    setStageSelected(id)
   }
+
+ /* function startGame() {
+    setPopupState(!popupState);
+    setStageSelected
+  } */
 
   return (
     <>
       {popupState ? (
-        <Popup
-          title={'testes'}
-          className={'popupHelper'}
-          width={'30rem'}
-          widthHeader={'32rem'}
-          widthContainer={'30rem'}
-          heightContainer={'30rem'}
-          height={'30rem'}
-          popupState={popupState}
-          setPopupState={setPopupState}
-        >
-          <p id="stageDescription">
-            Ser feliz é uma responsabilidade muito grande. Pouca gente tem
-            coragem. Tenho coragem mas com um pouco de medo. Pessoa feliz é quem
-            aceitou a morte. Quando estou feliz demais, sinto uma angústia
-            amordaçante: assusto-me. Sou tão medrosa. Tenho medo de estar viva
-            porque quem tem vida um dia morre. E o mundo me violenta.
-          </p>
-          <button>
-            <Link to="/gameplay">Iniciar</Link>
-          </button>
-        </Popup>
+        popup
       ) : null}
       <Container>
         <h1 id="title">Fases</h1>
         <p id="text">
-          Você é Adelina Shatterstaff, exímia lutadora e ex comandante militar. 
-          Ainda lhe falta ar para pensar em tudo que aconteceu nos últimos dias, 
-          mas sua legião de homens fracassou na principal missão de expansão do seu reino contra Alphenia, 
-          o império adversário. Exilada do seu antigo posto, 
-          vagando pela circunvizinhança você se depara com uma cidade devastada, mas sem vestígios de ataque inimigo. 
-          Contudo, haviam runas mal escritas entre as ruas e os pilares das casas que ainda resistiam. 
-          Você as reconhece do campo de batalha em que foi derrotada e sua cabeça começa a doer novamente ao pensar no que aconteceu. 
-          Guerreiros leais matando seus companheiros, homens habilidosos incapazes de levantar a espada contra o inimigo 
-          e...meio exército sumindo? Ainda confusa, você se retira dali em busca de respostas ou, talvez, em busca de alguém.
+        Boas vindas ao Dungeongrama! Este site foi desenvolvido com o auxílio do professor e mestre Anderson Costa, 
+        juntamente de Ajax Lima, Larissa Nascimento e Lucas Lobato. O intuito do Dungeongrama é ajudar no ensino de 
+        diagramas de atividade e, para isso, você será convidado a desafiar-se numa série de exercícios que 
+        ensinar-lhe-ão o passo-a-passo no desenvolvimento desse diagrama da UML. Cada fase possui um problema para ser resolvido, 
+        então leia com muita atenção antes de iniciá-la. Porém, não se preocupe, você pode ler o problema novamente no botão "?" 
+        presente no canto superior da tela durante as partidas. Para pontuar, é necessário montar o diagrama na ordem correta. 
+        O temporizador influencia sua pontuação final, diminuindo os seus pontos conforme o tempo passa. 
+        Caso pontue bastante, poderá entrar no nosso ranque de jogadores e orgulhar-se para seus colegas de classe. 
+        Sem mais enrolação, boa jogatina!
         </p>
         <div id="boxes">
           <Box
@@ -77,7 +129,7 @@ function Stage() {
               <p>Pontuação: 1000</p>
             </div>
             <div id="button">
-              <button onClick={startGame.bind(this)}>Jogar</button>
+              <button onClick={e=>{setStageSelected(0)}}>Jogar</button>
             </div>
           </Box>
           <Box
