@@ -10,15 +10,14 @@ import { auth, db } from './firebaseConfig';
 export async function loginDungeongrama({ username, password }) {
   username = `${username}@dungeongrama.com`;
   const logged = await signInWithEmailAndPassword(auth, username, password)
-    .then(async (userCredential) => {
-      window.localStorage.setItem('user', userCredential.user.uid);
-
+    .then((userCredential) => {
       return [true, userCredential.user.uid, null];
     })
     .catch((error) => {
       const errorCode = error.code;
+      alert(error.message);
 
-      return [false, null, filterError(errorCode)];
+      return [false, filterError(errorCode)];
     });
 
   return logged;
@@ -27,9 +26,7 @@ export async function loginDungeongrama({ username, password }) {
 export function logOutDungeongrama() {
   signOut(auth)
     .then(() => {
-      window.localStorage.setItem('user', '');
-
-      return null;
+      return true;
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -52,7 +49,7 @@ export async function createUserFB(user) {
     .catch((error) => {
       const errorCode = error.code;
 
-      return [false, null, filterError(errorCode)];
+      return [false, filterError(errorCode)];
     });
 
   return created;

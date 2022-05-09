@@ -4,9 +4,12 @@ import logo from '../../images/icons/logo.png';
 import { logOutDungeongrama } from '../../services/firebaseUse';
 import { Link } from 'react-router-dom';
 import { useNotifys } from '../../contexts/notifyContext';
+import { useCookies } from 'react-cookie';
 
 function Header() {
   const { notifys, setNotifys } = useNotifys();
+  const [, , remove] = useCookies(['user', 'logged']);
+  
   function logOut() {
     const error = logOutDungeongrama();
     if(error == null){
@@ -15,6 +18,8 @@ function Header() {
         log: "Obrigado pelo tempo dedicado. Até a próxima!",
         time: Date.now(),
       })
+      remove('user');
+      remove('logged');
     }else{
       setNotifys({
         type: "error",

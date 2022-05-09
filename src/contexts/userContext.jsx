@@ -1,14 +1,14 @@
 import React, { useState, createContext, useContext } from 'react';
+import { useCookies } from 'react-cookie';
 
 const userCredentialContext = createContext();
 
 export function UserCredentialProvider({ children }) {
   const [userCredential, setUserCredential] = useState('');
+  const [cookie] = useCookies(['user', 'logged']);
 
   async function validateUser() {
-    const user = window.localStorage.getItem('user');
-
-    if (user != userCredential) {
+    if (!cookie['logged']) {
       window.location.href = '/';
     }
   }

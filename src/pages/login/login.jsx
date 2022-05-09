@@ -18,9 +18,9 @@ import lobato from '../../images/developers/lucas.jpg';
 import larissa from '../../images/developers/larissa.jpg';
 import { useNotifys } from '../../contexts/notifyContext';
 
-import { loginDungeongrama, createUserFB, readUser } from '../../services/firebaseUse';
-import { useUserCredential } from '../../contexts/userContext';
+import { loginDungeongrama, createUserFB } from '../../services/firebaseUse';
 import { Redirect } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 function Login() {
   const [user, setUser] = useState({
@@ -29,8 +29,8 @@ function Login() {
     logged: false,
   });
   const [developerState, setDeveloperState] = useState('');
-  const { userCredential, setUserCredential } = useUserCredential();
   const { notifys, setNotifys } = useNotifys();
+  const [cookie, setCookie, remove] = useCookies(['user', 'logged']);
 
   const [developerInfo, setDeveloperInfo] = useState({
     informations: {
@@ -86,13 +86,12 @@ function Login() {
       await loginDungeongrama(user).then((loginReturns) => {
         const [logged, credential, error] = loginReturns;
         if (logged) {
-          setUserCredential(credential);
-          
           setNotifys({
             type: 'success',
             log: 'Login efetuado com sucesso!',
             time: Date.now(),
           });
+          setAuthCookie(credential);
           setUser({ ...user, logged });
         } else {
           setNotifys({
@@ -109,6 +108,15 @@ function Login() {
         time: Date.now(),
       });
     }
+  }
+
+  function setAuthCookie(credential, minutes = 30) {
+    let d = new Date();
+    d.setTime(d.getTime() + minutes * 60 * 1000);
+    alert(credential);
+
+    setCookie('logged', true, { expires: d });
+    setCookie('user', credential, { expires: d });
   }
 
   return (
