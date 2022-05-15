@@ -113,7 +113,7 @@ function Login() {
   function setAuthCookie(credential, minutes = 30) {
     let d = new Date();
     d.setTime(d.getTime() + minutes * 60 * 1000);
-    alert(credential);
+    //alert(credential);
 
     setCookie('logged', true, { expires: d });
     setCookie('user', credential, { expires: d });

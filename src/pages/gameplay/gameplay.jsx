@@ -26,7 +26,7 @@ import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
-import {Tiles} from '../../models/models';
+import {Tiles, Binds, Activitys, ElementsOfActivityDiagram} from '../../models/models';
 
 function Gameplay() {
   const [inventory, setInventory] = useState([]);
@@ -65,14 +65,6 @@ function Gameplay() {
       }
     }
   }, [auxTimer])
-
-  
-
- 
-
-
-
-  
 
   const dragActivityContainer = {
     onDragOver :(e)=>{e.preventDefault();},
@@ -163,97 +155,9 @@ function Gameplay() {
   
   useEffect(() => {
     var auxState = []
-    var activityARRAY = ['Correr',
-        'Pular',
-        'Saltar',
-        'Andar'
-    ]
+    var activityARRAY = Activitys(stageContext)
 
-    var graphARRAY = [{
-      id:'bar',
-	    drag: true,
-	    firstBind: true,
-	    lastBind: true,
-	    firstArrow: true,
-	    lastArrow: true,
-	    isLeftFirst: true,
-	    isLeftLast: true,
-	    isInitialFirst: true,
-	    isInitialLast: true,
-	    isVertical: true
-    },
-    {
-      id:'bar',
-	    drag: true,
-	    firstBind: true,
-	    lastBind: true,
-	    firstArrow: true,
-	    lastArrow: true,
-	    isLeftFirst: true,
-	    isLeftLast: true,
-	    isInitialFirst: true,
-	    isInitialLast: true,
-	    isVertical: true
-    },
-    {
-      id:'bar',
-	    drag: true,
-	    firstBind: true,
-	    lastBind: true,
-	    firstArrow: true,
-	    lastArrow: true,
-	    isLeftFirst: true,
-	    isLeftLast: true,
-	    isInitialFirst: true,
-	    isInitialLast: true,
-	    isVertical: true
-    },
-    {
-      id:'decision',
-	    drag: true,
-	    firstBind: true,
-      secondBind: true,
-      thirdBind: true,
-	    lastBind: true,
-	    firstArrow: true,
-      secondArrow: true,
-      thirdArrow: true,
-	    lastArrow: true,
-	    isLeftFirst: true,
-      isLeftSecond: true,
-      isLeftThird: true,
-	    isLeftLast: true,
-	    isInitialFirst: true,
-	    isInitialLast: true,
-	    isVertical: true
-    },
-    {
-      id:'ball',
-	    drag: true,
-	    firstBind: true,
-      secondBind: true,
-      thirdBind: true,
-	    lastBind: true,
-	    firstArrow: true,
-      secondArrow: true,
-      thirdArrow: true,
-	    lastArrow: true,
-	    isLeftFirst: true,
-      isLeftSecond: true,
-      isLeftThird: true,
-	    isLeftLast: true,
-	    isInitialFirst: true,
-	    isInitialLast: true,
-	
-    },
-    {
-      id:'bind',
-	    drag: true,
-      bindDirection: "leftTop",
-      description: "aaa",         
-      descPosition:"last",
-      isArrow: true,
-    }]
+    var graphARRAY = ElementsOfActivityDiagram(stageContext)
 
 
     
@@ -410,18 +314,6 @@ function Gameplay() {
       
     })
       setInventory(<div {...dragInventory} id="inventoryBox">{auxState}</div>);
-      /*
-      const tiles = [
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "activity", "bind", "activity","void","void",
-        "void", "void", "void", "decision", "bind","void","void",
-        "void", "void", "bar", "ball", "activity","void","void",
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "void", "void", "void","void","void",
-        "void", "void", "void", "void", "void","void","void",
-      ] */
 
       const tiles = Tiles(stageContext)
 
@@ -429,32 +321,7 @@ function Gameplay() {
       var auxTemplate = []
 
       var countBind = 0;
-      var bindARRAY = [
-        { 
-          bindDirection: "leftRight",
-          description: "encontrar obstáculo",         
-          descPosition:"first",
-          isArrow: true,
-        },
-        { 
-          bindDirection: "leftRight",
-          description: "Quando blablablaaaaaaaaaaaaaa2",
-          descPosition:"first",
-          isArrow: true,
-        },
-        { 
-          bindDirection: "leftBottom",
-          description: "Quando blablabla3",
-          descPosition:"last",
-          isArrow: true,
-        },
-        { 
-          bindDirection: "leftRight",
-          description: "Quando blablabla4",
-          descPosition:"first",
-          isArrow: false,
-        },
-      ]
+      var bindARRAY = Binds(stageContext)
 
       tiles.forEach((tile, index) =>{
         if(tile == "void"){
