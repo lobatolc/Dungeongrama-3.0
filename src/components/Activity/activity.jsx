@@ -21,7 +21,7 @@ function Activity({name, isInventory, drag}, ...props) {
     <Container 
       {...dragEvents} 
       id={name} 
-      className={"act"} 
+      className={"act "+name} 
       isInventory={isInventory} 
       draggable={drag} 
       title="Atividade: representa uma determinada tarefa realizada pelo usuário ou pelo software.">

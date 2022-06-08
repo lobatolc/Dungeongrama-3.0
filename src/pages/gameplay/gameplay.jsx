@@ -100,9 +100,10 @@ function Gameplay() {
 
   function verifyDiagram(node){
     var activityContainers = document.getElementsByClassName("actContainers");
+    
     var error = "";
     for(let i=0; i<activityContainers.length;i++){
-      console.log(activityContainers[i].children)
+     // console.log(activityContainers[i].children)
       if(activityContainers[i].children.length == 0){
         error = "Preencha todos os espaços com atividade!";
       }
@@ -115,11 +116,34 @@ function Gameplay() {
         time: Date.now(),
       })
     }else{
-      setNotifys({
-        type: "success",
-        log: "Tudo certo, parabéns!",
-        time: Date.now(),
-      })
+
+      var resposta = ["Pular", "leftTopaaa", "Correr"]
+  
+      for(let i=0; i<activityContainers.length;i++){
+        var elements = document.getElementsByClassName(resposta[i])
+
+        if(elements[0] == activityContainers[i].children[0]){
+          setNotifys({
+            type: "success",
+            log: "Você acertou tudo!",
+            time: Date.now(),
+          })
+
+        }else{
+          setNotifys({
+            type: "error",
+            log: "Você errou",
+            time: Date.now(),
+          })
+        }
+        
+        if(resposta[i] == activityContainers[i].children.className){
+          console.log(resposta[i])
+        }
+      }
+
+
+      
     }
     
   }
@@ -172,7 +196,7 @@ function Gameplay() {
       switch(grap.id){
         case 'bar':
           auxState.push(<BarContainer 
-
+            className={grap.isVertical == true ? "verticalBar" : "horizontalBar"}
             id={grap.id+index}
             {...dragEvents} 
             draggable={grap.drag}
@@ -204,10 +228,11 @@ function Gameplay() {
         case 'bind':
           auxState.push(
             <BindContainer 
+            className={grap.bindDirection + grap.description}
             area={null} 
             {...dragEvents} 
             draggable={grap.drag} 
-            id={grap.id+index}  
+            id={grap.bindDirection+grap.description}  
             h={'4rem'}
             marginB={'1rem'}>
                 <Bind 
@@ -220,9 +245,10 @@ function Gameplay() {
           break;
         
         case 'decision':
+          // const aux = grap.firstBind+grap.secondBind+grap.thirdBind+grap.lastBind+grap.firstArrow+grap.secondArrow+grap.thirdArrow+grap.lastArrow
           auxState.push(
             <DecisionContainer 
-
+                className={'decision'}
                 id={grap.id+index}
                 {...dragEvents} 
                 draggable={grap.drag}
@@ -273,7 +299,7 @@ function Gameplay() {
               draggable={grap.drag}
               h={'4rem'}
               marginB={'1rem'}
-
+              className={grap.isInitial == true ? 'initialBall' : 'finalBall'}
               firstBind={grap.firstBind} 
               secondBind={grap.secondBind} 
               thirdBind={grap.thirdBind} 
@@ -298,7 +324,7 @@ function Gameplay() {
                       <div id="secondBind"><div id="arrowContainer"><img src={arrow} draggable={false}/></div></div>
                     </div>
                     <div id="ball">
-                      <Ball isInitial={false}/>
+                      <Ball isInitial={grap.isInitial}/>
                     </div>
                     <div id="thirdBindContainer">
                       <div id="thirdBind"><div id="arrowContainer"><img src={arrow} draggable={false}/></div></div>
@@ -374,7 +400,6 @@ function Gameplay() {
         }else if(tile == "bar"){
           auxTiles.push(
             <BarContainer 
-
                 id={tile+index}
                 firstBind={true} 
                 lastBind={true} 
@@ -441,8 +466,9 @@ function Gameplay() {
                 </BallContainer>)
             auxTemplate.push(tile+index)
         }else{
-          auxTiles.push(<BindContainer area={tile+index}>
+          auxTiles.push(<BindContainer className={bindARRAY[countBind].bindDirection + " " + bindARRAY[countBind].description} area={tile+index}>
                           <Bind 
+                          
                             bindType={bindARRAY[countBind].bindDirection} 
                             description={bindARRAY[countBind].description} 
                             descPosition={bindARRAY[countBind].descPosition} 

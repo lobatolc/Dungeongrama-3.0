@@ -231,7 +231,7 @@ export function Tiles(id){
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
-              "void","void","activity","bind","activity","void","void",
+              "void","void","activity","activity","activity","void","void",
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",

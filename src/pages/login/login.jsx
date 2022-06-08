@@ -186,7 +186,7 @@ function Login() {
                 func: 'Analista',
                 links: [
                   'https://www.linkedin.com/in/larissa-nascimento-380a53226/',
-                  '#',
+                  'https://github.com/larissanascimentoo/Larissa-Nascimento',
                 ],
                 phrase: 'Professor, esse site merece uma nota 10.',
               });
