@@ -1,3 +1,5 @@
+import Decision from "../components/Decision/decision";
+
 export function PlayerModel() {
   const user = {
     _id: '',
@@ -60,7 +62,225 @@ export function ActivityModel() {
   return activity;
 }
 
+<<<<<<< HEAD
 export function Binds(id) {
+=======
+export function Balls(id){
+  const balls = [
+    [
+    {firstBind: false,
+      secondBind: true,
+      thirdBind :true, 
+      lastBind :true, 
+
+      firstArrow : true,
+      secondArrow : true,
+      thirdArrow :true,
+      lastArrow : true,
+
+      isLeftFirst : false,
+      isLeftSecond : true,
+      isLeftThird :false,
+      isLeftLast : false,
+    
+    isInitial : true},
+    {firstBind: false,
+      secondBind: true,
+      thirdBind :true, 
+      lastBind :true, 
+
+      firstArrow : true,
+      secondArrow : true,
+      thirdArrow :true,
+      lastArrow : true,
+
+      isLeftFirst : false,
+      isLeftSecond : true,
+      isLeftThird :false,
+      isLeftLast : false,
+    
+      isInitial : false}
+  ],
+  [
+    {firstBind: true,
+      secondBind: true,
+      thirdBind :true, 
+      lastBind :true, 
+
+      firstArrow : true,
+      secondArrow : true,
+      thirdArrow :true,
+      lastArrow : true,
+
+      isLeftFirst : false,
+      isLeftSecond : true,
+      isLeftThird :false,
+      isLeftLast : false,
+      isInitial : false },
+    {firstBind: false,
+      secondBind: true,
+      thirdBind :true, 
+      lastBind :true, 
+
+      firstArrow : true,
+      secondArrow : true,
+      thirdArrow :true,
+      lastArrow : true,
+
+      isLeftFirst : false,
+      isLeftSecond : true,
+      isLeftThird :false,
+      isLeftLast : false,
+      isInitial : true }
+  ]
+]
+
+  return balls[id]
+}
+
+export function Bars(id){
+  const bars = [
+    [
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : true
+  
+      },
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : false
+  
+      },
+    ],
+    [
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : false
+  
+      },
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : false
+  
+      },
+    ]
+    
+    
+  ]
+  return bars[id]
+}
+
+export function Decisions(id){
+  const decisions = [
+    [
+    
+        {
+          firstBind: false,
+          secondBind: true,
+          thirdBind :true, 
+          lastBind :true, 
+  
+          firstArrow : true,
+          secondArrow : true,
+          thirdArrow :true,
+          lastArrow : true,
+  
+          isLeftFirst : false,
+          isLeftSecond : true,
+          isLeftThird :false,
+          isLeftLast : false 
+        },
+        { 
+          firstBind: false,
+          secondBind: false,
+          thirdBind :false, 
+          lastBind :false, 
+  
+          firstArrow : true,
+          secondArrow : true,
+          thirdArrow :true,
+          lastArrow : true,
+  
+          isLeftFirst : false,
+          isLeftSecond : true,
+          isLeftThird :false,
+          isLeftLast : false 
+        }
+      ],
+      [
+        {
+          firstBind: false,
+          secondBind: false,
+          thirdBind :false, 
+          lastBind :false, 
+  
+          firstArrow : true,
+          secondArrow : true,
+          thirdArrow :true,
+          lastArrow : true,
+  
+          isLeftFirst : false,
+          isLeftSecond : true,
+          isLeftThird :false,
+          isLeftLast : false 
+        },
+        { 
+          firstBind: false,
+          secondBind: false,
+          thirdBind :false, 
+          lastBind :false, 
+  
+          firstArrow : true,
+          secondArrow : true,
+          thirdArrow :true,
+          lastArrow : true,
+  
+          isLeftFirst : false,
+          isLeftSecond : true,
+          isLeftThird :false,
+          isLeftLast : false 
+        }
+      ]
+      
+    
+  ]
+  return decisions[id]
+}
+
+export function Binds(id){
+>>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
   const binds = [
     [
       {
@@ -106,8 +326,14 @@ export function Binds(id) {
   return binds[id]
 }
 
+<<<<<<< HEAD
 export function ElementsOfActivityDiagram(id) {
   const elementsOfActivityDiagram = [
+=======
+
+export function ElementsInventory(id){
+  const elementsInventory = [
+>>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
     [{
       id: 'bar',
       drag: true,
@@ -220,7 +446,7 @@ export function ElementsOfActivityDiagram(id) {
       isVertical: true
     },]
   ]
-  return elementsOfActivityDiagram[id]
+  return elementsInventory[id]
 }
 
 export function Activitys(id) {
@@ -239,6 +465,7 @@ export function Activitys(id) {
   return activitys[id]
 }
 
+<<<<<<< HEAD
 export function Tiles(id) {
   const tiles = [
     [
@@ -266,6 +493,43 @@ export function Tiles(id) {
     ],
   ]
   return tiles[id]
+=======
+export function Response(id){
+  const response = [
+      ["Pular", "leftTopaaa", "Correr"],
+      ["Andar", "leftTopaaa", "Saltar"]
+  ]
+  return response[id]
+}
+
+export function Tiles(id){
+      const tiles = [
+          [
+              
+              "void","void","void","void","void","void","void",
+              "void","void","void","void","void","void","void",
+              "void","void","void","void","void","void","void",
+              "void","void","activity","activity","activity","void","void",
+              "void","void","ball","ball","void","void","void",
+              "void","void","decision","decision","void","void","void",
+              "void","void","bar","bar","void","void","void",
+              "void","void","bind","bind","void","void","void",
+              "void","void","void","void","void","void","void",
+          ],
+          [
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "activity", "bind", "activity","void","void",
+              "void", "void", "void", "activity", "bind","activity","void",
+              "void", "void", "bar", "ball", "activity","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+          ],
+      ]
+      return tiles[id]
+>>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
 }
 
 export function elementsActivityModel() {
