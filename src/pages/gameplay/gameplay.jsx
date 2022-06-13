@@ -26,7 +26,7 @@ import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
-import {Tiles, Binds, Activitys, ElementsOfActivityDiagram} from '../../models/models';
+import {Tiles, Binds, Decisions, Activitys, Response, ElementsInventory, Bars, Balls} from '../../models/models';
 
 function Gameplay() {
   const [inventory, setInventory] = useState([]);
@@ -117,7 +117,7 @@ function Gameplay() {
       })
     }else{
 
-      var resposta = ["Pular", "leftTopaaa", "Correr"]
+      var resposta = Response(stageContext)
   
       for(let i=0; i<activityContainers.length;i++){
         var elements = document.getElementsByClassName(resposta[i])
@@ -181,7 +181,7 @@ function Gameplay() {
     var auxState = []
     var activityARRAY = Activitys(stageContext)
 
-    var graphARRAY = ElementsOfActivityDiagram(stageContext)
+    var graphARRAY = ElementsInventory(stageContext)
 
 
     
@@ -349,6 +349,16 @@ function Gameplay() {
       var countBind = 0;
       var bindARRAY = Binds(stageContext)
 
+      var countDecision = 0
+      var decisionARRAY = Decisions(stageContext)
+
+
+      var countBar = 0
+      var barARRAY = Bars(stageContext)
+
+      var countBall = 0
+      var ballARRAY = Balls(stageContext)
+
       tiles.forEach((tile, index) =>{
         if(tile == "void"){
           auxTiles.push(<VoidContainer area={tile+index}></VoidContainer>);
@@ -361,20 +371,20 @@ function Gameplay() {
         }else if(tile == "decision"){
           auxTiles.push(
             <DecisionContainer 
-                firstBind={true} 
-                secondBind={true} 
-                thirdBind={true} 
-                lastBind={true} 
+                firstBind={decisionARRAY[countDecision].firstBind} 
+                secondBind={decisionARRAY[countDecision].secondBind} 
+                thirdBind={decisionARRAY[countDecision].thirdBind} 
+                lastBind={decisionARRAY[countDecision].lastBind} 
 
-                firstArrow={true}
-                secondArrow={true}
-                thirdArrow={true}
-                lastArrow={true}
+                firstArrow={decisionARRAY[countDecision].firstArrow}
+                secondArrow={decisionARRAY[countDecision].secondArrow}
+                thirdArrow={decisionARRAY[countDecision].thirdArrow}
+                lastArrow={decisionARRAY[countDecision].lastArrow}
 
-                isLeftFirst={false}
-                isLeftSecond={true}
-                isLeftThird={false}
-                isLeftLast={false}>
+                isLeftFirst={decisionARRAY[countDecision].isLeftFirst}
+                isLeftSecond={decisionARRAY[countDecision].isLeftSecond}
+                isLeftThird={decisionARRAY[countDecision].isLeftThird}
+                isLeftLast={decisionARRAY[countDecision].isLeftLast}>
 
               <div id="firstBindContainer">
                 <div id="firstBind"><div id="arrowContainer"><img src={arrow}/></div></div>
@@ -396,22 +406,23 @@ function Gameplay() {
               </div>
             </DecisionContainer>)
           auxTemplate.push(tile+index)
+          countDecision++;
 
         }else if(tile == "bar"){
           auxTiles.push(
             <BarContainer 
                 id={tile+index}
-                firstBind={true} 
-                lastBind={true} 
+                firstBind={barARRAY[countBar].firstBind} 
+                lastBind={barARRAY[countBar].lastBind} 
                 
-                firstArrow={true} 
-                lastArrow={true} 
+                firstArrow={barARRAY[countBar].firstArrow} 
+                lastArrow={barARRAY[countBar].lastArrow} 
 
-                isLeftFirst={false} 
-                isLeftLast={false} 
+                isLeftFirst={barARRAY[countBar].isLeftFirst} 
+                isLeftLast={barARRAY[countBar].isLeftLast} 
 
-                isInitialFirst={false}
-                isInitialLast={false}
+                isInitialFirst={barARRAY[countBar].isInitialFirst}
+                isInitialLast={barARRAY[countBar].isInitialLast}
 
                 isVertical={true}>
               <div id="firstBindContainer">
@@ -423,26 +434,27 @@ function Gameplay() {
               </div>
             </BarContainer>)
           auxTemplate.push(tile+index)
-
+          countBar++;
         }else if(tile == "ball"){
             auxTiles.push(
                 <BallContainer 
-                  firstBind={true} 
-                  secondBind={true} 
-                  thirdBind={true} 
-                  lastBind={true}
+                  firstBind={ballARRAY[countBall].firstBind} 
+                  secondBind={ballARRAY[countBall].secondBind} 
+                  thirdBind={ballARRAY[countBall].thirdBind} 
+                  lastBind={ballARRAY[countBall].lastBind}
                   
-                  firstArrow={true}
-                  secondArrow={true}
-                  thirdArrow={true}
-                  lastArrow={true}
+                  firstArrow={ballARRAY[countBall].firstArrow}
+                  secondArrow={ballARRAY[countBall].secondArrow}
+                  thirdArrow={ballARRAY[countBall].thirdArrow}
+                  lastArrow={ballARRAY[countBall].lastArrow}
                   
                   
-                  isLeftFirst={false}
-                  isLeftSecond={true}
-                  isLeftThird={false}
-                  isLeftLast={false}
+                  isLeftFirst={ballARRAY[countBall].isLeftFirst}
+                  isLeftSecond={ballARRAY[countBall].isLeftSecond}
+                  isLeftThird={ballARRAY[countBall].isLeftThird}
+                  isLeftLast={ballARRAY[countBall].isLeftLast}
                  
+              
                   
                   >
                 
@@ -454,7 +466,7 @@ function Gameplay() {
                       <div id="secondBind"><div id="arrowContainer"><img src={arrow}/></div></div>
                     </div>
                     <div id="ball">
-                      <Ball isInitial={false}/>
+                      <Ball isInitial={ballARRAY[countBall].isInitial}/>
                     </div>
                     <div id="thirdBindContainer">
                       <div id="thirdBind"><div id="arrowContainer"><img src={arrow}/></div></div>
@@ -465,6 +477,7 @@ function Gameplay() {
                   </div>
                 </BallContainer>)
             auxTemplate.push(tile+index)
+            countBall++;
         }else{
           auxTiles.push(<BindContainer className={bindARRAY[countBind].bindDirection + " " + bindARRAY[countBind].description} area={tile+index}>
                           <Bind 
@@ -476,6 +489,7 @@ function Gameplay() {
                         </BindContainer>);
           auxTemplate.push(tile+index);
           countBind++;
+          
         }
 
         
