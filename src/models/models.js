@@ -62,9 +62,6 @@ export function ActivityModel() {
   return activity;
 }
 
-<<<<<<< HEAD
-export function Binds(id) {
-=======
 export function Balls(id){
   const balls = [
     [
@@ -280,7 +277,6 @@ export function Decisions(id){
 }
 
 export function Binds(id){
->>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
   const binds = [
     [
       {
@@ -326,14 +322,9 @@ export function Binds(id){
   return binds[id]
 }
 
-<<<<<<< HEAD
-export function ElementsOfActivityDiagram(id) {
-  const elementsOfActivityDiagram = [
-=======
 
 export function ElementsInventory(id){
   const elementsInventory = [
->>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
     [{
       id: 'bar',
       drag: true,
@@ -465,35 +456,6 @@ export function Activitys(id) {
   return activitys[id]
 }
 
-<<<<<<< HEAD
-export function Tiles(id) {
-  const tiles = [
-    [
-
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "activity", "activity", "activity", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-    ],
-    [
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "activity", "bind", "activity", "void", "void",
-      "void", "void", "void", "activity", "bind", "activity", "void",
-      "void", "void", "bar", "ball", "activity", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-      "void", "void", "void", "void", "void", "void", "void",
-    ],
-  ]
-  return tiles[id]
-=======
 export function Response(id){
   const response = [
       ["Pular", "leftTopaaa", "Correr"],
@@ -529,7 +491,6 @@ export function Tiles(id){
           ],
       ]
       return tiles[id]
->>>>>>> e0009b5ef6e5b3c0ccb671f9b7ab3bb1ee5517bd
 }
 
 export function elementsActivityModel() {
