@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,15 +6,16 @@ import {
 import { child, get, ref, set } from 'firebase/database';
 import { auth, db } from './firebaseConfig';
 
+import { StageModel } from '../models/models';
+
 export async function loginDungeongrama({ username, password }) {
   username = `${username}@dungeongrama.com`;
   const logged = await signInWithEmailAndPassword(auth, username, password)
     .then((userCredential) => {
-      return [true, userCredential.user.uid, null];
+      return [true, null, userCredential.user.uid];
     })
     .catch((error) => {
       const errorCode = error.code;
-      alert(error.message);
 
       return [false, filterError(errorCode)];
     });
@@ -61,17 +61,29 @@ function createUserInDB(user) {
     username: username,
     avgTime: 0,
     matches: 0,
-    score: 0,
+    gamesPlayed: 0,
+    maxScore: 0,
+    lastLevelClear: 0,
+    scoreStage: createScoreStageUser()
   }).catch((error) => {
     const errorCode = error.code;
     console.log(filterError(errorCode));
   });
 }
 
+function createScoreStageUser() {
+  const scoreStage = {};
+  for (let i = 0; i < 10; i++) {
+    scoreStage[`stage ${i + 1}`] = i === 0 ? StageModel(i, true) : StageModel(i)
+  }
+
+  return scoreStage;
+}
+
 export async function getUserInRealtimeDatabase(userId = '') {
-  const data = await get(child(ref(db), `users/${userId}`))
+  let data = await get(child(ref(db), `users/${userId}`))
     .then((snapshot) => {
-      const items = [];
+      let items = [];
       if (snapshot.exists()) {
         snapshot.forEach((user) => {
           items.push(user.val());
@@ -84,11 +96,55 @@ export async function getUserInRealtimeDatabase(userId = '') {
     .catch((error) => {
       console.error(error);
     });
+
+    data = setMaxScoreUse(data)
+
   return sortDataUsers(data);
 }
 
+function setMaxScoreUse(users){
+  users.map(user => {
+    user['maxScore'] = 0
+    for(let stage in user.scoreStage){
+      user['maxScore'] += user.scoreStage[stage].score
+    }
+  })
+  return users
+}
+
 function sortDataUsers(data) {
-  return data.sort((a, b) => b.score - a.score);
+  return data.sort((a, b) => b.maxScore - a.maxScore);
+}
+
+export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0, percentComplete = 0, useHint = false) {
+  const [, stageNumber] = stage.split(' ')
+  const nextStage = `stage ${parseInt(stageNumber) + 1}`
+  const stringForUpdate = `users/${user}/scoreStage`;
+  const score = 1000 - timeClear
+  const clear = percentComplete == 100 ? true : false
+  const userDB = await getUserInRealtimeDatabase(user)
+
+  console.log(userDB[5][parseInt(stageNumber) + 1].unlock)
+
+  set(ref(db, `${stringForUpdate}/${stage}`), {
+    clear,
+    percentComplete,
+    score,
+    stage,
+    timeClear,
+    unlock: true,
+    useHint,
+  }).catch(error => {
+    const errorCode = error.code
+    console.log(filterError(errorCode));
+  })
+  if (clear && !(userDB[5][parseInt(stageNumber) + 1].unlock)) {
+    set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
+      const errorCode = error.code
+      console.log(filterError(errorCode));
+    })
+  }
+  
 }
 
 function filterError(errorCode = '/Erro Desconhecido') {

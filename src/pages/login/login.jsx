@@ -21,6 +21,7 @@ import { useNotifys } from '../../contexts/notifyContext';
 import { loginDungeongrama, createUserFB } from '../../services/firebaseUse';
 import { Redirect } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useUserCredential } from '../../contexts/userContext';
 
 function Login() {
   const [user, setUser] = useState({
@@ -84,7 +85,7 @@ function Login() {
 
     if (len >= 6) {
       await loginDungeongrama(user).then((loginReturns) => {
-        const [logged, credential, error] = loginReturns;
+        const [logged, error, credential] = loginReturns;
         if (logged) {
           setNotifys({
             type: 'success',
@@ -110,13 +111,14 @@ function Login() {
     }
   }
 
+  const { userCredential, setUserCredential } = useUserCredential();
   function setAuthCookie(credential, minutes = 30) {
     let d = new Date();
     d.setTime(d.getTime() + minutes * 60 * 1000);
-    //alert(credential);
 
     setCookie('logged', true, { expires: d });
     setCookie('user', credential, { expires: d });
+    setUserCredential(credential);
   }
 
   return (

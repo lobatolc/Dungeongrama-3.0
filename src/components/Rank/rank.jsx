@@ -9,7 +9,7 @@ function Rank({ crown, user, rank }) {
       <p>{user.username}</p>
       <p>{user.avgTime}</p>
       <p>{user.matches}</p>
-      <p>{user.score}</p>
+      <p>{user.maxScore}</p>
     </Container>
   );
 }
