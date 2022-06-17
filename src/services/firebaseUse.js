@@ -97,6 +97,7 @@ export async function getUserInRealtimeDatabase(userId = '') {
       console.error(error);
     });
 
+    console.log(data)
     data = setMaxScoreUse(data)
 
   return sortDataUsers(data);
@@ -104,7 +105,6 @@ export async function getUserInRealtimeDatabase(userId = '') {
 
 function setMaxScoreUse(users){
   users.map(user => {
-    user['maxScore'] = 0
     for(let stage in user.scoreStage){
       user['maxScore'] += user.scoreStage[stage].score
     }
@@ -124,8 +124,9 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   const clear = percentComplete == 100 ? true : false
   const userDB = await getUserInRealtimeDatabase(user)
 
-  console.log(userDB[5][parseInt(stageNumber) + 1].unlock)
-
+  console.log(percentComplete)
+  console.log(useHint)
+  console.log(timeClear)
   set(ref(db, `${stringForUpdate}/${stage}`), {
     clear,
     percentComplete,

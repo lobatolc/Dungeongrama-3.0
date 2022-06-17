@@ -18,6 +18,7 @@ import Bar from '../../components/Bar/bar';
 import Bind from '../../components/Bind/bind';
 import Ball from '../../components/Ball/ball';
 import { useNotifys } from '../../contexts/notifyContext';
+import { useUserCredential } from '../../contexts/userContext';
 import { useStage } from '../../contexts/stageContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
@@ -27,6 +28,7 @@ import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
 import {Tiles, Binds, Decisions, Activitys, Response, ElementsInventory, Bars, Balls} from '../../models/models';
+import { updateScoreInStage } from '../../services/firebaseUse';
 
 function Gameplay() {
   const [inventory, setInventory] = useState([]);
@@ -34,9 +36,11 @@ function Gameplay() {
   const [template, setTemplate] = useState([]);
   const [audio, setAudio] = useState(false);
   const { notifys, setNotifys } = useNotifys();
+  const {userCredential, setUserCretendial} = useUserCredential();
   const { stageContext, setStageContext } = useStage();
   const [auxTimer, setAuxTimer] = useState();
-
+  const [time, setTime] = useState(0)
+  var auxTime = 0
   useEffect(() => {
     var hours = 0;
     var minutes = 0;
@@ -44,9 +48,11 @@ function Gameplay() {
     setInterval(()=>{startTimer()}, 1000)
 
     function startTimer(){
-
+      auxTime++
+    
+      setTime(auxTime)
       seconds++;
-  
+      
       if(seconds == 60){
         seconds = 0;
         minutes++;
@@ -118,16 +124,14 @@ function Gameplay() {
     }else{
 
       var resposta = Response(stageContext)
-  
+      var percent = 0
       for(let i=0; i<activityContainers.length;i++){
         var elements = document.getElementsByClassName(resposta[i])
 
         if(elements[0] == activityContainers[i].children[0]){
-          setNotifys({
-            type: "success",
-            log: "Você acertou tudo!",
-            time: Date.now(),
-          })
+
+          percent++;
+
 
         }else{
           setNotifys({
@@ -137,11 +141,22 @@ function Gameplay() {
           })
         }
         
-        if(resposta[i] == activityContainers[i].children.className){
-          console.log(resposta[i])
-        }
+        // if(resposta[i] == activityContainers[i].children.className){
+        //   console.log(resposta[i])
+        // }
       }
 
+      
+      const percentComplete = parseInt(percent)/parseInt(activityContainers.length)
+      console.log(percentComplete*100)
+      console.log(time)
+     
+      updateScoreInStage(userCredential, "stage 1", time, (percentComplete*100), false)
+      setNotifys({
+        type: "error",
+        log: "AAAAAAAA",
+        time: Date.now(),
+      })
 
       
     }
