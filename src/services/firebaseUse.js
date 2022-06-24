@@ -96,9 +96,11 @@ export async function getUserInRealtimeDatabase(userId = '') {
     .catch((error) => {
       console.error(error);
     });
-
-    console.log(data)
-    data = setMaxScoreUse(data)
+    if(userId === ''){
+      data = setMaxScoreUse(data)
+    }else{
+      data = setMaxScoreOneUser(data)
+    }
 
   return sortDataUsers(data);
 }
@@ -112,6 +114,15 @@ function setMaxScoreUse(users){
   return users
 }
 
+function setMaxScoreOneUser(user){
+  let totalScore = 0;
+  for(let stage in user[5]){
+    totalScore += user[5][stage].score
+  }
+  user[4] = totalScore
+  return user
+}
+
 function sortDataUsers(data) {
   return data.sort((a, b) => b.maxScore - a.maxScore);
 }
@@ -120,30 +131,29 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   const [, stageNumber] = stage.split(' ')
   const nextStage = `stage ${parseInt(stageNumber) + 1}`
   const stringForUpdate = `users/${user}/scoreStage`;
-  const score = 1000 - timeClear
-  const clear = percentComplete == 100 ? true : false
+  let score = 1000 - timeClear
+  const clear = percentComplete >= 80
   const userDB = await getUserInRealtimeDatabase(user)
 
-  console.log(percentComplete)
-  console.log(useHint)
-  console.log(timeClear)
-  set(ref(db, `${stringForUpdate}/${stage}`), {
-    clear,
-    percentComplete,
-    score,
-    stage,
-    timeClear,
-    unlock: true,
-    useHint,
-  }).catch(error => {
-    const errorCode = error.code
-    console.log(filterError(errorCode));
-  })
-  if (clear && !(userDB[5][parseInt(stageNumber) + 1].unlock)) {
-    set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
+  if(score > userDB[5][stage].score){
+    set(ref(db, `${stringForUpdate}/${stage}`), {
+      clear,
+      percentComplete,
+      score,
+      stage,
+      timeClear,
+      unlock: true,
+      useHint,
+    }).catch(error => {
       const errorCode = error.code
       console.log(filterError(errorCode));
     })
+    if (clear && !(userDB[5][parseInt(stageNumber) + 1].unlock)) {
+      set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
+        const errorCode = error.code
+        console.log(filterError(errorCode));
+      })
+    }
   }
   
 }

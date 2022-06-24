@@ -13,8 +13,7 @@ import {
   font,
   gradient,
 } from '../../global.Styles';
-import { getUserInRealtimeDatabase, updateScoreInStage } from '../../services/firebaseUse';
-import { useUserCredential } from '../../contexts/userContext';
+import { getUserInRealtimeDatabase } from '../../services/firebaseUse';
 
 function Ranking() {
   const [rankingState, setRankingState] = useState();
