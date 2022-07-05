@@ -14,12 +14,23 @@ function Stage() {
   const { stageContext, setStageContext } = useStage();
   const [popup, setPopup] = useState();
   const [stageSelected, setStageSelected] = useState(9999);
+
+  const stageDescription = [
+    [<div className='ZeroContainer'>
+      <p>Ao começar a construção de um diagrama de atividades, a primeira atividade a ser posicionada deve ser sempre a ATIVIDADE INICIAL, que é simbolizada desta forma:</p>
+      <img src=''/>
+      <p>Da mesma forma, encerramos o diagrama com a ATIVIDADE FINAL, que é representada assim:</p>
+      <img src=''/>
+      <p>É preciso se atentar para a diferença entre as duas atividades. O símbolo de início é um círculo totalmente preenchido, enquanto que o símbolo de fim não é. Com isso em mente, complete o diagrama desta fase.</p>
+    </div>]
+  ]
+
   const [stage, setStage] = useState([
     {
       id : "0",
-      title: "title 0",
-      description: "Descricao 0"
-    },
+      title: "Atividades de Início e Fim",
+      description: stageDescription[0]
+     },
     {
       id : "1",
       title: "title 1",

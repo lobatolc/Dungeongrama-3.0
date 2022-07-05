@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 
 import { Container } from './activity.Styles';
 
-function Activity({name, isInventory, drag}, ...props) {
+function Activity({name, isInventory, drag, heightMaximus}, ...props) {
 
   const dragEvents = {
     onDragEnter :(e)=>{ e.preventDefault(e)},
@@ -22,6 +22,7 @@ function Activity({name, isInventory, drag}, ...props) {
       {...dragEvents} 
       id={name} 
       className={"act "+name} 
+      heightMaximus={heightMaximus}
       isInventory={isInventory} 
       draggable={drag} 
       title="Atividade: representa uma determinada tarefa realizada pelo usuário ou pelo software.">

@@ -18,6 +18,7 @@ export const Container = styled.div`
   background-color: ${colors.yellow};
 
   ${({ isDragging, isInventory }) => {
+ 
     if(isDragging){
         return css`
         border: 0.20rem dashed ${isInventory == null? colors.white : colors.purple};
@@ -30,6 +31,16 @@ export const Container = styled.div`
       `;
     }
   }};
+
+${({ heightMaximus }) => {
+ 
+ if(heightMaximus){
+     return css`
+     height: 100%;
+     cursor: default;
+   `;
+ }
+}};
 
   ${({ isInventory }) => {
         if(isInventory){

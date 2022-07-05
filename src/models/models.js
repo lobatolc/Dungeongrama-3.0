@@ -322,6 +322,14 @@ export function Binds(id){
   return binds[id]
 }
 
+export function StaticActivity(id){
+  const staticActivity = [
+    [{name:"Cantar"}, {name:"Gritar"}],
+    [{name:"Assobiar"}, {name:"Tagalerar"}]
+  ]
+  return staticActivity[id]
+}
+
 
 export function ElementsInventory(id){
   const elementsInventory = [
@@ -472,7 +480,7 @@ export function Tiles(id){
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
               "void","void","activity","activity","activity","void","void",
-              "void","void","ball","ball","void","void","void",
+              "void","void","ball","staticActivity","staticActivity","void","void",
               "void","void","decision","decision","void","void","void",
               "void","void","bar","bar","void","void","void",
               "void","void","bind","bind","void","void","void",

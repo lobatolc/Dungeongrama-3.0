@@ -152,6 +152,20 @@ export const BindContainer = styled.div`
 
 `;
 
+export const StaticActivityContainer = styled.div`
+    width: 100%;
+    height: 100%;
+
+    ${({ area }) => {
+            return css`
+            
+             grid-area: ${area};
+
+        `;
+
+    }};
+`;
+
 export const ActivityContainer = styled.div`
     width: 100%;
     height: 100%;

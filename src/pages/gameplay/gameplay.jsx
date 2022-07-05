@@ -9,7 +9,8 @@ import {
           ActivityContainer,
           DecisionContainer,
           BarContainer,
-          BallContainer
+          BallContainer, 
+          StaticActivityContainer
         } from './gameplay.Styles';
 import Box from '../../components/Box/box';
 import Activity from '../../components/Activity/activity';
@@ -27,7 +28,7 @@ import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
-import {Tiles, Binds, Decisions, Activitys, Response, ElementsInventory, Bars, Balls} from '../../models/models';
+import {Tiles, Binds, Decisions, Activitys, Response, ElementsInventory, Bars, Balls, StaticActivity} from '../../models/models';
 import { updateScoreInStage } from '../../services/firebaseUse';
 
 function Gameplay() {
@@ -358,6 +359,9 @@ function Gameplay() {
 
       const tiles = Tiles(stageContext)
 
+      var staticActivityARRAY = StaticActivity(stageContext)
+      var countStaticActivity = 0
+
       var auxTiles = []
       var auxTemplate = []
 
@@ -383,7 +387,16 @@ function Gameplay() {
             <ActivityContainer {...dragActivityContainer} area={tile+index} className="actContainers"  title="Posicione uma atividade aqui"
            ></ActivityContainer>);
           auxTemplate.push(tile+index)
-        }else if(tile == "decision"){
+        }else if(tile == "staticActivity"){
+          auxTiles.push(
+            <StaticActivityContainer area={tile+index}>
+              <Activity name={staticActivityARRAY[countStaticActivity].name} drag={false} heightMaximus={true}/>
+            </StaticActivityContainer>
+            
+          )
+          auxTemplate.push(tile+index)
+          countStaticActivity++
+        } else if(tile == "decision"){
           auxTiles.push(
             <DecisionContainer 
                 firstBind={decisionARRAY[countDecision].firstBind} 
