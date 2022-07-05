@@ -8,7 +8,7 @@ function Popup({title, width, widthHeader, widthContainer, heightContainer, heig
 
     function closePopup(node){
         if(node.target.className.includes("popup") || node.target.className.includes("boxContainer")){
-            setPopupState(!popupState) 
+            setPopupState(false) 
         }
     }
 

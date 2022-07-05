@@ -30,4 +30,6 @@ export const Container = styled.div`
         flex-wrap: wrap; 
         gap: 1rem;
     }
+
+
 `;

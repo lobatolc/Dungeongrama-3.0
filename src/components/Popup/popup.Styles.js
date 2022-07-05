@@ -16,6 +16,18 @@ export const Container = styled.div`
     left: 0;
     #stageDescription{
         text-align: justify;
+       
+        .zeroContainer{
+            
+            img{
+                height: 2rem;
+                width: 2rem;
+                margin-top: 1rem;
+            }
+        }
+    }
+    #buttonContainer{
+        margin-top: 1rem;
     }
 `;
 

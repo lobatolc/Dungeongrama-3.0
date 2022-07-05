@@ -23,15 +23,63 @@ import { useUserCredential } from '../../contexts/userContext';
 import { useStage } from '../../contexts/stageContext';
 import mute from '../../images/icons/mute.png';
 import sound from '../../images/icons/sound.png';
-import refresh from '../../images/icons/refresh.png';
+import help from '../../images/icons/help.png';
 import {colors, border} from '../../global.Styles';
 import { useState } from 'react/cjs/react.development';
 import soundtrack from '../../audio/music/soundtrack.mp3';
 import arrow from '../../images/icons/arrow.png';
 import {Tiles, Binds, Decisions, Activitys, Response, ElementsInventory, Bars, Balls, StaticActivity} from '../../models/models';
 import { updateScoreInStage } from '../../services/firebaseUse';
+import Popup from '../../components/Popup/popup';
+import initial from '../../images/diagrams/initialActivity.png';
+import final from '../../images/diagrams/finalActivity.png';
 
 function Gameplay() {
+  const [popup, setPopup] = useState();
+  const [popupState, setPopupState] = useState(false);
+
+  const [statusPopup, setStatusPopup] = useState();
+  const [statusPopupState, setStatusPopupState] = useState(false);
+
+
+  const stageDescription = [
+    [<div className='zeroContainer'>
+      <p>Ao começar a construção de um diagrama de atividades, a primeira atividade a ser posicionada deve ser sempre a <strong>atividade inicial</strong>, que é simbolizada desta forma:</p>
+      <img src={initial}/>
+      <p>Da mesma forma, encerramos o diagrama com a <strong>atividade final</strong>, que é representada assim:</p>
+      <img src={final}/>
+      <p>É preciso se atentar para a diferença entre as duas atividades. O símbolo de início é um círculo totalmente preenchido, enquanto que o símbolo de fim não é. Com isso em mente, complete o diagrama desta fase.</p>
+    </div>]
+  ]
+
+  const [stage, setStage] = useState([
+    {
+      id : "0",
+      title: "Atividades de Início e Fim",
+      description: stageDescription[0]
+     },
+    {
+      id : "1",
+      title: "title 1",
+      description: "Descricao 1"
+    },
+    {
+      id : "2",
+      title: "title 2",
+      description: "Descricao 2"
+    },
+    {
+      id : "3",
+      title: "title 3",
+      description: "Descricao 3"
+    },
+    {
+      id : "4",
+      title: "title 4",
+      description: "Descricao 4"
+    }
+  ])
+
   const [inventory, setInventory] = useState([]);
   const [construct, setConstruct] = useState([]);
   const [template, setTemplate] = useState([]);
@@ -39,7 +87,10 @@ function Gameplay() {
   const { notifys, setNotifys } = useNotifys();
   const {userCredential, setUserCretendial} = useUserCredential();
   const { stageContext, setStageContext } = useStage();
+ 
   const [auxTimer, setAuxTimer] = useState();
+
+
   const [time, setTime] = useState(0)
   var auxTime = 0
   useEffect(() => {
@@ -130,7 +181,7 @@ function Gameplay() {
         var elements = document.getElementsByClassName(resposta[i])
 
         if(elements[0] == activityContainers[i].children[0]){
-
+    
           percent++;
 
 
@@ -149,16 +200,12 @@ function Gameplay() {
 
       
       const percentComplete = parseInt(percent)/parseInt(activityContainers.length)
-      console.log(percentComplete*100)
-      console.log(time)
+      
+      var auxStage = stageContext+1
      
-      updateScoreInStage(userCredential, "stage 1", time, (percentComplete*100), false)
-      setNotifys({
-        type: "error",
-        log: "AAAAAAAA",
-        time: Date.now(),
-      })
-
+      updateScoreInStage(userCredential, "stage "+auxStage, time, (percentComplete*100), false) 
+      
+        setStatusPopupState(true)
       
     }
     
@@ -539,7 +586,68 @@ function Gameplay() {
       }
   },[audio])
 
+
+  useEffect(()=>{
+    var auxPopup = []
+    auxPopup = 
+    <Popup
+    title={"Resultado"}
+            className={'popupHelper'}
+            width={'30rem'}
+            widthHeader={'32rem'}
+            widthContainer={'30rem'}
+            heightContainer={'30rem'}
+            height={'fit-content'}
+            popupState={statusPopupState}
+            setPopupState={setStatusPopupState}
+          >
+            <p id="stageDescription">
+              <div>
+                <p>Tempo:</p>
+                <p>Porcentagem de Acerto:</p>
+                <p>Pontuação:</p>
+              </div>
+              <div id="button">
+              <button onClick={e=>{setStageContext(stageContext+1); window.location.href="/stage"}}>Próxima fase</button>
+            </div>
+            </p>
+
+      
+    </Popup>
+    setStatusPopup(auxPopup)
+  },[statusPopupState])
+
+  useEffect(()=>{
+    var auxPopup = []
+    auxPopup = 
+    <Popup
+    title={"Ajuda"}
+            className={'popupHelper'}
+            width={'30rem'}
+            widthHeader={'32rem'}
+            widthContainer={'30rem'}
+            heightContainer={'30rem'}
+            height={'30rem'}
+            popupState={popupState}
+            setPopupState={setPopupState}
+          >
+            <p id="stageDescription">
+              {stage[stageContext].description}
+            </p>
+
+      
+    </Popup>
+    setPopup(auxPopup)
+  },[popupState])
+
   return( 
+    <>
+    {popupState ? (
+      popup
+    ) : null}
+    {statusPopupState ? (
+      statusPopup
+    ) : null}
     <Container>
       <audio id="soundTrack" src={soundtrack} loop/>
         <Inventory>
@@ -565,8 +673,8 @@ function Gameplay() {
                }}>
               <img src={audio? sound : mute} alt=''/>
             </div>
-            <div className='imgButtons'  onClick={(e)=>{window.location.href = '/gameplay'}}>
-              <img src={refresh} alt=''/>
+            <div className='imgButtons'  onClick={(e)=>{setPopupState(!popupState)}}>
+              <img src={help} alt=''/>
             </div>
           </div>
           <p id="stopwatch">00:00:00</p>
@@ -576,6 +684,7 @@ function Gameplay() {
           {construct}
         </Construct>
     </Container>
+    </>
   )}
 
 export default Gameplay;

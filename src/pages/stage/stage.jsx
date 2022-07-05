@@ -6,7 +6,8 @@ import Box from '../../components/Box/box';
 import { border, colors } from '../../global.Styles';
 import { useValidateUser } from '../../contexts/userContext';
 import { useStage } from '../../contexts/stageContext';
-
+import initial from '../../images/diagrams/initialActivity.png';
+import final from '../../images/diagrams/finalActivity.png';
 import { Link } from 'react-router-dom';
 
 function Stage() {
@@ -16,11 +17,11 @@ function Stage() {
   const [stageSelected, setStageSelected] = useState(9999);
 
   const stageDescription = [
-    [<div className='ZeroContainer'>
-      <p>Ao começar a construção de um diagrama de atividades, a primeira atividade a ser posicionada deve ser sempre a ATIVIDADE INICIAL, que é simbolizada desta forma:</p>
-      <img src=''/>
-      <p>Da mesma forma, encerramos o diagrama com a ATIVIDADE FINAL, que é representada assim:</p>
-      <img src=''/>
+    [<div className='zeroContainer'>
+      <p>Ao começar a construção de um diagrama de atividades, a primeira atividade a ser posicionada deve ser sempre a <strong>atividade inicial</strong>, que é simbolizada desta forma:</p>
+      <img src={initial}/>
+      <p>Da mesma forma, encerramos o diagrama com a <strong>atividade final</strong>, que é representada assim:</p>
+      <img src={final}/>
       <p>É preciso se atentar para a diferença entre as duas atividades. O símbolo de início é um círculo totalmente preenchido, enquanto que o símbolo de fim não é. Com isso em mente, complete o diagrama desta fase.</p>
     </div>]
   ]
@@ -124,7 +125,7 @@ function Stage() {
         </p>
         <div id="boxes">
           <Box
-            title={'teste'}
+            title={'00 - Introdução'}
             width={'17.5rem'}
             height={'22.5rem'}
             widthHeader={'19rem'}
@@ -133,7 +134,6 @@ function Stage() {
             color={'white'}
           >
             <div>
-              <p>Seus status</p>
               <p>Min. Tempo: 00:02:31</p>
               <p>Qtd. Partidas: 3</p>
               <p>Máx. Acerto: 100%</p>
@@ -144,14 +144,81 @@ function Stage() {
             </div>
           </Box>
           <Box
-            title={'teste'}
+            title={'01 - Introdução'}
             width={'17.5rem'}
             height={'22.5rem'}
             widthHeader={'19rem'}
             border={border.color.lilac}
             bgColor={colors.purple}
-            color={'black'}
-          />
+            color={'white'}
+          >
+            <div>
+              <p>Min. Tempo: 00:02:31</p>
+              <p>Qtd. Partidas: 3</p>
+              <p>Máx. Acerto: 100%</p>
+              <p>Pontuação: 1000</p>
+            </div>
+            <div id="button">
+              <button onClick={e=>{setStageSelected(1)}}>Jogar</button>
+            </div>
+          </Box>
+          <Box
+            title={'02 - Introdução'}
+            width={'17.5rem'}
+            height={'22.5rem'}
+            widthHeader={'19rem'}
+            border={border.color.lilac}
+            bgColor={colors.purple}
+            color={'white'}
+          >
+            <div>
+              <p>Min. Tempo: 00:02:31</p>
+              <p>Qtd. Partidas: 3</p>
+              <p>Máx. Acerto: 100%</p>
+              <p>Pontuação: 1000</p>
+            </div>
+            <div id="button">
+              <button onClick={e=>{setStageSelected(2)}}>Jogar</button>
+            </div>
+          </Box>
+          <Box
+            title={'03 - Introdução'}
+            width={'17.5rem'}
+            height={'22.5rem'}
+            widthHeader={'19rem'}
+            border={border.color.lilac}
+            bgColor={colors.purple}
+            color={'white'}
+          >
+            <div>
+              <p>Min. Tempo: 00:02:31</p>
+              <p>Qtd. Partidas: 3</p>
+              <p>Máx. Acerto: 100%</p>
+              <p>Pontuação: 1000</p>
+            </div>
+            <div id="button">
+              <button onClick={e=>{setStageSelected(3)}}>Jogar</button>
+            </div>
+          </Box>
+          <Box
+            title={'04 - Introdução'}
+            width={'17.5rem'}
+            height={'22.5rem'}
+            widthHeader={'19rem'}
+            border={border.color.lilac}
+            bgColor={colors.purple}
+            color={'white'}
+          >
+            <div>
+              <p>Min. Tempo: 00:02:31</p>
+              <p>Qtd. Partidas: 3</p>
+              <p>Máx. Acerto: 100%</p>
+              <p>Pontuação: 1000</p>
+            </div>
+            <div id="button">
+              <button onClick={e=>{setStageSelected(4)}}>Jogar</button>
+            </div>
+          </Box>
         </div>
       </Container>
     </>

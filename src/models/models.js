@@ -281,28 +281,23 @@ export function Binds(id){
     [
       {
         bindDirection: "leftRight",
-        description: "encontrar obstáculo",
+        description: "",
         descPosition: "first",
         isArrow: true,
       },
       {
         bindDirection: "leftRight",
-        description: "Quando blablablaaaaaaaaaaaaaa2",
+        description: "",
         descPosition: "first",
         isArrow: true,
       },
       {
-        bindDirection: "leftBottom",
-        description: "Quando blablabla3",
-        descPosition: "last",
-        isArrow: true,
-      },
-      {
         bindDirection: "leftRight",
-        description: "Quando blablabla4",
+        description: "",
         descPosition: "first",
         isArrow: false,
       },
+
     ],
     [
       {
@@ -324,7 +319,7 @@ export function Binds(id){
 
 export function StaticActivity(id){
   const staticActivity = [
-    [{name:"Cantar"}, {name:"Gritar"}],
+    [{name:"Verificar diagrama"}, {name:"Pontuar diagrama"}],
     [{name:"Assobiar"}, {name:"Tagalerar"}]
   ]
   return staticActivity[id]
@@ -333,91 +328,46 @@ export function StaticActivity(id){
 
 export function ElementsInventory(id){
   const elementsInventory = [
-    [{
-      id: 'bar',
-      drag: true,
-      firstBind: true,
-      lastBind: true,
-      firstArrow: true,
-      lastArrow: true,
-      isLeftFirst: true,
-      isLeftLast: true,
-      isInitialFirst: true,
-      isInitialLast: true,
-      isVertical: true
-    },
+    [
     {
-      id: 'bar',
+      id: 'ball',
       drag: true,
-      firstBind: true,
-      lastBind: true,
-      firstArrow: true,
-      lastArrow: true,
-      isLeftFirst: true,
-      isLeftLast: true,
-      isInitialFirst: true,
-      isInitialLast: true,
-      isVertical: true
-    },
-    {
-      id: 'bar',
-      drag: true,
-      firstBind: true,
-      lastBind: true,
-      firstArrow: true,
-      lastArrow: true,
-      isLeftFirst: true,
-      isLeftLast: true,
-      isInitialFirst: true,
-      isInitialLast: true,
-      isVertical: true
-    },
-    {
-      id: 'decision',
-      drag: true,
-      firstBind: true,
-      secondBind: true,
+      firstBind: false,
+      secondBind: false,
       thirdBind: true,
-      lastBind: true,
-      firstArrow: true,
-      secondArrow: true,
-      thirdArrow: true,
-      lastArrow: true,
+      lastBind: false,
+      firstArrow: false,
+      secondArrow: false,
+      thirdArrow:false,
+      lastArrow: false,
       isLeftFirst: true,
       isLeftSecond: true,
-      isLeftThird: true,
+      isLeftThird: false,
       isLeftLast: true,
       isInitialFirst: true,
       isInitialLast: true,
-      isVertical: true
+      isInitial: true,
     },
     {
       id: 'ball',
       drag: true,
-      firstBind: true,
+      firstBind: false,
       secondBind: true,
-      thirdBind: true,
-      lastBind: true,
-      firstArrow: true,
+      thirdBind: false,
+      lastBind: false,
+      firstArrow: false,
       secondArrow: true,
       thirdArrow: true,
       lastArrow: true,
       isLeftFirst: true,
-      isLeftSecond: true,
+      isLeftSecond: false,
       isLeftThird: true,
       isLeftLast: true,
       isInitialFirst: true,
       isInitialLast: true,
-
+      isInitial: false,
     },
-    {
-      id: 'bind',
-      drag: true,
-      bindDirection: "leftTop",
-      description: "aaa",
-      descPosition: "last",
-      isArrow: true,
-    }],
+ ],
     [{
       id: 'bar',
       drag: true,
@@ -451,10 +401,6 @@ export function ElementsInventory(id){
 export function Activitys(id) {
   const activitys = [
     [
-      'Correr',
-      'Pular',
-      'Saltar',
-      'Andar'
     ],
     [
       'Navegar',
@@ -466,7 +412,7 @@ export function Activitys(id) {
 
 export function Response(id){
   const response = [
-      ["Pular", "leftTopaaa", "Correr"],
+      ["initialBall", "finalBall"],
       ["Andar", "leftTopaaa", "Saltar"]
   ]
   return response[id]
@@ -475,15 +421,14 @@ export function Response(id){
 export function Tiles(id){
       const tiles = [
           [
-              
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
-              "void","void","activity","activity","activity","void","void",
-              "void","void","ball","staticActivity","staticActivity","void","void",
-              "void","void","decision","decision","void","void","void",
-              "void","void","bar","bar","void","void","void",
-              "void","void","bind","bind","void","void","void",
+              "void","void","void","void","void","void","void",
+              "activity","bind","staticActivity","bind","staticActivity","bind","activity",
+              "void","void","void","void","void","void","void",
+              "void","void","void","void","void","void","void",
+              "void","void","void","void","void","void","void",
               "void","void","void","void","void","void","void",
           ],
           [
