@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import {colors, spacing, shadow, margin, padding, button, border, font, gradient} from '../../global.Styles';
 
+
+
 export const Container = styled.div`
     background-color: ${colors.white};
     width: 100%;
@@ -30,6 +32,12 @@ export const Container = styled.div`
         flex-wrap: wrap; 
         gap: 1rem;
     }
+
+    .btnStartStagefalse{
+        background-image: ${gradient.grayLight}
+    }
+
+
 
 
 `;

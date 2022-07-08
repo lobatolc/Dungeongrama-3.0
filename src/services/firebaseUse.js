@@ -131,7 +131,7 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   const [, stageNumber] = stage.split(' ')
   const nextStage = `stage ${parseInt(stageNumber) + 1}`
   const stringForUpdate = `users/${user}/scoreStage`;
-  let score = 1000 - timeClear
+  let score = (1000 - timeClear)*percentComplete
   const clear = percentComplete >= 80
   const userDB = await getUserInRealtimeDatabase(user)
 

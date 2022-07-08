@@ -9,13 +9,18 @@ import { useStage } from '../../contexts/stageContext';
 import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
 import { Link } from 'react-router-dom';
+import { useUserCredential } from '../../contexts/userContext';
+import { getUserInRealtimeDatabase } from '../../services/firebaseUse';
+import { useNotifys } from '../../contexts/notifyContext';
 
 function Stage() {
   const [popupState, setPopupState] = useState(false);
   const { stageContext, setStageContext } = useStage();
   const [popup, setPopup] = useState();
   const [stageSelected, setStageSelected] = useState(9999);
-
+  const {userCredential, setUserCretendial} = useUserCredential();
+  const [stageBox, setStageBox] = useState()
+  const { notifys, setNotifys } = useNotifys();
   const stageDescription = [
     [<div className='zeroContainer'>
       <p>Ao começar a construção de um diagrama de atividades, a primeira atividade a ser posicionada deve ser sempre a <strong>atividade inicial</strong>, que é simbolizada desta forma:</p>
@@ -59,15 +64,70 @@ function Stage() {
     validateUser();
   }, []);
 
+
+  function showNotify(type, log){
+    setNotifys({
+      type: type,
+      log: log,
+      time: Date.now(),
+    })
+  }
+
+  function reciveStages(){
+  
+    Promise.resolve(getUserInRealtimeDatabase(userCredential)).then(function(value) {
+    
+ 
+      const stages = Object.values(value[5])
+      var auxStages = []
+      stages.forEach((st, index) =>{
+        console.log(st)
+        console.log(index)
+  
+        auxStages.push(
+          <Box
+            title={index > 9 ? "Fase "+index : "Fase 0"+index}
+            width={'15rem'}
+            height={'15rem'}
+            widthHeader={'16rem'}
+            border={border.color.lilac}
+            bgColor={colors.purple}
+            color={'white'}
+          >
+            <div>
+              <p>Min. Tempo: {st.timeClear}</p>
+              <p>Qtd. Partidas: 3</p>
+              <p>Máx. Acerto: {st.percentComplete}%</p>
+              <p>Pontuação: {st.score}</p>
+            </div>
+            <div id="button">
+              <button className={'btnStartStage'+st.unlock} onClick={e=>{st.unlock? setStageSelected(index) : alert('aa')}}>Jogar</button>
+            </div>
+          </Box>
+        )
+        
+      })
+      setStageBox(auxStages)
+    }, function(value) {
+      // not called
+      showNotify("error", "Houve um erro ao receber os dados de cada fase")
+    });
+  }
+
+  useEffect(()=>{
+    reciveStages()
+  }, [])
+
   useEffect(()=>{
     if(stageSelected!=9999){
+      
       var auxPopup = []
       auxPopup = 
       <Popup
             title={stage[stageSelected].title}
             className={'popupHelper'}
-            width={'30rem'}
-            widthHeader={'32rem'}
+            width={'33rem'}
+            widthHeader={'35rem'}
             widthContainer={'30rem'}
             heightContainer={'30rem'}
             height={'30rem'}
@@ -124,101 +184,7 @@ function Stage() {
         Sem mais enrolação, boa jogatina!
         </p>
         <div id="boxes">
-          <Box
-            title={'00 - Introdução'}
-            width={'17.5rem'}
-            height={'22.5rem'}
-            widthHeader={'19rem'}
-            border={border.color.lilac}
-            bgColor={colors.purple}
-            color={'white'}
-          >
-            <div>
-              <p>Min. Tempo: 00:02:31</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: 100%</p>
-              <p>Pontuação: 1000</p>
-            </div>
-            <div id="button">
-              <button onClick={e=>{setStageSelected(0)}}>Jogar</button>
-            </div>
-          </Box>
-          <Box
-            title={'01 - Introdução'}
-            width={'17.5rem'}
-            height={'22.5rem'}
-            widthHeader={'19rem'}
-            border={border.color.lilac}
-            bgColor={colors.purple}
-            color={'white'}
-          >
-            <div>
-              <p>Min. Tempo: 00:02:31</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: 100%</p>
-              <p>Pontuação: 1000</p>
-            </div>
-            <div id="button">
-              <button onClick={e=>{setStageSelected(1)}}>Jogar</button>
-            </div>
-          </Box>
-          <Box
-            title={'02 - Introdução'}
-            width={'17.5rem'}
-            height={'22.5rem'}
-            widthHeader={'19rem'}
-            border={border.color.lilac}
-            bgColor={colors.purple}
-            color={'white'}
-          >
-            <div>
-              <p>Min. Tempo: 00:02:31</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: 100%</p>
-              <p>Pontuação: 1000</p>
-            </div>
-            <div id="button">
-              <button onClick={e=>{setStageSelected(2)}}>Jogar</button>
-            </div>
-          </Box>
-          <Box
-            title={'03 - Introdução'}
-            width={'17.5rem'}
-            height={'22.5rem'}
-            widthHeader={'19rem'}
-            border={border.color.lilac}
-            bgColor={colors.purple}
-            color={'white'}
-          >
-            <div>
-              <p>Min. Tempo: 00:02:31</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: 100%</p>
-              <p>Pontuação: 1000</p>
-            </div>
-            <div id="button">
-              <button onClick={e=>{setStageSelected(3)}}>Jogar</button>
-            </div>
-          </Box>
-          <Box
-            title={'04 - Introdução'}
-            width={'17.5rem'}
-            height={'22.5rem'}
-            widthHeader={'19rem'}
-            border={border.color.lilac}
-            bgColor={colors.purple}
-            color={'white'}
-          >
-            <div>
-              <p>Min. Tempo: 00:02:31</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: 100%</p>
-              <p>Pontuação: 1000</p>
-            </div>
-            <div id="button">
-              <button onClick={e=>{setStageSelected(4)}}>Jogar</button>
-            </div>
-          </Box>
+          {stageBox}
         </div>
       </Container>
     </>

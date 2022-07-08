@@ -87,42 +87,38 @@ function Gameplay() {
   const { notifys, setNotifys } = useNotifys();
   const {userCredential, setUserCretendial} = useUserCredential();
   const { stageContext, setStageContext } = useStage();
- 
+  const [status, setStatus] = useState({score:"", percent:"", time:""})
   const [auxTimer, setAuxTimer] = useState();
 
-
+  const [sei, setSei] = useState()
   const [time, setTime] = useState(0)
+  const [counter, setCounter] = useState(0)
+  const [stopwatch, setStopwatch] = useState("")
   var auxTime = 0
   useEffect(() => {
-    var hours = 0;
-    var minutes = 0;
-    var seconds = 0;
+
     setInterval(()=>{startTimer()}, 1000)
 
     function startTimer(){
+
       auxTime++
-    
+
       setTime(auxTime)
-      seconds++;
+      if(auxTime>counter){
+        setCounter(auxTime)
+      }
       
-      if(seconds == 60){
-        seconds = 0;
-        minutes++;
-      }
-  
-      if(minutes == 60){
-        minutes = 0;
-        hours++;
-      }
-  
-      var stopwatch = document.getElementById('stopwatch');
-  
-      if(stopwatch!=null || stopwatch!=undefined){
-        var format = (hours < 10 ? '0' + hours : hours) + ':' + (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds);
-        stopwatch.innerText = format;
-      }
+ 
     }
   }, [auxTimer])
+
+  useEffect(() => {
+      var auxStopwatch = []
+      auxStopwatch.push(<p id="stopwatch">{counter}</p>)
+      setStopwatch(auxStopwatch)
+    
+  }, [counter])
+
 
   const dragActivityContainer = {
     onDragOver :(e)=>{e.preventDefault();},
@@ -185,12 +181,6 @@ function Gameplay() {
           percent++;
 
 
-        }else{
-          setNotifys({
-            type: "error",
-            log: "Você errou",
-            time: Date.now(),
-          })
         }
         
         // if(resposta[i] == activityContainers[i].children.className){
@@ -201,11 +191,30 @@ function Gameplay() {
       
       const percentComplete = parseInt(percent)/parseInt(activityContainers.length)
       
-      var auxStage = stageContext+1
-     
-      updateScoreInStage(userCredential, "stage "+auxStage, time, (percentComplete*100), false) 
+      if(percentComplete>0){
+        var auxStage = stageContext+1
+
+        var auxHour = (time/3600).toFixed(0)
+        var auxMinute = parseInt((time%3600)/60)
+        var auxSecond = parseInt((time%3600)%60)
+        var auxStopwatch = (auxHour > 9 ? auxHour : "0"+auxHour) + " : " + (auxMinute > 9 ? auxMinute : "0"+auxMinute) + " : " + (auxSecond > 9 ? auxSecond : "0"+auxSecond)
+        var auxScore = (1000-time)*percentComplete
+        console.log(percentComplete)
+        console.log(auxScore)
+        auxScore = auxScore < 0 ? 0 : auxScore
+        setStatus({score: auxScore, percent: (percentComplete*100)+"%", time:auxStopwatch})
+       
+        updateScoreInStage(userCredential, "stage "+auxStage, auxStopwatch, (percentComplete*100), false) 
+        
+          setStatusPopupState(true)
+      }else{
+        setNotifys({
+          type: "error",
+          log: "Você não acertou a porcentagem mínima para finalizar, continue tentando!",
+          time: Date.now(),
+        })
+      }
       
-        setStatusPopupState(true)
       
     }
     
@@ -603,9 +612,9 @@ function Gameplay() {
           >
             <p id="stageDescription">
               <div>
-                <p>Tempo:</p>
-                <p>Porcentagem de Acerto:</p>
-                <p>Pontuação:</p>
+                <p>Tempo: {status.time}</p>
+                <p>Porcentagem de Acerto: {status.percent}</p>
+                <p>Pontuação: {status.score}</p>
               </div>
               <div id="button">
               <button onClick={e=>{setStageContext(stageContext+1); window.location.href="/stage"}}>Próxima fase</button>
@@ -677,7 +686,7 @@ function Gameplay() {
               <img src={help} alt=''/>
             </div>
           </div>
-          <p id="stopwatch">00:00:00</p>
+          {stopwatch}
           <button onClick={verifyDiagram.bind(this)}><p>Finalizar</p></button>
         </Interface>
         <Construct template={template} id="construct">
