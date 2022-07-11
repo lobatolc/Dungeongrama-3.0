@@ -77,16 +77,26 @@ function Stage() {
   
     Promise.resolve(getUserInRealtimeDatabase(userCredential)).then(function(value) {
     
- 
+     
       const stages = Object.values(value[5])
+      
+
+      stages.forEach((st) =>{
+        const [, stageNumber] = st.stage.split(' ')
+   
+        st.stage = stageNumber
+     
+      })
+
+      const aux = sortStages(stages)
+      console.log(aux)
       var auxStages = []
       stages.forEach((st, index) =>{
-        console.log(st)
-        console.log(index)
+        
   
         auxStages.push(
           <Box
-            title={index > 9 ? "Fase "+index : "Fase 0"+index}
+            title={'Fase '+st.stage}
             width={'15rem'}
             height={'15rem'}
             widthHeader={'16rem'}
@@ -95,13 +105,12 @@ function Stage() {
             color={'white'}
           >
             <div>
-              <p>Min. Tempo: {st.timeClear}</p>
-              <p>Qtd. Partidas: 3</p>
-              <p>Máx. Acerto: {st.percentComplete}%</p>
+              <p>Tempo: {st.timeClear}</p>
+              <p>Porcentagem: {st.percentComplete}%</p>
               <p>Pontuação: {st.score}</p>
             </div>
             <div id="button">
-              <button className={'btnStartStage'+st.unlock} onClick={e=>{st.unlock? setStageSelected(index) : alert('aa')}}>Jogar</button>
+              <button className={'btnStartStage'+st.unlock} onClick={e=>{st.unlock? setStageSelected(index) : showNotify("info", "Para jogar essa fase, é necessário passar todas as fases anteriores")}}>Jogar</button>
             </div>
           </Box>
         )
@@ -118,9 +127,14 @@ function Stage() {
     reciveStages()
   }, [])
 
+function sortStages(data) {
+  return data.sort((a, b) => a.stage - b.stage);
+}
+
   useEffect(()=>{
     if(stageSelected!=9999){
       
+   
       var auxPopup = []
       auxPopup = 
       <Popup
@@ -139,7 +153,7 @@ function Stage() {
             </p>
             <div id="buttonContainer">
             
-            <button onClick={e=>{setStageContext(0)}}>
+            <button onClick={e=>{setStageContext(stageSelected)}}>
               <Link to="/gameplay">Iniciar</Link>
             </button>
             <button id="cancelButton" onClick={e=>{setPopupState(false)}}>

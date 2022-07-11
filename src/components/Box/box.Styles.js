@@ -34,7 +34,7 @@ export const Header = styled.div`
             return css`
                 width: ${width};
                 display: grid;
-                grid-template-columns: 1fr 3fr 3fr 3fr 3fr;
+                grid-template-columns: 1fr 1fr 1fr;
                 align-items: center;
                 padding-right: 2rem;
                 padding-left: 2rem;

@@ -127,15 +127,19 @@ function sortDataUsers(data) {
   return data.sort((a, b) => b.maxScore - a.maxScore);
 }
 
-export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0, percentComplete = 0, useHint = false) {
+export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0, percentComplete = 0, useHint = false, score = 0) {
   const [, stageNumber] = stage.split(' ')
   const nextStage = `stage ${parseInt(stageNumber) + 1}`
   const stringForUpdate = `users/${user}/scoreStage`;
-  let score = (1000 - timeClear)*percentComplete
+  score = Math.round(score)
+
+  console.log(score)
+  percentComplete = percentComplete
   const clear = percentComplete >= 80
   const userDB = await getUserInRealtimeDatabase(user)
 
   if(score > userDB[5][stage].score){
+    console.log("true 1")    
     set(ref(db, `${stringForUpdate}/${stage}`), {
       clear,
       percentComplete,
@@ -148,13 +152,17 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
       const errorCode = error.code
       console.log(filterError(errorCode));
     })
-    if (clear && !(userDB[5][parseInt(stageNumber) + 1].unlock)) {
+    if (clear && !(userDB[5][nextStage].unlock)) {
+      console.log("true 2")
       set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
         const errorCode = error.code
         console.log(filterError(errorCode));
       })
     }
   }
+
+
+  console.log(userDB[5][nextStage])
   
 }
 

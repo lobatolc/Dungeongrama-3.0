@@ -10,4 +10,5 @@ export const Container = styled.div`
     color: ${colors.purple};
     text-align: center;
   }
+
 `;

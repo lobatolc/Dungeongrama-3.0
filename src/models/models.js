@@ -302,13 +302,19 @@ export function Binds(id){
     [
       {
         bindDirection: "leftRight",
-        description: "ccccccccccccc",
+        description: "Ligação 1",
         descPosition: "first",
         isArrow: true,
       },
       {
         bindDirection: "leftRight",
-        description: "ddddddddddddddd",
+        description: "Ligação 2",
+        descPosition: "first",
+        isArrow: true,
+      },
+      {
+        bindDirection: "leftRight",
+        description: "Ligação 3",
         descPosition: "first",
         isArrow: true,
       },
@@ -320,7 +326,7 @@ export function Binds(id){
 export function StaticActivity(id){
   const staticActivity = [
     [{name:"Verificar diagrama"}, {name:"Pontuar diagrama"}],
-    [{name:"Assobiar"}, {name:"Tagalerar"}]
+    [{name:"Atividade S1"}, {name:"Atividade S2"}]
   ]
   return staticActivity[id]
 }
@@ -368,32 +374,65 @@ export function ElementsInventory(id){
       isInitial: false,
     },
  ],
-    [{
-      id: 'bar',
-      drag: true,
-      firstBind: true,
-      lastBind: true,
-      firstArrow: true,
-      lastArrow: true,
-      isLeftFirst: true,
-      isLeftLast: true,
-      isInitialFirst: true,
-      isInitialLast: true,
-      isVertical: true
-    },
-    {
-      id: 'ball',
-      drag: true,
-      firstBind: true,
-      lastBind: true,
-      firstArrow: true,
-      lastArrow: true,
-      isLeftFirst: true,
-      isLeftLast: true,
-      isInitialFirst: true,
-      isInitialLast: true,
-      isVertical: true
-    },]
+    [
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: true,
+        thirdBind: false,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow: true,
+        lastArrow: true,
+        isLeftFirst: true,
+        isLeftSecond: false,
+        isLeftThird: true,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: false,
+      },
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: true,
+        thirdBind: false,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow: true,
+        lastArrow: true,
+        isLeftFirst: true,
+        isLeftSecond: false,
+        isLeftThird: true,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: false,
+      },
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: false,
+        thirdBind: true,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: false,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: true,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: true,
+      },
+    ]
   ]
   return elementsInventory[id]
 }
@@ -403,8 +442,9 @@ export function Activitys(id) {
     [
     ],
     [
-      'Navegar',
-      'Zoar'
+      'Atividade 1',
+      'Atividade 2',
+      'Atividade 3'
     ],
   ]
   return activitys[id]
@@ -434,9 +474,9 @@ export function Tiles(id){
           [
               "void", "void", "void", "void", "void","void","void",
               "void", "void", "void", "void", "void","void","void",
-              "void", "void", "activity", "bind", "activity","void","void",
-              "void", "void", "void", "activity", "bind","activity","void",
-              "void", "void", "bar", "ball", "activity","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "activity", "bind", "activity", "bind", "staticActivity","bind","activity",
               "void", "void", "void", "void", "void","void","void",
               "void", "void", "void", "void", "void","void","void",
               "void", "void", "void", "void", "void","void","void",

@@ -33,6 +33,7 @@ import { updateScoreInStage } from '../../services/firebaseUse';
 import Popup from '../../components/Popup/popup';
 import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
+import { Link } from 'react-router-dom';
 
 function Gameplay() {
   const [popup, setPopup] = useState();
@@ -204,7 +205,7 @@ function Gameplay() {
         auxScore = auxScore < 0 ? 0 : auxScore
         setStatus({score: auxScore, percent: (percentComplete*100)+"%", time:auxStopwatch})
        
-        updateScoreInStage(userCredential, "stage "+auxStage, auxStopwatch, (percentComplete*100), false) 
+        updateScoreInStage(userCredential, "stage "+auxStage, auxStopwatch, (percentComplete*100), false, auxScore) 
         
           setStatusPopupState(true)
       }else{
@@ -617,7 +618,9 @@ function Gameplay() {
                 <p>Pontuação: {status.score}</p>
               </div>
               <div id="button">
-              <button onClick={e=>{setStageContext(stageContext+1); window.location.href="/stage"}}>Próxima fase</button>
+              <button onClick={e=>{status.percent == "100%"? setStageContext(stageContext+1) : setStageContext(stageContext)}}>
+              <Link to="/stage">{status.percent == "100%"? "Próxima fase" : "Tentar Novamente"}</Link>
+            </button>
             </div>
             </p>
 
