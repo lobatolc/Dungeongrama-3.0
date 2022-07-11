@@ -18,11 +18,35 @@ export const Container = styled.div`
         text-align: justify;
        
         .zeroContainer{
-            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             img{
                 height: 2rem;
                 width: 2rem;
                 margin-top: 1rem;
+            }
+        }
+        .oneContainer{
+            display: flex;
+            flex-direction: column;
+           
+            img{
+                margin-top: 1rem;
+                height: 5rem;
+              
+            }
+        }
+        .twoContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            img{
+                margin-top: 1rem;
+                height: 3rem;
+                width: 3rem;
+              
             }
         }
     }

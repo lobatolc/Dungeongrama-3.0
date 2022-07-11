@@ -133,13 +133,13 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   const stringForUpdate = `users/${user}/scoreStage`;
   score = Math.round(score)
 
-  console.log(score)
+
   percentComplete = percentComplete
   const clear = percentComplete >= 80
   const userDB = await getUserInRealtimeDatabase(user)
 
   if(score > userDB[5][stage].score){
-    console.log("true 1")    
+   
     set(ref(db, `${stringForUpdate}/${stage}`), {
       clear,
       percentComplete,
@@ -153,7 +153,7 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
       console.log(filterError(errorCode));
     })
     if (clear && !(userDB[5][nextStage].unlock)) {
-      console.log("true 2")
+    
       set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
         const errorCode = error.code
         console.log(filterError(errorCode));

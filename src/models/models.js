@@ -129,7 +129,22 @@ export function Balls(id){
       isLeftThird :false,
       isLeftLast : false,
       isInitial : true }
-  ]
+  ],
+  [{firstBind: false,
+    secondBind: false,
+    thirdBind :true, 
+    lastBind :false, 
+
+    firstArrow : false,
+    secondArrow : true,
+    thirdArrow :false,
+    lastArrow : true,
+
+    isLeftFirst : false,
+    isLeftSecond : false,
+    isLeftThird :false,
+    isLeftLast : false,
+    isInitial : true }]
 ]
 
   return balls[id]
@@ -308,7 +323,7 @@ export function Binds(id){
       },
       {
         bindDirection: "leftRight",
-        description: "Ligação 2",
+        description: "inimigo encontrado",
         descPosition: "first",
         isArrow: true,
       },
@@ -316,8 +331,60 @@ export function Binds(id){
         bindDirection: "leftRight",
         description: "Ligação 3",
         descPosition: "first",
+        isArrow: false,
+      },
+    ],
+    [
+      {
+        bindDirection: "leftBottom",
+        description: "",
+        descPosition: "last",
+        isArrow: false,
+      },
+
+      {
+        bindDirection: "bottomTop",
+        description: "usuário existe",
+        descPosition: "first",
         isArrow: true,
       },
+
+      {
+        bindDirection: "topBottom",
+        description: "",
+        descPosition: "first",
+        isArrow: false,
+      },
+      {
+        bindDirection: "leftRight",
+        description: "",
+        descPosition: "first",
+        isArrow: true,
+      },
+      {
+        bindDirection: "topBottom",
+        description: "usuário não existe",
+        descPosition: "first",
+        isArrow: true,
+      },
+      {
+        bindDirection: "bottomTop",
+        description: "",
+        descPosition: "first",
+        isArrow: false,
+      },
+      {
+        bindDirection: "leftTop",
+        description: "",
+        descPosition: "last",
+        isArrow: false,
+      },
+      {
+        bindDirection: "bottomTop",
+        description: "Ligação 7",
+        descPosition: "first",
+        isArrow: true,
+      }
     ]
   ]
   return binds[id]
@@ -326,7 +393,7 @@ export function Binds(id){
 export function StaticActivity(id){
   const staticActivity = [
     [{name:"Verificar diagrama"}, {name:"Pontuar diagrama"}],
-    [{name:"Atividade S1"}, {name:"Atividade S2"}]
+    [{name:"Pular"}, {name:"Atividade S2"}]
   ]
   return staticActivity[id]
 }
@@ -432,6 +499,62 @@ export function ElementsInventory(id){
         isInitialLast: true,
         isInitial: true,
       },
+    ],
+    [
+      {
+        id:'decision',
+        drag: true,
+        firstBind: false,
+        secondBind: false,
+        thirdBind: false,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: false,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: false,
+      },
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: true,
+        secondBind: false,
+        thirdBind: false,
+        lastBind: true,
+        firstArrow: true,
+        secondArrow: false,
+        thirdArrow:false,
+        lastArrow: true,
+        isLeftFirst: false,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: false,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: false,
+      },
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: true,
+        thirdBind: false,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: true,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: true,
+      },
     ]
   ]
   return elementsInventory[id]
@@ -442,10 +565,17 @@ export function Activitys(id) {
     [
     ],
     [
-      'Atividade 1',
+      'Correr',
       'Atividade 2',
       'Atividade 3'
     ],
+    [
+      'Deletar dados',
+      'Atualizar cadastro',
+      'Criar usuário',
+      'Baixar dados',
+      'Procurar dados'
+  ]
   ]
   return activitys[id]
 }
@@ -453,7 +583,8 @@ export function Activitys(id) {
 export function Response(id){
   const response = [
       ["initialBall", "finalBall"],
-      ["Andar", "leftTopaaa", "Saltar"]
+      ["initialBall", "Correr", "finalBall"],
+      ["Atualizar cadastro", "Procurar dados", "decision", "finalBall","Criar usuário", ]
   ]
   return response[id]
 }
@@ -482,6 +613,17 @@ export function Tiles(id){
               "void", "void", "void", "void", "void","void","void",
               "void", "void", "void", "void", "void","void","void",
           ],
+          [
+            "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "activity", "bind","void","void",
+              "void", "void", "void", "bind", "bind","void","void",
+              "ball", "bind", "activity", "activity", "activity","void","void",
+              "void", "void", "void", "bind", "bind","void","void",
+              "void", "void", "void", "activity", "bind","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+          ]
       ]
       return tiles[id]
 }

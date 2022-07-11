@@ -33,7 +33,9 @@ import { updateScoreInStage } from '../../services/firebaseUse';
 import Popup from '../../components/Popup/popup';
 import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
+import act from '../../images/diagrams/activitys.png';
 import { Link } from 'react-router-dom';
+import dec from '../../images/diagrams/decision.png';
 
 function Gameplay() {
   const [popup, setPopup] = useState();
@@ -50,7 +52,22 @@ function Gameplay() {
       <p>Da mesma forma, encerramos o diagrama com a <strong>atividade final</strong>, que é representada assim:</p>
       <img src={final}/>
       <p>É preciso se atentar para a diferença entre as duas atividades. O símbolo de início é um círculo totalmente preenchido, enquanto que o símbolo de fim não é. Com isso em mente, complete o diagrama desta fase.</p>
-    </div>]
+    </div>],
+     [<div className='oneContainer'>
+     <p>As demais atividades são posicionadas <strong>depois da atividade inicial e antes da atividade final</strong>, logicamente. Cada atividade representa uma ação dentro do seu sistema
+e essas ações são sempre verbos no infinitivo. Ex: Correr, Andar e Pular. As atividades são simbolizadas assim:
+</p>
+     <img src={act} />
+     <p>Existe uma ligação que relaciona as atividades e descreve quando o fluxo segue de uma atividade para a outra. Essas ligações costumam ter uma seta indicando a direção. Escolha a atividade que melhor se encaixa no diagrama a seguir.</p>
+   </div>],
+   [<div className='twoContainer'>
+   <p>As estruturas de decisões são utilizadas quando o usuário pode tomar uma atitude no sistema que mudará o fluxo a ser seguido. Um exemplo disso é em caixas de diálogo, que o usuário pode escolher entre fechá-las ou continuar o diálogo.
+Elas são simbolizadas da seguinte forma: 
+</p>
+   <img src={dec} />
+   <p>Utilize as estruturas a seguir, incluindo a estrutura de decisão, para concluir esta fase.
+</p>
+ </div>],
   ]
 
   const [stage, setStage] = useState([
@@ -61,13 +78,13 @@ function Gameplay() {
      },
     {
       id : "1",
-      title: "title 1",
-      description: "Descricao 1"
+      title: "Atividades",
+      description: stageDescription[1]
     },
     {
       id : "2",
-      title: "title 2",
-      description: "Descricao 2"
+      title: "Estrutura de Decisão",
+      description: stageDescription[2]
     },
     {
       id : "3",
@@ -174,19 +191,23 @@ function Gameplay() {
 
       var resposta = Response(stageContext)
       var percent = 0
+
       for(let i=0; i<activityContainers.length;i++){
         var elements = document.getElementsByClassName(resposta[i])
-
-        if(elements[0] == activityContainers[i].children[0]){
+     
+        if(elements[0].className == activityContainers[i].children[0].className){
     
           percent++;
+          console.log("========= SIM ========")
+          console.log(elements[0])
+          console.log(activityContainers[i].children[0])
 
-
+        }else{
+          console.log("======== NÃO ========")
+          console.log(elements[0])
+          console.log(activityContainers[i].children[0])
         }
         
-        // if(resposta[i] == activityContainers[i].children.className){
-        //   console.log(resposta[i])
-        // }
       }
 
       
@@ -202,10 +223,11 @@ function Gameplay() {
         var auxScore = (1000-time)*percentComplete
         console.log(percentComplete)
         console.log(auxScore)
+        auxScore = Math.round(auxScore)
         auxScore = auxScore < 0 ? 0 : auxScore
-        setStatus({score: auxScore, percent: (percentComplete*100)+"%", time:auxStopwatch})
+        setStatus({score: auxScore, percent: (percentComplete.toFixed(2)*100)+"%", time:auxStopwatch})
        
-        updateScoreInStage(userCredential, "stage "+auxStage, auxStopwatch, (percentComplete*100), false, auxScore) 
+        updateScoreInStage(userCredential, "stage "+auxStage, auxStopwatch, (percentComplete.toFixed(2)*100), false, auxScore) 
         
           setStatusPopupState(true)
       }else{
@@ -635,8 +657,8 @@ function Gameplay() {
     <Popup
     title={"Ajuda"}
             className={'popupHelper'}
-            width={'30rem'}
-            widthHeader={'32rem'}
+            width={'43rem'}
+            widthHeader={'44rem'}
             widthContainer={'30rem'}
             heightContainer={'30rem'}
             height={'30rem'}

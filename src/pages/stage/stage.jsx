@@ -8,6 +8,8 @@ import { useValidateUser } from '../../contexts/userContext';
 import { useStage } from '../../contexts/stageContext';
 import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
+import act from '../../images/diagrams/activitys.png';
+import dec from '../../images/diagrams/decision.png';
 import { Link } from 'react-router-dom';
 import { useUserCredential } from '../../contexts/userContext';
 import { getUserInRealtimeDatabase } from '../../services/firebaseUse';
@@ -28,7 +30,23 @@ function Stage() {
       <p>Da mesma forma, encerramos o diagrama com a <strong>atividade final</strong>, que é representada assim:</p>
       <img src={final}/>
       <p>É preciso se atentar para a diferença entre as duas atividades. O símbolo de início é um círculo totalmente preenchido, enquanto que o símbolo de fim não é. Com isso em mente, complete o diagrama desta fase.</p>
-    </div>]
+    </div>],
+     [<div className='oneContainer'>
+     <p>As demais atividades são posicionadas <strong>depois da atividade inicial e antes da atividade final</strong>, logicamente. Cada atividade representa uma ação dentro do seu sistema
+e essas ações são sempre verbos no infinitivo. Ex: Correr, Andar e Pular. As atividades são simbolizadas assim:
+</p>
+     <img src={act} />
+     <p>Existe uma ligação que relaciona as atividades e descreve quando o fluxo segue de uma atividade para a outra. Essas ligações costumam ter uma seta indicando a direção. Escolha a atividade que melhor se encaixa no diagrama a seguir.</p>
+
+   </div>],
+   [<div className='twoContainer'>
+   <p>As estruturas de decisões são utilizadas quando o usuário pode tomar uma atitude no sistema que mudará o fluxo a ser seguido. Um exemplo disso é em caixas de diálogo, que o usuário pode escolher entre fechá-las ou continuar o diálogo.
+Elas são simbolizadas da seguinte forma: 
+</p>
+   <img src={dec} />
+   <p>Utilize as estruturas a seguir, incluindo a estrutura de decisão, para concluir esta fase.
+</p>
+ </div>],
   ]
 
   const [stage, setStage] = useState([
@@ -39,13 +57,13 @@ function Stage() {
      },
     {
       id : "1",
-      title: "title 1",
-      description: "Descricao 1"
+      title: "Atividades",
+      description: stageDescription[1]
     },
     {
       id : "2",
-      title: "title 2",
-      description: "Descricao 2"
+      title: "Estrutura de Decisão",
+      description: stageDescription[2]
     },
     {
       id : "3",
@@ -89,7 +107,7 @@ function Stage() {
       })
 
       const aux = sortStages(stages)
-      console.log(aux)
+
       var auxStages = []
       stages.forEach((st, index) =>{
         
@@ -140,8 +158,8 @@ function sortStages(data) {
       <Popup
             title={stage[stageSelected].title}
             className={'popupHelper'}
-            width={'33rem'}
-            widthHeader={'35rem'}
+            width={'43rem'}
+            widthHeader={'44rem'}
             widthContainer={'30rem'}
             heightContainer={'30rem'}
             height={'30rem'}
