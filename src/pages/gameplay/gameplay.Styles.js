@@ -611,6 +611,28 @@ export const BarContainer = styled.div`
                     grid-template-rows: 1fr 1fr;
                     grid-template-areas: "first" "last";
                     
+    
+        ${({ firstBind }) => {
+            if(firstBind){
+         
+                return css`
+                
+                        opacity:1;
+                    
+                `;
+            }else{
+            
+                return css`
+                     
+                        opacity:0;
+                    
+                `;
+            } 
+
+        }};
+    
+
+
                     #firstBarBind{
                         display: flex;
                         #arrowContainer{
@@ -693,6 +715,26 @@ export const BarContainer = styled.div`
                     display: grid;
                     grid-template-rows: 1fr 1fr;
                     grid-template-areas: "first" "last";
+                    
+                    ${({ lastBind }) => {
+                        if(lastBind){
+                    
+                            return css`
+                            
+                                    opacity:1;
+                                
+                            `;
+                        }else{
+                        
+                            return css`
+                                
+                                    opacity:0;
+                                
+                            `;
+                        } 
+
+                    }};
+
                     
                     #lastBarBind{
                         display: flex;
@@ -781,6 +823,24 @@ export const BarContainer = styled.div`
                 grid-template-columns: 1fr 1fr;
                 grid-template-areas: "first last";
   
+                ${({ firstBind }) => {
+                    if(firstBind){
+                
+                        return css`
+                        
+                                opacity:1;
+                            
+                        `;
+                    }else{
+                    
+                        return css`
+                            
+                                opacity:0;
+                            
+                        `;
+                    } 
+                }};
+
                 #firstBarBind{
                     display: flex;
                     #arrowContainer{
@@ -862,6 +922,26 @@ export const BarContainer = styled.div`
                     grid-template-columns: 1fr 1fr;
                     grid-template-areas: "first last";
 
+
+                    ${({ lastBind }) => {
+                        if(lastBind){
+                    
+                            return css`
+                            
+                                    opacity:1;
+                                
+                            `;
+                        }else{
+                        
+                            return css`
+                                
+                                    opacity:0;
+                                
+                            `;
+                        } 
+
+                    }};
+                    
                     #lastBarBind{
                         display: flex;
                         #arrowContainer{

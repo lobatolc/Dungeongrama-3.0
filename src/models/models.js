@@ -144,7 +144,24 @@ export function Balls(id){
     isLeftSecond : false,
     isLeftThird :false,
     isLeftLast : false,
-    isInitial : true }]
+    isInitial : true }],
+    
+    [{firstBind: false,
+      secondBind: true,
+      thirdBind :false, 
+      lastBind :false, 
+  
+      firstArrow : false,
+      secondArrow : true,
+      thirdArrow :false,
+      lastArrow : true,
+  
+      isLeftFirst : false,
+      isLeftSecond : false,
+      isLeftThird :false,
+      isLeftLast : false,
+      isInitial : false }]
+
 ]
 
   return balls[id]
@@ -205,6 +222,75 @@ export function Bars(id){
         isInitialLast : false,
   
         isVertical : false
+  
+      },
+    ],
+    [
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : false
+  
+      },
+      {
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : false
+  
+      },
+    ],
+    [
+      {
+        firstBind: false,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : false,
+  
+        isVertical : true
+  
+      },
+      {
+        firstBind: true,
+        lastBind :false, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : true
+  
+      },
+      {
+        firstBind: false,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : true,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : false,
+        isInitialLast : false,
+  
+        isVertical : true
   
       },
     ]
@@ -385,6 +471,32 @@ export function Binds(id){
         descPosition: "first",
         isArrow: true,
       }
+    ],
+    [
+      {
+        bindDirection: "leftRight",
+        description: "",
+        descPosition: "first",
+        isArrow: true,
+      },
+      {
+        bindDirection: "leftRight",
+        description: "",
+        descPosition: "first",
+        isArrow: false,
+      },
+      {
+        bindDirection: "leftRight",
+        description: "",
+        descPosition: "first",
+        isArrow: true,
+      },
+      {
+        bindDirection: "leftRight",
+        description: "",
+        descPosition: "first",
+        isArrow: false,
+      },
     ]
   ]
   return binds[id]
@@ -393,7 +505,9 @@ export function Binds(id){
 export function StaticActivity(id){
   const staticActivity = [
     [{name:"Verificar diagrama"}, {name:"Pontuar diagrama"}],
-    [{name:"Pular"}, {name:"Atividade S2"}]
+    [{name:"Pular"}, {name:"Atividade S2"}],
+    [{name:""}], 
+    [{name:"Static 1", name:"Static 2"}],
   ]
   return staticActivity[id]
 }
@@ -555,6 +669,134 @@ export function ElementsInventory(id){
         isInitialLast: true,
         isInitial: true,
       },
+    ],
+    [
+      {
+        id: 'bar',
+        firstBind: true,
+        lastBind :false, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : false,
+        drag: true,
+        isVertical : true
+  
+      },
+      {
+        id: 'bar',
+        firstBind: true,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : true,
+        drag: true,
+        isVertical : false
+  
+      },
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: false,
+        thirdBind: true,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: true,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: true,
+      },
+      {
+        id:'decision',
+        drag: true,
+        firstBind: true,
+        secondBind: false,
+        thirdBind: false,
+        lastBind: true,
+        firstArrow: false,
+        secondArrow: true,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: false,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: false,
+      },
+
+      {
+        id: 'ball',
+        drag: true,
+        firstBind: false,
+        secondBind: false,
+        thirdBind: true,
+        lastBind: false,
+        firstArrow: false,
+        secondArrow: false,
+        thirdArrow:false,
+        lastArrow: false,
+        isLeftFirst: true,
+        isLeftSecond: true,
+        isLeftThird: false,
+        isLeftLast: true,
+        isInitialFirst: true,
+        isInitialLast: true,
+        isInitial: false,
+      },
+      {
+        id: 'bar',
+        firstBind: false,
+        lastBind :true, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : true,
+        drag: true,
+        isVertical : true
+  
+      },
+      {
+        id: 'bar',
+        firstBind: true,
+        lastBind :false, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : false,
+        drag: true,
+        isVertical : false
+  
+      },
+      {
+        id: 'bar',
+        firstBind: true,
+        lastBind: false, 
+        firstArrow : true,
+        lastArrow : false,
+        isLeftFirst : false,
+        isLeftLast : false, 
+        isInitialFirst : true,
+        isInitialLast : true,
+        drag: true,
+        isVertical : true
+  
+      },
+
     ]
   ]
   return elementsInventory[id]
@@ -575,7 +817,8 @@ export function Activitys(id) {
       'Criar usuário',
       'Baixar dados',
       'Procurar dados'
-  ]
+  ],
+  ['Atv 1', 'Atv 2', 'Atv 3', 'Atv 4']
   ]
   return activitys[id]
 }
@@ -585,6 +828,7 @@ export function Response(id){
       ["initialBall", "finalBall"],
       ["initialBall", "Correr", "finalBall"],
       ["Atualizar cadastro", "Procurar dados", "decision", "finalBall","Criar usuário", ]
+      [""]
   ]
   return response[id]
 }
@@ -623,7 +867,18 @@ export function Tiles(id){
               "void", "void", "void", "activity", "bind","void","void",
               "void", "void", "void", "void", "void","void","void",
               "void", "void", "void", "void", "void","void","void",
-          ]
+          ],
+          [
+            "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "bar", "bind", "staticActivity", "bind","activity","void",
+              "activity", "bar", "void", "void", "void","activity","ball",
+              "void", "bar", "bind", "activity", "bind","activity","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+              "void", "void", "void", "void", "void","void","void",
+          ],
       ]
       return tiles[id]
 }

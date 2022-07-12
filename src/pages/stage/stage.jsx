@@ -10,6 +10,10 @@ import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
 import act from '../../images/diagrams/activitys.png';
 import dec from '../../images/diagrams/decision.png';
+import horizontalDivider from '../../images/diagrams/horizontalBarDivider.png'
+import horizontalUnite from '../../images/diagrams/horizontalBarUnite.png'
+import verticalDivider from '../../images/diagrams/verticalBarDivider.png'
+import verticalUnite from '../../images/diagrams/verticalBarUnite.png'
 import { Link } from 'react-router-dom';
 import { useUserCredential } from '../../contexts/userContext';
 import { getUserInRealtimeDatabase } from '../../services/firebaseUse';
@@ -47,6 +51,22 @@ Elas são simbolizadas da seguinte forma:
    <p>Utilize as estruturas a seguir, incluindo a estrutura de decisão, para concluir esta fase.
 </p>
  </div>],
+ [<div className='threeContainer'>
+ <p>Existem dois tipos de barramentos, o primeiro deles serve para agrupar o fluxo de diferentes atividades que terminarão em outra atividade em comum, como no exemplo abaixo:
+</p>
+  <div className='imgContainer'>
+    <img className='imgHorizontal' src={horizontalUnite} />
+    <img  className='imgVertical' src={verticalUnite} />
+
+  </div>
+ <p>O segundo tipo funciona de forma contrária ao primeiro. Ao invés de agrupar, ele separa o fluxo de uma atividade em vários fluxos para várias atividades. Com isso em mente, complete o diagrama a seguir.
+</p>
+  <div className='imgContainer'>
+    <img  className='imgHorizontal' src={horizontalDivider} />
+    <img   className='imgVertical' src={verticalDivider}/>
+  </div>
+
+</div>],
   ]
 
   const [stage, setStage] = useState([
@@ -67,8 +87,8 @@ Elas são simbolizadas da seguinte forma:
     },
     {
       id : "3",
-      title: "title 3",
-      description: "Descricao 3"
+      title: "Estrutura de Barra",
+      description: stageDescription[3]
     },
     {
       id : "4",

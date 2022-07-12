@@ -6,8 +6,8 @@ export const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     overflow: hidden;
     padding: 0 !important;
     background-color: rgba(0, 0, 0, 0.25);
@@ -47,6 +47,30 @@ export const Container = styled.div`
                 height: 3rem;
                 width: 3rem;
               
+            }
+        }
+
+        
+        .threeContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .imgContainer{
+                display: flex;
+                gap: 5rem;
+            }
+
+            img{
+                margin-top: 1rem;
+            }
+
+            .imgVertical{
+                height:9rem;
+              
+            }
+            .imgHorizontal{
+                height:9rem;
+                width: 10rem;
             }
         }
     }
