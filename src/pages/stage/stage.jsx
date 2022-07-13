@@ -144,7 +144,8 @@ Elas são simbolizadas da seguinte forma:
           >
             <div>
               <p>Tempo: {st.timeClear}</p>
-              <p>Porcentagem: {st.percentComplete}%</p>
+              <p>Completude: {st.percentComplete}%</p>
+              <p>Tentativas:</p>
               <p>Pontuação: {st.score}</p>
             </div>
             <div id="button">
@@ -224,17 +225,6 @@ function sortStages(data) {
       ) : null}
       <Container>
         <h1 id="title">Fases</h1>
-        <p id="text">
-        Boas vindas ao Dungeongrama! Este site foi desenvolvido com o auxílio do professor e mestre Anderson Costa, 
-        juntamente de Ajax Lima, Larissa Nascimento e Lucas Lobato. O intuito do Dungeongrama é ajudar no ensino de 
-        diagramas de atividade e, para isso, você será convidado a desafiar-se numa série de exercícios que 
-        ensinar-lhe-ão o passo-a-passo no desenvolvimento desse diagrama da UML. Cada fase possui um problema para ser resolvido, 
-        então leia com muita atenção antes de iniciá-la. Porém, não se preocupe, você pode ler o problema novamente no botão "?" 
-        presente no canto superior da tela durante as partidas. Para pontuar, é necessário montar o diagrama na ordem correta. 
-        O temporizador influencia sua pontuação final, diminuindo os seus pontos conforme o tempo passa. 
-        Caso pontue bastante, poderá entrar no nosso ranque de jogadores e orgulhar-se para seus colegas de classe. 
-        Sem mais enrolação, boa jogatina!
-        </p>
         <div id="boxes">
           {stageBox}
         </div>

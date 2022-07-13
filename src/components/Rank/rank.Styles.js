@@ -3,7 +3,7 @@ import {colors, shadow, margin, padding, button, border, font, gradient} from '.
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   text-align: center;
 
   

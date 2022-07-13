@@ -656,7 +656,8 @@ Elas são simbolizadas da seguinte forma:
             <p id="stageDescription">
               <div>
                 <p>Tempo: {status.time}</p>
-                <p>Porcentagem de Acerto: {status.percent}</p>
+                <p>Nível de Completude: {status.percent}</p>
+                <p>Tentativas:</p>
                 <p>Pontuação: {status.score}</p>
               </div>
               <div id="button">

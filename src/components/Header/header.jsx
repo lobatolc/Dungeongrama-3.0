@@ -38,6 +38,7 @@ function Header() {
       <div>
         <Link to="/stage">Jogar</Link>
         <Link to="/ranking">Classificação</Link>
+        <Link to="/about">Sobre</Link>
         <Link onClick={logOut} to="/">
           Sair
         </Link>

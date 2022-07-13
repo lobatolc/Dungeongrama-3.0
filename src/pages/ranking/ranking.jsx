@@ -36,7 +36,7 @@ function Ranking() {
       <h1>Classificação dos Jogadores</h1>
       <Box
         
-        title={['Nº', 'Nome', 'Pontuação']}
+        title={['Nº', 'Nome', 'Total de Tentativas', 'Pontuação']}
         width={'98%'}
         height={'100%'}
         widthHeader={'100%'}
