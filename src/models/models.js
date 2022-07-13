@@ -23,7 +23,8 @@ export function StageModel(i, unlock = false) {
     clear: false,
     unlock,
     timeClear: 0,
-    percentComplete: 0.0
+    percentComplete: 0.0,
+    countAttempts: 0
   }
 
   return stage;

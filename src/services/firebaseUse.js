@@ -96,27 +96,27 @@ export async function getUserInRealtimeDatabase(userId = '') {
     .catch((error) => {
       console.error(error);
     });
-    if(userId === ''){
-      data = setMaxScoreUse(data)
-    }else{
-      data = setMaxScoreOneUser(data)
-    }
+  if (userId === '') {
+    data = setMaxScoreUse(data)
+  } else {
+    data = setMaxScoreOneUser(data)
+  }
 
   return sortDataUsers(data);
 }
 
-function setMaxScoreUse(users){
+function setMaxScoreUse(users) {
   users.map(user => {
-    for(let stage in user.scoreStage){
+    for (let stage in user.scoreStage) {
       user['maxScore'] += user.scoreStage[stage].score
     }
   })
   return users
 }
 
-function setMaxScoreOneUser(user){
+function setMaxScoreOneUser(user) {
   let totalScore = 0;
-  for(let stage in user[5]){
+  for (let stage in user[5]) {
     totalScore += user[5][stage].score
   }
   user[4] = totalScore
@@ -127,19 +127,26 @@ function sortDataUsers(data) {
   return data.sort((a, b) => b.maxScore - a.maxScore);
 }
 
-export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0, percentComplete = 0, useHint = false, score = 0) {
+export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0, percentComplete = 0, useHint = false, countAttempts = 1) {
+  const userDB = await getUserInRealtimeDatabase(user)
+
   const [, stageNumber] = stage.split(' ')
   const nextStage = `stage ${parseInt(stageNumber) + 1}`
   const stringForUpdate = `users/${user}/scoreStage`;
+
+  let score = (1000 - timeClear) * percentComplete;
+
+  countAttempts += userDB[5][stage].countAttempts
+  for (let i = 1; i > countAttempts; i++) {
+    score *= 0.995
+  }
+
   score = Math.round(score)
+  score = score > 0 ? score : 0
 
-
-  percentComplete = percentComplete
   const clear = percentComplete >= 80
-  const userDB = await getUserInRealtimeDatabase(user)
 
-  if(score > userDB[5][stage].score){
-   
+  if (score > userDB[5][stage].score) {
     set(ref(db, `${stringForUpdate}/${stage}`), {
       clear,
       percentComplete,
@@ -148,22 +155,29 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
       timeClear,
       unlock: true,
       useHint,
+      countAttempts
     }).catch(error => {
       const errorCode = error.code
       console.log(filterError(errorCode));
     })
+
     if (clear && !(userDB[5][nextStage].unlock)) {
-    
       set(ref(db, `${stringForUpdate}/${nextStage}`), StageModel(parseInt(stageNumber), clear)).catch(error => {
         const errorCode = error.code
         console.log(filterError(errorCode));
       })
     }
+  } else {
+    set(ref(db, `${stringForUpdate}/${stage}`), {
+      ...userDB[5][stage],
+      countAttempts
+    }).catch(error => {
+      const errorCode = error.code
+      console.log(filterError(errorCode));
+    })
   }
 
-
-  console.log(userDB[5][nextStage])
-  
+  return score
 }
 
 function filterError(errorCode = '/Erro Desconhecido') {
