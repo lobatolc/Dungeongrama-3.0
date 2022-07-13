@@ -618,10 +618,10 @@ export function ElementsInventory(id){
       {
         id:'decision',
         drag: true,
-        firstBind: false,
-        secondBind: false,
+        firstBind: true,
+        secondBind: true,
         thirdBind: false,
-        lastBind: false,
+        lastBind: true,
         firstArrow: false,
         secondArrow: true,
         thirdArrow:false,
@@ -827,7 +827,7 @@ export function Response(id){
   const response = [
       ["initialBall", "finalBall"],
       ["initialBall", "Correr", "finalBall"],
-      ["Atualizar cadastro", "Procurar dados", "decision", "finalBall","Criar usuário", ]
+      ["Atualizar cadastro", "Procurar dados", "decision", "finalBall","Criar usuário"],
       [""]
   ]
   return response[id]

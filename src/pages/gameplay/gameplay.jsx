@@ -211,8 +211,9 @@ Elas são simbolizadas da seguinte forma:
 
       var resposta = Response(stageContext)
       var percent = 0
-
+      
       for(let i=0; i<activityContainers.length;i++){
+
         var elements = document.getElementsByClassName(resposta[i])
      
         if(elements[0].className == activityContainers[i].children[0].className){
