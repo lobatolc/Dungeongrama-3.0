@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, { useEffect } from 'react';
 import {
   Container,
   Inventory,
@@ -14,9 +12,22 @@ import {
   BallContainer,
   StaticActivityContainer,
 } from './gameplay.Styles';
-
+import Box from '../../components/Box/box';
+import Activity from '../../components/Activity/activity';
+import Decision from '../../components/Decision/decision';
+import Bar from '../../components/Bar/bar';
+import Bind from '../../components/Bind/bind';
+import Ball from '../../components/Ball/ball';
+import { useNotifys } from '../../contexts/notifyContext';
+import { useUserCredential, useValidateUser } from '../../contexts/userContext';
+import { useStage } from '../../contexts/stageContext';
+import mute from '../../images/icons/mute.png';
+import sound from '../../images/icons/sound.png';
+import help from '../../images/icons/help.png';
 import { colors, border } from '../../global.Styles';
-
+import { useState } from 'react/cjs/react.development';
+import soundtrack from '../../audio/music/soundtrack.mp3';
+import arrow from '../../images/icons/arrow.png';
 import {
   Tiles,
   Binds,
@@ -28,36 +39,19 @@ import {
   Balls,
   StaticActivity,
 } from '../../models/models';
-
-import Box from '../../components/Box/box';
-import Activity from '../../components/Activity/activity';
-import Decision from '../../components/Decision/decision';
-import Bar from '../../components/Bar/bar';
-import Bind from '../../components/Bind/bind';
-import Ball from '../../components/Ball/ball';
-
-import { useNotifys } from '../../contexts/notifyContext';
-import { useUserCredential } from '../../contexts/userContext';
-import { useStage } from '../../contexts/stageContext';
-
-import mute from '../../images/icons/mute.png';
-import sound from '../../images/icons/sound.png';
-import help from '../../images/icons/help.png';
-import soundtrack from '../../audio/music/soundtrack.mp3';
-import arrow from '../../images/icons/arrow.png';
+import { updateScoreInStage } from '../../services/firebaseUse';
 import Popup from '../../components/Popup/popup';
 import initial from '../../images/diagrams/initialActivity.png';
 import final from '../../images/diagrams/finalActivity.png';
 import act from '../../images/diagrams/activitys.png';
+import { Link } from 'react-router-dom';
 import dec from '../../images/diagrams/decision.png';
 import horizontalDivider from '../../images/diagrams/horizontalBarDivider.png';
 import horizontalUnite from '../../images/diagrams/horizontalBarUnite.png';
 import verticalDivider from '../../images/diagrams/verticalBarDivider.png';
 import verticalUnite from '../../images/diagrams/verticalBarUnite.png';
 
-import { updateScoreInStage } from '../../services/firebaseUse';
-
-let firstClickFinishButton = 0;
+let firstClickButtonFinish = 0;
 function Gameplay() {
   const [popup, setPopup] = useState();
   const [popupState, setPopupState] = useState(false);
@@ -184,7 +178,7 @@ function Gameplay() {
   const { stageContext, setStageContext } = useStage();
 
   useEffect(() => {
-    firstClickFinishButton = 0;
+    firstClickButtonFinish = 0;
     updateScoreInStage(userCredential, 'stage ' + (stageContext + 1));
   }, []);
 
@@ -262,8 +256,17 @@ function Gameplay() {
 
     var error = '';
     for (let i = 0; i < activityContainers.length; i++) {
+      // console.log(activityContainers[i].children)
       if (activityContainers[i].children.length == 0) {
         error = 'Preencha todos os espaços com atividade!';
+        updateScoreInStage(
+          userCredential,
+          'stage ' + (stageContext + 1),
+          undefined,
+          undefined,
+          undefined,
+          firstClickButtonFinish
+        );
       }
     }
 
@@ -273,14 +276,6 @@ function Gameplay() {
         log: error,
         time: Date.now(),
       });
-      updateScoreInStage(
-        userCredential,
-        'stage ' + (stageContext + 1),
-        undefined,
-        undefined,
-        undefined,
-        firstClickFinishButton
-      );
     } else {
       var resposta = Response(stageContext);
       var percent = 0;
@@ -317,40 +312,41 @@ function Gameplay() {
           (auxMinute > 9 ? auxMinute : '0' + auxMinute) +
           ' : ' +
           (auxSecond > 9 ? auxSecond : '0' + auxSecond);
-        var score = await updateScoreInStage(
+        var auxScore = await updateScoreInStage(
           userCredential,
-          'stage ' + stage,
+          'stage ' + auxStage,
           auxStopwatch,
           percentComplete.toFixed(2) * 100,
-          false,
-          firstClickFinishButton
+          false
         );
         console.log(percentComplete);
-        console.log(score);
+        console.log(auxScore);
+        auxScore = Math.round(auxScore);
+        auxScore = auxScore < 0 ? 0 : auxScore;
         setStatus({
-          score,
+          score: auxScore,
           percent: percentComplete.toFixed(2) * 100 + '%',
           time: auxStopwatch,
         });
 
         setStatusPopupState(true);
       } else {
+        updateScoreInStage(
+          userCredential,
+          'stage ' + auxStage,
+          undefined,
+          undefined,
+          undefined,
+          firstClickButtonFinish
+        );
         setNotifys({
           type: 'error',
           log: 'Você não acertou a porcentagem mínima para finalizar, continue tentando!',
           time: Date.now(),
         });
-        updateScoreInStage(
-          userCredential,
-          'stage ' + (stageContext + 1),
-          undefined,
-          undefined,
-          undefined,
-          firstClickFinishButton
-        );
       }
     }
-    firstClickFinishButton = undefined;
+    firstClickButtonFinish = undefined;
   }
 
   function containerStyler() {
@@ -832,7 +828,8 @@ function Gameplay() {
         <p id="stageDescription">
           <div>
             <p>Tempo: {status.time}</p>
-            <p>Porcentagem de Acerto: {status.percent}</p>
+            <p>Nível de Completude: {status.percent}</p>
+            <p>Tentativas:</p>
             <p>Pontuação: {status.score}</p>
           </div>
           <div id="button">

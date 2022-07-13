@@ -123,7 +123,7 @@ function Login() {
 
   return (
     <>
-      {user.logged ? <Redirect to="/stage" /> : null}
+      {user.logged ? <Redirect to="/about" /> : null}
       {developerState != '' ? (
         <CardDeveloper
           dev={developerState}

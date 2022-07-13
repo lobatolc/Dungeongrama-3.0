@@ -7,6 +7,7 @@ import Login from '../pages/login/login';
 import Stage from '../pages/stage/stage';
 import Ranking from '../pages/ranking/ranking';
 import Gameplay from '../pages/gameplay/gameplay';
+import About from '../pages/about/about';
 import NotifyModal from '../components/Notify/notify';
 import { useNotifys } from '../contexts/notifyContext';
 export default function Routes() {
@@ -42,6 +43,13 @@ export default function Routes() {
           privateRoute={true}
           exact
           component={Gameplay}
+        />
+        <ValidatedRoute
+          path="/about"
+          page_name="about"
+          privateRoute={true}
+          exact
+          component={About}
         />
       </Switch>
     </>
