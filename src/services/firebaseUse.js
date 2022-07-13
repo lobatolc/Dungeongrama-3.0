@@ -109,6 +109,8 @@ function setMaxScoreUse(users) {
   users.map(user => {
     for (let stage in user.scoreStage) {
       user['maxScore'] += user.scoreStage[stage].score
+      user['gamesPlayed'] += user.scoreStage[stage].countAttempts
+      console.log(user.scoreStage[stage].countAttempts)
     }
   })
   return users
@@ -116,10 +118,13 @@ function setMaxScoreUse(users) {
 
 function setMaxScoreOneUser(user) {
   let totalScore = 0;
+  let gamesPlayed = 0;
   for (let stage in user[5]) {
     totalScore += user[5][stage].score
+    gamesPlayed += user[5][stage].countAttempts
   }
   user[4] = totalScore
+  user[1] = gamesPlayed
   return user
 }
 
