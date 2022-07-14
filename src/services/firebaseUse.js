@@ -138,9 +138,10 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   const [, stageNumber] = stage.split(' ')
   const nextStage = `stage ${parseInt(stageNumber) + 1}`
   const stringForUpdate = `users/${user}/scoreStage`;
-
+  console.log(percentComplete)
   let score = (1000 - timeClear) * percentComplete;
 
+  percentComplete = percentComplete*100
   countAttempts += userDB[5][stage].countAttempts
   for (let i = 1; i > countAttempts; i++) {
     score *= 0.995
@@ -150,8 +151,9 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
   score = score > 0 ? score : 0
 
   const clear = percentComplete >= 80
-
+  timeClear = formatStopWatch(timeClear)
   if (score > userDB[5][stage].score) {
+    //console.log("é maior")
     set(ref(db, `${stringForUpdate}/${stage}`), {
       clear,
       percentComplete,
@@ -173,6 +175,7 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
       })
     }
   } else {
+    //console.log("não é maior")
     set(ref(db, `${stringForUpdate}/${stage}`), {
       ...userDB[5][stage],
       countAttempts
@@ -181,8 +184,22 @@ export async function updateScoreInStage(user, stage = 'stage 1', timeClear = 0,
       console.log(filterError(errorCode));
     })
   }
+  console.log(score)
+  var status = [score, countAttempts]
+  return status
+}
 
-  return score
+function formatStopWatch(time){
+  var auxHour =(time / 3600).toFixed(0);
+  var auxMinute = parseInt((time % 3600) / 60);
+  var auxSecond = parseInt((time % 3600) % 60);
+  var auxStopwatch =
+      (auxHour > 9 ? auxHour : '0' + auxHour) +
+          ' : ' +
+      (auxMinute > 9 ? auxMinute : '0' + auxMinute) +
+          ' : ' +
+      (auxSecond > 9 ? auxSecond : '0' + auxSecond);
+  return auxStopwatch
 }
 
 function filterError(errorCode = '/Erro Desconhecido') {

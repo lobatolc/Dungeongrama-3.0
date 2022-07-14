@@ -117,7 +117,7 @@ Elas são simbolizadas da seguinte forma:
     
      
       const stages = Object.values(value[5])
-      
+      console.log(value)
 
       stages.forEach((st) =>{
         const [, stageNumber] = st.stage.split(' ')
@@ -145,7 +145,7 @@ Elas são simbolizadas da seguinte forma:
             <div>
               <p>Tempo: {st.timeClear}</p>
               <p>Completude: {st.percentComplete}%</p>
-              <p>Tentativas:</p>
+              <p>Qtd. Tentativas: {st.countAttempts}</p>
               <p>Pontuação: {st.score}</p>
             </div>
             <div id="button">

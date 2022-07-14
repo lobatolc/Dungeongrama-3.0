@@ -182,7 +182,7 @@ function Gameplay() {
     updateScoreInStage(userCredential, 'stage ' + (stageContext + 1));
   }, []);
 
-  const [status, setStatus] = useState({ score: '', percent: '', time: '' });
+  const [status, setStatus] = useState({ score: '', countAttempts: '', percent: '', time: '' });
   const [auxTimer, setAuxTimer] = useState();
 
   const [sei, setSei] = useState();
@@ -287,67 +287,82 @@ function Gameplay() {
           elements[0].className == activityContainers[i].children[0].className
         ) {
           percent++;
-          console.log('========= SIM ========');
-          console.log(elements[0]);
-          console.log(activityContainers[i].children[0]);
-        } else {
-          console.log('======== NÃO ========');
-          console.log(elements[0]);
-          console.log(activityContainers[i].children[0]);
-        }
+        } 
       }
 
       const percentComplete =
         parseInt(percent) / parseInt(activityContainers.length);
-
-      if (percentComplete > 0) {
         var auxStage = stageContext + 1;
 
-        var auxHour = (time / 3600).toFixed(0);
-        var auxMinute = parseInt((time % 3600) / 60);
-        var auxSecond = parseInt((time % 3600) % 60);
-        var auxStopwatch =
-          (auxHour > 9 ? auxHour : '0' + auxHour) +
-          ' : ' +
-          (auxMinute > 9 ? auxMinute : '0' + auxMinute) +
-          ' : ' +
-          (auxSecond > 9 ? auxSecond : '0' + auxSecond);
-        var auxScore = await updateScoreInStage(
+            var auxStopwatch = formatStopWatch(time)
+              
+
+           
+        Promise.resolve(updateScoreInStage(
           userCredential,
           'stage ' + auxStage,
-          auxStopwatch,
-          percentComplete.toFixed(2) * 100,
-          false
-        );
-        console.log(percentComplete);
-        console.log(auxScore);
-        auxScore = Math.round(auxScore);
-        auxScore = auxScore < 0 ? 0 : auxScore;
-        setStatus({
-          score: auxScore,
-          percent: percentComplete.toFixed(2) * 100 + '%',
-          time: auxStopwatch,
+          time,
+          percentComplete.toFixed(2),
+          false,
+          firstClickButtonFinish
+        )).then(function(value) {
+          if (percentComplete > 0) {
+            var auxScore = value[0] ;
+            var countAttempts = value[1]
+    
+            
+           
+    
+    
+           // console.log(percentComplete);
+           // console.log(auxScore);
+            auxScore = Math.round(auxScore);
+            auxScore = auxScore < 0 ? 0 : auxScore;
+            setStatus({
+              score: auxScore,
+              countAttempts: countAttempts,
+              percent: percentComplete.toFixed(2) * 100 + '%',
+              time: auxStopwatch,
+            });
+    
+            setStatusPopupState(true);
+          } else {
+            updateScoreInStage(
+              userCredential,
+              'stage ' + auxStage,
+              undefined,
+              undefined,
+              undefined,
+              firstClickButtonFinish
+            );
+            setNotifys({
+              type: 'error',
+              log: 'Você não acertou a porcentagem mínima para finalizar, continue tentando!',
+              time: Date.now(),
+            });
+          }
+        }, function(value) {
+          // not called
+         
         });
 
-        setStatusPopupState(true);
-      } else {
-        updateScoreInStage(
-          userCredential,
-          'stage ' + auxStage,
-          undefined,
-          undefined,
-          undefined,
-          firstClickButtonFinish
-        );
-        setNotifys({
-          type: 'error',
-          log: 'Você não acertou a porcentagem mínima para finalizar, continue tentando!',
-          time: Date.now(),
-        });
-      }
+      
     }
     firstClickButtonFinish = undefined;
   }
+
+  function formatStopWatch(time){
+    var auxHour =(time / 3600).toFixed(0);
+    var auxMinute = parseInt((time % 3600) / 60);
+    var auxSecond = parseInt((time % 3600) % 60);
+    var auxStopwatch =
+        (auxHour > 9 ? auxHour : '0' + auxHour) +
+            ' : ' +
+        (auxMinute > 9 ? auxMinute : '0' + auxMinute) +
+            ' : ' +
+        (auxSecond > 9 ? auxSecond : '0' + auxSecond);
+    return auxStopwatch
+}
 
   function containerStyler() {
     var activityContainers = document.getElementsByClassName('actContainers');
